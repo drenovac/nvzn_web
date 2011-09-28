@@ -1,0 +1,172 @@
+/*
+  Outline:
+  1. class
+  1. main page > header
+  2. main page > body
+  3. roster page > table
+*/
+
+/* Theme */
+body.sc-theme,
+body.sc-theme > .sc-pane.sc-main{ 
+  overflow: hidden;
+  background: #000 static_url('images/login-bg.png') repeat-x;
+}
+
+
+/* Overall style */
+a{
+  color: #fff;
+}
+
+a:hover{
+  cursor: pointer;
+}
+
+/* class */
+.black{
+  color: black;
+}
+
+.green-text{
+  color: green;
+}
+
+/* Login screen */
+
+.sc-view.login {
+  border: 1px solid #ccc;
+  
+  background: #fff;
+  border-radius: 5px;
+}
+
+/* @group toobar  */
+
+
+/* @group normal */
+
+.tabs .sc-segmented-view .sc-segment.sc-last-segment .sc-button-inner,
+.tabs .sc-segmented-view .sc-segment.sc-first-segment,
+.tabs .sc-segmented-view .sc-segment label,
+.tabs .sc-segmented-view .sc-segment.sc-middle-segment,
+.tabs .sc-segmented-view .sc-segment.sc-last-segment ,
+.tabs .sc-segmented-view .sc-segment.sc-middle-segment .sc-button-inner,
+.tabs .sc-segmented-view .sc-segment.sc-first-segment .sc-button-inner {
+  background: none;
+}
+
+
+/* @group toolbar.selected */
+
+.tabs .sc-segmented-view .sc-segment.sc-last-segment.sel .sc-button-inner,
+.tabs .sc-segmented-view .sc-segment.sc-first-segment.sel,
+.tabs .sc-segmented-view .sc-segment.sel label,
+.tabs .sc-segmented-view .sc-segment.sc-middle-segment.sel,
+.tabs .sc-segmented-view .sc-segment.sc-last-segment.sel,
+.tabs .sc-segmented-view .sc-segment.sc-middle-segment.sel .sc-button-inner,
+.tabs .sc-segmented-view .sc-segment.sc-first-segment.sel .sc-button-inner {
+  background: none;
+}
+
+/* @group toolbar.active */
+
+.tabs .sc-segmented-view .sc-segment.active.sc-last-segment .sc-button-inner,
+.tabs .sc-segmented-view .sc-segment.active.sc-first-segment,
+.tabs .sc-segmented-view .sc-segment.active label,
+.tabs .sc-segmented-view .sc-segment.active.sc-middle-segment,
+.tabs .sc-segmented-view .sc-segment.active.sc-last-segment,
+.tabs .sc-segmented-view .sc-segment.active.sc-middle-segment .sc-button-inner,
+.tabs .sc-segmented-view .sc-segment.active.sc-first-segment .sc-button-inner {
+  background: none;
+}
+
+/*  @group toolbar selected and active */
+.tabs .sc-segmented-view .sc-segment.active.sel.sc-last-segment .sc-button-inner,
+.tabs .sc-segmented-view .sc-segment.active.sel.sc-first-segment,
+.tabs .sc-segmented-view .sc-segment.active.sel label,
+.tabs .sc-segmented-view .sc-segment.active.sel.sc-middle-segment,
+.tabs .sc-segmented-view .sc-segment.active.sel.sc-last-segment,
+.tabs .sc-segmented-view .sc-segment.active.sel.sc-middle-segment .sc-button-inner,
+.tabs .sc-segmented-view .sc-segment.active.sel.sc-first-segment .sc-button-inner {
+  background: none;
+}
+
+
+.toolbar {
+  background: static_url('images/toolbar-bg.png');
+}
+.tabs .sc-segmented-view .sc-segment.sc-first-segment,
+.tabs .sc-segmented-view .sc-segment.sc-middle-segment,
+.tabs .sc-segmented-view .sc-segment.sc-last-segment {
+  padding: 0 !important;
+}
+
+.tabs .sc-segmented-view .sc-segment label {
+  text-align: center;
+  background:  transparent;
+  line-height: 20px;
+  padding-top: 3px;
+}
+
+.tabs .sc-segmented-view .sc-segment label img.icon {
+  width:  32px;
+  height: 32px;
+  display: block;
+  margin: 0 auto;
+  top: 0;
+}
+
+/*  @group  Normal    */
+.tabs .sc-segmented-view .sc-segment label {
+  width: 67px;
+  height: 55px;
+}
+.tabs .sc-segmented-view .sc-segment .sc-button-label {
+  color: #ccc;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.1);
+}
+
+/*  @group  Selected  */
+.tabs .sc-segmented-view .sc-segment.sel label{
+  background: static_url('images/toolbar-btn-active.png') !important;
+}
+
+.tabs .sc-segmented-view .sc-segment.sel .sc-button-label {
+  text-shadow: 0 1px 0 rgba(0,0,0,0.3);  
+}
+
+.title {
+  color: #000;
+  font-size: 14px !important;
+}
+
+/* main page > body */
+body.sc-theme .sc-view.sc-black-border {
+  border: none;
+  background: none;
+}
+
+/* roster page > table */
+.sc-view.sc-table-cell{
+  text-align: center;
+}
+
+.sc-view.sc-table-header{
+  text-align: center;
+} 
+
+.sc-view.sc-table-header.sc-table-header-sort-asc{
+/*  background: url('http://www.amigoslink.org/images/down_arrow.gif')no-repeat;*/
+  background: static_url('images/down_arrow.gif') no-repeat;
+  background-color: #eee;
+  background-position: right center;
+}
+
+.sc-view.sc-table-header.sc-table-header-sort-desc{
+/*  background: url('http://www.amigoslink.org/images/up_arrow.gif') no-repeat;*/
+  background: static_url('images/up_arrow.gif') no-repeat;
+  background-color: #eee;
+  background-position: right center;
+}
+/* end roster page > table*/

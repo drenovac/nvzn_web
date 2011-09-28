@@ -1,0 +1,58 @@
+#!/usr/bin/env ruby
+ 
+# Custom Build
+#
+#
+#  1. make build target in project root
+#  2. write to VERSION using current git version
+#  3. issue command to sc-build with the right arguments
+
+require 'fileutils'
+require 'optparse'
+
+class Builder
+  BUILD = `git rev-parse HEAD`.chomp
+  ROOT_PATH = File.expand_path('../..', __FILE__)
+
+  class << self
+    def parse_options
+      @build_path = "#{ROOT_PATH}/tmp/build/static"
+      @build_mode = ''
+
+      @options = {}
+      OptionParser.new do |opts|
+        opts.banner = "Usage: bin/build [options]"
+
+          opts.on(false, "--mode", "build mode defaults to production [production|debug]") do |mode|
+            @build_path = "#{ROOT_PATH}/tmp/#{mode}/build/static"
+            @build_mode = "--mode=#{mode}"
+            @options[:mode] = mode
+          end
+        end.parse!
+    end
+
+    def run
+      parse_options
+      execute "building sproutcore..." do
+        File.open("#{ROOT_PATH}/VERSION", 'w') do |file|
+          file.write(BUILD)
+        end
+        
+        system "git rm -r #{ROOT_PATH}/static"
+        FileUtils.rm_rf("#{ROOT_PATH}/static")
+      
+        FileUtils.rm_rf("#{ROOT_PATH}/tmp")
+        system "sc-build --build=#{BUILD} #{@build_mode}"
+        FileUtils.mv(@build_path, ROOT_PATH)
+      end
+    end
+
+    def execute(message, &block)
+      puts message
+      block.call()
+    end
+    
+  end
+end
+
+Builder.run

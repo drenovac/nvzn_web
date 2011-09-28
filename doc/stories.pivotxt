@@ -1,0 +1,14 @@
+Roaster
+
+  - As a employee, I want to view my roasters for the next 2 weeks
+    Each roster record should include following data
+      date, location, employee phone, employee number, site phone, shift, status
+  - As a employee, I wamt to view my current payslip 
+  - As a employee, I want to confirm my availability for any unconfirmed roasters, so i can update status of the roaster to be confirmed.
+  - As a employee, I want to see "When", "Where" filters to view respective job assignments on the sidebar.
+  
+Account
+
+  - As a employee, I want to have a account in the system, so that i can access all the functionalities
+  - As a employee, I want to login into this system to see my roasters.
+  - As a employee, I want to access my account profile, So that i can update my details such as address and contact number.
