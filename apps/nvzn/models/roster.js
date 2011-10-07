@@ -1,8 +1,8 @@
 // ==========================================================================
-// Project:   Powerforce.Roster
+// Project:   Nvzn.Roster
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
-/*globals Powerforce */
+/*globals Nvzn */
 
 /** @class
 
@@ -11,8 +11,8 @@
   @extends SC.Record
   @version 0.1
 */
-Powerforce.Roster = SC.Record.extend(
-/** @scope Powerforce.Roster.prototype */ {
+Nvzn.Roster = SC.Record.extend(
+/** @scope Nvzn.Roster.prototype */ {
 
   // TODO: Add your own code here.
 

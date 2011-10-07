@@ -39,7 +39,7 @@ var tableColumns = [
   })
 ];
 
-Powerforce.rosterPage = SC.Page.create({
+Nvzn.rosterPage = SC.Page.create({
 
   containerView:SC.SplitView.design({
     classNames: "container-view",
@@ -72,8 +72,8 @@ Powerforce.rosterPage = SC.Page.create({
         backgroundColor: '#f6f6f6',
         contentIconKey:  'icon',
         hasContentIcon: YES,
-        contentBinding: 'Powerforce.sidebarController.time',
-        selectionBinding: 'Powerforce.sidebarController.selection',
+        contentBinding: 'Nvzn.sidebarController.time',
+        selectionBinding: 'Nvzn.sidebarController.selection',
       }),
 
       place:SC.LabelView.design({
@@ -87,8 +87,8 @@ Powerforce.rosterPage = SC.Page.create({
         backgroundColor: '#f6f6f6',
         contentIconKey:  'icon',
         hasContentIcon: YES,
-        contentBinding: 'Powerforce.sidebarController.place',
-        selectionBinding: 'Powerforce.sidebarController.selection',
+        contentBinding: 'Nvzn.sidebarController.place',
+        selectionBinding: 'Nvzn.sidebarController.selection',
       })
 
     }),
@@ -109,13 +109,13 @@ Powerforce.rosterPage = SC.Page.create({
         hasVerticalScroller: YES,
         layout:{top:40},
         columns: tableColumns,
-        contentBinding: 'Powerforce.rosterController.arrangedObjects',
-        selectionBinding: 'Powerforce.rosterController.selection',
-        sortedColumnBinding: 'Powerforce.rosterController.sortedColumn',
+        contentBinding: 'Nvzn.rosterController.arrangedObjects',
+        selectionBinding: 'Nvzn.rosterController.selection',
+        sortedColumnBinding: 'Nvzn.rosterController.sortedColumn',
         selectOnMouseDown: YES,
         exampleView: SC.TableRowView,
         canReorderContent: YES,
-        recordType: Powerforce.Roster
+        recordType: Nvzn.Roster
       }),
 
       dividerView: SC.SplitDividerView.design({

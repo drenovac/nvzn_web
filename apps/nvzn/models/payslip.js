@@ -1,8 +1,8 @@
 // ==========================================================================
-// Project:   Powerforce.Payslip
+// Project:   Nvzn.Payslip
 // Copyright: ©2011 My Company, Inc.
 // ==========================================================================
-/*globals Powerforce */
+/*globals Nvzn */
 
 /** @class
 
@@ -11,8 +11,8 @@
   @extends SC.Record
   @version 0.1
 */
-Powerforce.Payslip = SC.Record.extend(
-/** @scope Powerforce.Payslip.prototype */ {
+Nvzn.Payslip = SC.Record.extend(
+/** @scope Nvzn.Payslip.prototype */ {
 
   employee: SC.Record.attr(String),
   from: SC.Record.attr(String),

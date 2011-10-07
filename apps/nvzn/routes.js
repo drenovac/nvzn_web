@@ -1,4 +1,4 @@
-Powerforce.routes = SC.Object.create({
+Nvzn.routes = SC.Object.create({
   currentPagePane: null,
   
   route: function(routeParams){
@@ -18,7 +18,7 @@ Powerforce.routes = SC.Object.create({
 
     // Show the specified pane
     var pagePanePath = pageName + '.' + paneName;
-    var pagePane = Powerforce.getPath(pagePanePath);
+    var pagePane = Nvzn.getPath(pagePanePath);
     pagePane.append();
 
     // Save the current pane so we can remove it when process the next route

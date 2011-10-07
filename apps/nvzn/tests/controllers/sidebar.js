@@ -1,12 +1,12 @@
 // ==========================================================================
-// Project:   Powerforce.appController Unit Test
+// Project:   Nvzn.sidebarController Unit Test
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
-/*globals Powerforce module test ok equals same stop start */
+/*globals Nvzn module test ok equals same stop start */
 
-module("Powerforce.appController");
+module("Nvzn.sidebarController");
 
-// TODO: Replace with real unit test for Powerforce.appController
+// TODO: Replace with real unit test for Nvzn.sidebarController
 test("test description", function() {
   var expected = "test";
   var result   = "test";

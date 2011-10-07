@@ -1,4 +1,4 @@
-Powerforce.mainPage = SC.Page.create({
+Nvzn.mainPage = SC.Page.create({
   
   mainPane: SC.MainPane.design({
     childViews: 'header tabs'.w(),
@@ -34,7 +34,7 @@ Powerforce.mainPage = SC.Page.create({
       logout:SC.ButtonView.design({
         layout: { centerY: 0, height: 24, right: 12, width: 80 },
         title: 'Logout',
-        target: 'Powerforce.appController',
+        target: 'Nvzn.appController',
         action: 'logout'
       })
       
@@ -51,19 +51,19 @@ Powerforce.mainPage = SC.Page.create({
         { 
           classNames: 'menu',
           title: "Roster", 
-          value: "Powerforce.rosterPage.containerView", 
+          value: "Nvzn.rosterPage.containerView",
           icon: sc_static("images/icons/briefcase.png")
         },
         { 
           classNames: 'menu',
           title: "Payslip", 
-          value: "Powerforce.payslipPage.mainView", 
+          value: "Nvzn.payslipPage.mainView",
           icon: sc_static("images/icons/payslips.png")
         },
         { 
           classNames: 'menu',
           title: "Account", 
-          value: "Powerforce.accountPage.mainView", 
+          value: "Nvzn.accountPage.mainView",
           icon: sc_static("images/icons/account.png")
         }
       ],
@@ -73,7 +73,7 @@ Powerforce.mainPage = SC.Page.create({
       itemIconKey: 'icon',
     
       userDefaultKey: "mainPane",
-      nowShowing: 'Powerforce.rosterPage.containerView'
+      nowShowing: 'Nvzn.rosterPage.containerView'
 
     })//end tabs
     

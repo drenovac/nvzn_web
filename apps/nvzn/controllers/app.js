@@ -1,4 +1,4 @@
-Powerforce.appController = SC.ObjectController.create(
+Nvzn.appController = SC.ObjectController.create(
 {
   loginInput: '',
   passInput: '',

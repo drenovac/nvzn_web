@@ -1,8 +1,8 @@
 // ==========================================================================
-// Project:   Powerforce.sidebarController
+// Project:   Nvzn.sidebarController
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
-/*globals Powerforce */
+/*globals Nvzn */
 
 /** @class
 
@@ -10,8 +10,8 @@
 
   @extends SC.ArrayController
 */
-Powerforce.sidebarController = SC.ArrayController.create(
-/** @scope Powerforce.sidebarController.prototype */ {
+Nvzn.sidebarController = SC.ArrayController.create(
+/** @scope Nvzn.sidebarController.prototype */ {
 
   // TODO: Add your own code here.
 

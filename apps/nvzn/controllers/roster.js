@@ -1,8 +1,8 @@
 // ==========================================================================
-// Project:   Powerforce.rosterController
+// Project:   Nvzn.rosterController
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
-/*globals Powerforce */
+/*globals Nvzn */
 
 /** @class
 
@@ -10,16 +10,16 @@
 
   @extends SC.Object
 */
-Powerforce.rosterController = SC.ArrayController.create(
-/** @scope Powerforce.rosterController.prototype */ {
+Nvzn.rosterController = SC.ArrayController.create(
+/** @scope Nvzn.rosterController.prototype */ {
   
   sortStateDidChange: function() {
     var column = this.get('sortedColumn');
     if( column == null || column.get('sortState') == null ) { return; }
 
     sort = column.get('sortState') == SC.SORT_ASCENDING ? 'ASC' : 'DESC';
-    var query = SC.Query.local(Powerforce.Roster, { orderBy: column.get('key')+' '+sort });
-    this.set('content', Powerforce.store.find(query));
+    var query = SC.Query.local(Nvzn.Roster, { orderBy: column.get('key')+' '+sort });
+    this.set('content', Nvzn.store.find(query));
   }.observes('*sortedColumn.sortState'),
 
 }) ;

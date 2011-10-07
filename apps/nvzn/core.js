@@ -1,8 +1,8 @@
 // ==========================================================================
-// Project:   Powerforce
+// Project:   Nvzn
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
-/*globals Powerforce */
+/*globals Nvzn */
 
 /** @namespace
 
@@ -10,10 +10,10 @@
   
   @extends SC.Object
 */
-Powerforce = SC.Application.create(
-  /** @scope Powerforce.prototype */ {
+Nvzn = SC.Application.create(
+  /** @scope Nvzn.prototype */ {
 
-  NAMESPACE: 'Powerforce',
+  NAMESPACE: 'Nvzn',
   VERSION: '0.1.0',
 
   // This is your application store.  You will use this store to access all

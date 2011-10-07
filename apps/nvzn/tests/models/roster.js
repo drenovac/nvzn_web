@@ -1,10 +1,10 @@
 // ==========================================================================
-// Project:   Powerforce.Roster Unit Test
+// Project:   Nvzn.Roster Unit Test
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
-/*globals Powerforce module test ok equals same stop start */
+/*globals Nvzn module test ok equals same stop start */
 
-module("Powerforce.Roster");
+module("Nvzn.Roster");
 
 // TODO: Replace with real unit test for Roster
 test("test description", function() {

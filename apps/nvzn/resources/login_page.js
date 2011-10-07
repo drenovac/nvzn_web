@@ -1,11 +1,11 @@
 // ==========================================================================
-// Project:   Powerforce.loginPage
+// Project:   Nvzn.loginPage
 // Copyright: ©2011 My Company, Inc.
 // ==========================================================================
-/*globals Powerforce */
+/*globals Nvzn */
  
 // This page describes a part of the interface for your application.
-Powerforce.loginPage = SC.Page.design({
+Nvzn.loginPage = SC.Page.design({
  
   loginPane: SC.Pane.design({
     layout: { centerX: 0, centerY: 0, width: 450, height: 270 },
@@ -26,7 +26,7 @@ Powerforce.loginPage = SC.Page.design({
     errorMessage: SC.LabelView.design({
       layout: { top: 80, left: 10, height: 20, width: 230 },
       textAlign: SC.ALIGN_CENTER,
-      valueBinding: 'Powerforce.appController.errorMessage',
+      valueBinding: 'Nvzn.appController.errorMessage',
     }),
  
     loginLabel: SC.LabelView.design({
@@ -40,7 +40,7 @@ Powerforce.loginPage = SC.Page.design({
     loginInput: SC.TextFieldView.design({
       layout: { left: 150, top: 110, width: 200, height: 30 },
       hint: 'admin',
-      valueBinding: 'Powerforce.appController.loginInput'
+      valueBinding: 'Nvzn.appController.loginInput'
     }),
  
     passLabel: SC.LabelView.design({
@@ -67,7 +67,7 @@ Powerforce.loginPage = SC.Page.design({
       layout: { left: 250, top: 220, width: 100, height: 30 },
       isDefault: YES,
       title: 'Submit',
-      target: 'Powerforce.appController',
+      target: 'Nvzn.appController',
       action: 'login'
     }),
      

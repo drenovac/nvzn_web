@@ -1,10 +1,10 @@
 // ==========================================================================
-// Project:   Powerforce.accountPage
+// Project:   Nvzn.accountPage
 // Copyright: ©2011 My Company, Inc.
 // ==========================================================================
-/*globals Powerforce */
+/*globals Nvzn */
 // This page describes a part of the interface for your application.
-Powerforce.accountPage = SC.Page.create({
+Nvzn.accountPage = SC.Page.create({
   
   mainView: SC.ContainerView.design({
     layout: { top: 20 },
@@ -34,8 +34,8 @@ Powerforce.accountPage = SC.Page.create({
           backgroundColor: '#f6f6f6',
           contentIconKey:  'icon',
           hasContentIcon: YES,
-          contentBinding: 'Powerforce.sidebarController.account_list',
-          selectionBinding: 'Powerforce.sidebarController.selection',
+          contentBinding: 'Nvzn.sidebarController.account_list',
+          selectionBinding: 'Nvzn.sidebarController.selection',
         }),
         
       }),
@@ -132,14 +132,14 @@ Powerforce.accountPage = SC.Page.create({
             layout: {left: 40, top: 330, width: 100, height: 30},
             title: 'Cancel',
             action: 'cancel',
-            target: 'Powerforce.accountController'
+            target: 'Nvzn.accountController'
           }),
 
           submit: SC.ButtonView.design({
             layout: {left: 250, top: 330, width: 100, height: 30},
             title: 'Update',
             action: 'submit',
-            target: 'Powerforce.accountController',
+            target: 'Nvzn.accountController',
             isDefault: YES
           })
           

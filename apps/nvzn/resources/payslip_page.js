@@ -1,11 +1,11 @@
 // ==========================================================================
-// Project:   Powerforce.payslipPage
+// Project:   Nvzn.payslipPage
 // Copyright: ©2011 My Company, Inc.
 // ==========================================================================
-/*globals Powerforce */
+/*globals Nvzn */
 
 // This page describes a part of the interface for your application.
-Powerforce.payslipPage = SC.Page.create({
+Nvzn.payslipPage = SC.Page.create({
 
   mainView: SC.ScrollView.design({
     layout: { top: 20 },
@@ -34,8 +34,8 @@ Powerforce.payslipPage = SC.Page.create({
 	  contentIconKey:  'icon',
 	  hasContentIcon: YES,
 	  backgroundColor: '#f6f6f6',
-	  contentBinding: 'Powerforce.yearsController.arrangedObjects',
-	  selectionBinding: 'Powerforce.yearsController.selection'
+	  contentBinding: 'Nvzn.yearsController.arrangedObjects',
+	  selectionBinding: 'Nvzn.yearsController.selection'
 	})
       }),
 
@@ -47,8 +47,8 @@ Powerforce.payslipPage = SC.Page.create({
 	topLeftView: SC.TableView.design({
 	  hasVerticalScroller: YES,
 	  exampleView: SC.TableRowView,
-	  contentBinding: 'Powerforce.payslipsController.arrangedObjects',
-	  selectionBinding: 'Powerforce.payslipsController.selection',
+	  contentBinding: 'Nvzn.payslipsController.arrangedObjects',
+	  selectionBinding: 'Nvzn.payslipsController.selection',
 	  columns: [
 	    SC.TableColumn.create({
 	      key:   'toString',

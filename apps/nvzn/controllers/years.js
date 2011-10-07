@@ -1,17 +1,18 @@
 // ==========================================================================
-// Project:   Powerforce.payslipsController
+// Project:   Nvzn.yearsController
 // Copyright: ©2011 My Company, Inc.
 // ==========================================================================
-/*globals Powerforce */
+/*globals Nvzn */
 
 /** @class
 
   (Document Your Controller Here)
 
-  @extends SC.ArrayController
+  @extends SC.Object
 */
-Powerforce.payslipsController = SC.ArrayController.create(
-/** @scope Powerforce.payslipsController.prototype */ {
+Nvzn.yearsController = SC.ArrayController.create(
+/** @scope Nvzn.yearsController.prototype */ {
 
+  // Dummy controller to hold data as defined in apps/nvzn/main.js
 
 }) ;

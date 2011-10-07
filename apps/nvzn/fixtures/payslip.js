@@ -1,12 +1,12 @@
 // ==========================================================================
-// Project:   Powerforce.Payslip Fixtures
+// Project:   Nvzn.Payslip Fixtures
 // Copyright: ©2011 My Company, Inc.
 // ==========================================================================
-/*globals Powerforce */
+/*globals Nvzn */
 
 sc_require('models/payslip');
 
-Powerforce.Payslip.FIXTURES = [
+Nvzn.Payslip.FIXTURES = [
 
   { guid: 'payslip-1',
     employee: 'John Smith',
