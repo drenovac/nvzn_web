@@ -1,2 +1,4 @@
 tmp/
 static/
+.idea
+.DS_Store
