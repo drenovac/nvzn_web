@@ -1,9 +1,10 @@
-::DEFAULT_APP = 'powerforce'
+::DEFAULT_APP = 'nvzn'
 ::DEFAULT_LANGUAGE = 'en'
 ::CURRENT_BUILDS = {
-  'powerforce' => File.open('VERSION') {|version| version.read}
+  'nvzn' => File.open('VERSION') {|version| version.read}
 }
 
 require './lib/static_asset'
+require './lib/api'
 
 run Sinatra::Application
