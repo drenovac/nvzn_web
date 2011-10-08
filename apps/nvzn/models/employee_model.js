@@ -1,8 +1,8 @@
 // ==========================================================================
-// Project:   Roster.Employee
+// Project:   Nvzn.Employee
 // Copyright: @2011 My Company, Inc.
 // ==========================================================================
-/*globals Roster */
+/*globals Nvzn */
 
 /** @class
 
@@ -11,13 +11,13 @@
   @extends SC.Record
   @version 0.1
 */
-Roster.Employee = SC.Record.extend(
-/** @scope Roster.Employee.prototype */ {
+Nvzn.Employee = SC.Record.extend(
+/** @scope Nvzn.Employee.prototype */ {
 
   primaryKey: 'id',
   firstName: SC.Record.attr('String', {key: 'first_name'}),
   lastName:  SC.Record.attr('String', {key: 'last_name' }),
-//  employer:  SC.Record.toOne('Roster.Customer'),
+//  employer:  SC.Record.toOne('Nvzn.Customer'),
 
   fullName: function() {
     return [this.get('firstName'), this.get('lastName')].join(" ");
@@ -26,10 +26,10 @@ Roster.Employee = SC.Record.extend(
 //  timeCards: function() {
 //    // Return a record array of all timecards of this employee
 //    return this.get('store').find(
-//      SC.Query.local('Roster.TimeCard', "employee = %@", [this])
+//      SC.Query.local('Nvzn.TimeCard', "employee = %@", [this])
 //    );
 //  }.property().cacheable()
 
-  timeCards: SC.Record.toMany('Roster.TimeCard', {nested: YES})
+  timeCards: SC.Record.toMany('Nvzn.TimeCard', {nested: YES})
 
 }) ;

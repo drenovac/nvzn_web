@@ -1,8 +1,8 @@
 // ==========================================================================
-// Project:   Roster.customerController
+// Project:   Nvzn.customerController
 // Copyright: @2011 My Company, Inc.
 // ==========================================================================
-/*globals Roster */
+/*globals Nvzn */
 
 /** @class
 
@@ -10,10 +10,10 @@
 
   @extends SC.Object
 */
-Roster.customerController = SC.ObjectController.create(
-/** @scope Roster.customerController.prototype */ {
+Nvzn.customerController = SC.ObjectController.create(
+/** @scope Nvzn.customerController.prototype */ {
 
-  contentBinding: SC.Binding.single('Roster.customersController.selection')
+  contentBinding: SC.Binding.single('Nvzn.customersController.selection')
 //  contentBindingDefault: SC.Binding.single()
 
   

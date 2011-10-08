@@ -1,8 +1,8 @@
 // ==========================================================================
-// Project:   Roster.Customer
+// Project:   Nvzn.Customer
 // Copyright: @2011 My Company, Inc.
 // ==========================================================================
-/*globals Roster */
+/*globals Nvzn */
 
 /** @class
 
@@ -11,18 +11,18 @@
   @extends SC.Record
   @version 0.1
 */
-Roster.Customer = SC.Record.extend(
-/** @scope Roster.Customer.prototype */ {
+Nvzn.Customer = SC.Record.extend(
+/** @scope Nvzn.Customer.prototype */ {
 
   name: SC.Record.attr('String'),
 
 //  employees: function() {
 //    // Return a record array of all employees of this customer
 //    return this.get('store').find(
-//      SC.Query.local('Roster.Employee', "employer = %@", [this])
+//      SC.Query.local('Nvzn.Employee', "employer = %@", [this])
 //    );
 //  }.property().cacheable()
 
-  employees: SC.Record.toMany('Roster.Employee', {nested: YES})
+  employees: SC.Record.toMany('Nvzn.Employee', {nested: YES})
 
 }) ;

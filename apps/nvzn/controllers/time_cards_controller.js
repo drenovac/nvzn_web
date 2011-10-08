@@ -1,8 +1,8 @@
 // ==========================================================================
-// Project:   Roster.timeCardsController
+// Project:   Nvzn.timeCardsController
 // Copyright: @2011 My Company, Inc.
 // ==========================================================================
-/*globals Roster */
+/*globals Nvzn */
 
 /** @class
 
@@ -10,9 +10,9 @@
 
   @extends SC.Object
 */
-Roster.timeCardsController = SC.ArrayController.create(
-/** @scope Roster.timeCardsController.prototype */ {
+Nvzn.timeCardsController = SC.ArrayController.create(
+/** @scope Nvzn.timeCardsController.prototype */ {
 
-  contentBinding: 'Roster*employeeController.timeCards'
+  contentBinding: 'Nvzn.employeeController.timeCards'
 
 }) ;

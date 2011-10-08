@@ -26,7 +26,7 @@ Nvzn.loginPage = SC.Page.design({
     errorMessage: SC.LabelView.design({
       layout: { top: 80, left: 10, height: 20, width: 230 },
       textAlign: SC.ALIGN_CENTER,
-      valueBinding: 'Nvzn.appController.errorMessage',
+      valueBinding: 'Nvzn.appController.errorMessage'
     }),
  
     loginLabel: SC.LabelView.design({

@@ -1,8 +1,8 @@
 // ==========================================================================
-// Project:   Roster.TimeCard
+// Project:   Nvzn.TimeCard
 // Copyright: @2011 My Company, Inc.
 // ==========================================================================
-/*globals Roster */
+/*globals Nvzn */
 
 /** @class
 
@@ -11,10 +11,10 @@
   @extends SC.Record
   @version 0.1
 */
-Roster.TimeCard = SC.Record.extend(
-/** @scope Roster.TimeCard.prototype */ {
+Nvzn.TimeCard = SC.Record.extend(
+/** @scope Nvzn.TimeCard.prototype */ {
 
-//  employee:  SC.Record.toOne('Roster.Employee'),
+//  employee:  SC.Record.toOne('Nvzn.Employee'),
 
   date: SC.Record.attr('String'),
   start: SC.Record.attr('String'),

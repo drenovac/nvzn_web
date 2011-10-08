@@ -1,8 +1,8 @@
 // ==========================================================================
-// Project:   Roster.employeesController
+// Project:   Nvzn.employeesController
 // Copyright: @2011 My Company, Inc.
 // ==========================================================================
-/*globals Roster */
+/*globals Nvzn */
 
 /** @class
 
@@ -10,10 +10,10 @@
 
   @extends SC.Object
 */
-Roster.employeesController = SC.ArrayController.create(
-/** @scope Roster.employeesController.prototype */ {
+Nvzn.employeesController = SC.ArrayController.create(
+/** @scope Nvzn.employeesController.prototype */ {
 
-  contentBinding: 'Roster.customerController.employees',
+  contentBinding: 'Nvzn.customerController.employees',
 
   allowsEmptySelection: NO
 

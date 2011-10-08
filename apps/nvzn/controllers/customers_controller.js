@@ -1,8 +1,8 @@
 // ==========================================================================
-// Project:   Roster.customersController
+// Project:   Nvzn.customersController
 // Copyright: @2011 My Company, Inc.
 // ==========================================================================
-/*globals Roster */
+/*globals Nvzn */
 
 /** @class
 
@@ -10,8 +10,8 @@
 
   @extends SC.Object
 */
-Roster.customersController = SC.ArrayController.create(
-/** @scope Roster.customersController.prototype */ {
+Nvzn.customersController = SC.ArrayController.create(
+/** @scope Nvzn.customersController.prototype */ {
 
   allowsEmptySelection: NO,
 
@@ -25,7 +25,7 @@ Roster.customersController = SC.ArrayController.create(
 
   loadEmployees: function(res) {
     var body = res.get('body');
-    Roster.store.pushRetrieve(Roster.Customer, body.name, body);
+    Nvzn.store.pushRetrieve(Nvzn.Customer, body.name, body);
   }
 
 }) ;
