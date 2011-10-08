@@ -4,7 +4,7 @@
 // ==========================================================================
 /*globals Nvzn module test ok equals same stop start */
 
-module("Nvzn.appController");
+module("Nvzn.loginController");
 
 // TODO: Replace with real unit test for Nvzn.appController
 test("test description", function() {

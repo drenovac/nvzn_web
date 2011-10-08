@@ -1,6 +1,8 @@
 Nvzn.mainPage = SC.Page.create({
   
   mainPane: SC.MainPane.design({
+    defaultResponder: 'Nvzn.statechart',
+
     childViews: 'header tabs'.w(),
     
     header: SC.ToolbarView.design({
@@ -19,7 +21,7 @@ Nvzn.mainPage = SC.Page.create({
         escapeHTML: NO,
         textAlign: SC.ALIGN_RIGHT,
         escapeHTML: NO,
-        value: '<a href="#mainPage/mainPane">John Smith</a>',
+        valueBinding: 'Nvzn.loginController.name',
         icon: 'sc-icon-user-16'
       }),
       
@@ -34,7 +36,6 @@ Nvzn.mainPage = SC.Page.create({
       logout:SC.ButtonView.design({
         layout: { centerY: 0, height: 24, right: 12, width: 80 },
         title: 'Logout',
-        target: 'Nvzn.appController',
         action: 'logout'
       })
       
