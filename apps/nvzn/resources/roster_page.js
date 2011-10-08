@@ -58,37 +58,23 @@ Nvzn.rosterPage = SC.Page.create({
     dividerThickness: 2,
 
     topLeftView: SC.View.design({
-      childViews: "time when place where".w(),
+      childViews: "place where".w(),
       backgroundColor: '#f6f6f6',
 
-      time:SC.LabelView.design({
-        layout:{left:10, width:140, top:10, height:24},
-        classNames: "title",
-        value: "When"
-      }),
-
-      when: SC.ListView.design({
-        layout:{top:35},
-        backgroundColor: '#f6f6f6',
-        contentIconKey:  'icon',
-        hasContentIcon: YES,
-        contentBinding: 'Nvzn.sidebarController.time',
-        selectionBinding: 'Nvzn.sidebarController.selection',
-      }),
-
       place:SC.LabelView.design({
-        layout:{left:10, width:140, top:160, height:24},
+        layout:{left:10, width:140, top:10, height:24},
         classNames: "title",
         value: "Where"
       }),
 
       where: SC.ListView.design({
-        layout:{top:185},
+        layout:{top:35},
         backgroundColor: '#f6f6f6',
-        contentIconKey:  'icon',
-        hasContentIcon: YES,
-        contentBinding: 'Nvzn.sidebarController.place',
-        selectionBinding: 'Nvzn.sidebarController.selection',
+//        contentIconKey:  'icon',
+//        hasContentIcon: YES,
+        contentValueKey: 'name',
+        contentBinding: 'Nvzn.customersController',
+        selectionBinding: 'Nvzn.customersController.selection'
       })
 
     }),
