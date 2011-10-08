@@ -9,8 +9,10 @@ Nvzn.loginPage = SC.Page.design({
  
   loginPane: SC.Pane.design({
     layout: { centerX: 0, centerY: 0, width: 450, height: 270 },
-    childViews: 'logo prompt errorMessage loginLabel loginInput passLabel passInput forgotPassLink cancelButton submitButton'.w(),
+    childViews: 'logo prompt errorMessage loginLabel loginInput passLabel passInput submitButton'.w(),
     classNames: "login",
+
+    defaultResponder: 'Nvzn.statechart',
  
     logo: SC.ImageView.design({
       layout: { width: 181, left: 25, top: 15, height: 61 },
@@ -24,9 +26,10 @@ Nvzn.loginPage = SC.Page.design({
     }),
      
     errorMessage: SC.LabelView.design({
-      layout: { top: 80, left: 10, height: 20, width: 230 },
-      textAlign: SC.ALIGN_CENTER,
-      valueBinding: 'Nvzn.appController.errorMessage'
+      layout: { top: 85, left: 10, height: 20, width: 300 },
+      classNames: ['error-message'],
+      textAlign: SC.ALIGN_RIGHT,
+      valueBinding: 'Nvzn.loginController.errorMessage'
     }),
  
     loginLabel: SC.LabelView.design({
@@ -39,8 +42,8 @@ Nvzn.loginPage = SC.Page.design({
  
     loginInput: SC.TextFieldView.design({
       layout: { left: 150, top: 110, width: 200, height: 30 },
-      hint: 'admin',
-      valueBinding: 'Nvzn.appController.loginInput'
+      hint: 'site or employee',
+      valueBinding: 'Nvzn.loginController.loginInput'
     }),
  
     passLabel: SC.LabelView.design({
@@ -53,7 +56,8 @@ Nvzn.loginPage = SC.Page.design({
  
     passInput: SC.TextFieldView.design({
       layout: { left: 150, top: 150, width: 200, height: 30 },
-      isPassword: YES,
+      valueBinding: 'Nvzn.loginController.passInput',
+      isPassword: YES,
       hint: '*******'
     }),
  
@@ -66,9 +70,9 @@ Nvzn.loginPage = SC.Page.design({
     submitButton: SC.ButtonView.design({
       layout: { left: 250, top: 220, width: 100, height: 30 },
       isDefault: YES,
-      title: 'Submit',
-      target: 'Nvzn.appController',
-      action: 'login'
+      supportFocusRing: YES,
+      title: 'Login',
+      action: 'submitLogin'
     }),
      
     cancelButton: SC.ButtonView.design({

@@ -41,6 +41,10 @@ a:hover{
   border-radius: 5px;
 }
 
+.error-message {
+  color: #ff3333;
+}
+
 /* @group toobar  */
 
 
