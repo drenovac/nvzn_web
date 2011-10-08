@@ -18,6 +18,36 @@ config = {
 
 use Rack::Deflater
 
+post '/api/v1.1/login' do
+  request.body.rewind  # in case someone already read it
+  data = JSON.parse request.body.read
+  username = data['username']
+  if username === 'site'
+    user = {
+      :status => "ok",
+      :user => {
+        :id   => 1,
+        :name => 'WESCHAT',
+        :role => 'site'
+      }
+    }
+  elsif username === 'employee'
+    user = {
+      :status => "ok",
+      :user => {
+        :id   => 3,
+        :name => 'Mr Employee',
+        :role => 'employee'
+      }
+    }
+  else
+    status 401
+    user = { :status => 'unauthorised' }
+  end
+
+  body user.to_json
+end
+
 get '/api/v1.1/site/timecards' do
 
   ActiveRecord::Base.establish_connection( config )
@@ -43,7 +73,7 @@ get '/api/v1.1/site/timecards' do
 SQL
 
   response = {
-      :name => params[:customer],
+      :name => customer,
       :employees => {}
   }
   results = connection.execute(sql)
@@ -71,8 +101,6 @@ SQL
 
   ActiveRecord::Base.clear_active_connections!
 
-  #response = '[' << response.join(",\n") << ']' # JSON output
-  #response = response.join(",\n")
   response.to_json
 
 end
