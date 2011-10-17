@@ -96,8 +96,7 @@ a:hover{
   background: none;
 }
 
-
-.toolbar {
+.nvzn.sc-toolbar-view {
   background: static_url('images/toolbar-bg.png');
 }
 .tabs .sc-segmented-view .sc-segment.sc-first-segment,
@@ -174,3 +173,11 @@ body.sc-theme .sc-view.sc-black-border {
   background-position: right center;
 }
 /* end roster page > table*/
+
+.upcoming-view {
+  background-color: #999999;
+}
+
+.upcoming-view #cal {
+  width:100%;
+}

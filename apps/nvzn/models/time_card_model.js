@@ -19,6 +19,7 @@ Nvzn.TimeCard = SC.Record.extend(
   date: SC.Record.attr('String'),
   start: SC.Record.attr('String'),
   finish: SC.Record.attr('String'),
+  customer: SC.Record.attr('String'),
 
   timeDisplay: function() {
     return this.get('start').split(" ")[1]+"-"+ this.get('finish').split(" ")[1];

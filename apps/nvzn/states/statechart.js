@@ -1,6 +1,6 @@
 Nvzn.statechart = Ki.Statechart.create({
 
-  trace: YES,
+//  trace: YES,
 
   rootState: Ki.State.design({
     initialSubstate: 'LOGIN',

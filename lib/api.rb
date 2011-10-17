@@ -90,6 +90,7 @@ SQL
     }
 
     employees[employee_id][:timeCards] << {
+      :customer => r['customer'],
       :date => r['roster_date'],
       :start => r['stime'],
       :finish => r['ftime']

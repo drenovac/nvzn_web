@@ -6,8 +6,9 @@ Nvzn.mainPage = SC.Page.create({
     childViews: 'header tabs'.w(),
     
     header: SC.ToolbarView.design({
+      theme: "nvzn",
       layout: { height: 60 },
-      classNames: 'toolbar',
+      classNames: 'header',
       childViews: 'logo greet help logout'.w(),
       anchorLocation: SC.ANCHOR_TOP,
       
