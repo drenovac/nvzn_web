@@ -13,9 +13,8 @@
 Nvzn.customerController = SC.ObjectController.create(
 /** @scope Nvzn.customerController.prototype */ {
 
-  contentBinding: SC.Binding.single('Nvzn.customersController.selection')
-//  contentBindingDefault: SC.Binding.single()
+  isCustomerController: YES,
 
-  
+  contentBinding: SC.Binding.single('Nvzn.customersController.selection')
 
 }) ;

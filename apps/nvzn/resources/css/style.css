@@ -175,7 +175,8 @@ body.sc-theme .sc-view.sc-black-border {
 /* end roster page > table*/
 
 .upcoming-view {
-  background-color: #999999;
+  background-color: #cccccc;
+  overflow: scroll;
 }
 
 .upcoming-view #cal {

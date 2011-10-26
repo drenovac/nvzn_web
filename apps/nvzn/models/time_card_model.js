@@ -22,7 +22,9 @@ Nvzn.TimeCard = SC.Record.extend(
   customer: SC.Record.attr('String'),
 
   timeDisplay: function() {
-    return this.get('start').split(" ")[1]+"-"+ this.get('finish').split(" ")[1];
+    var start = this.timeFromString('start'),
+        end   = this.timeFromString('finish');
+    return start+"-"+end ;
   }.property('start','finish'),
 
   dateObject: function() {
@@ -32,12 +34,25 @@ Nvzn.TimeCard = SC.Record.extend(
     );
   }.property('date').cacheable(),
 
+  dateString: function() {
+    return this.get('dateObject').toFormattedString("%Y-%m-%d")
+  }.property('date').cacheable(),
+
   year: function() {
     return this.get('dateObject').get('year');
   }.property('dateObject'),
 
   week: function() {
     return this.get('dateObject').get('week');
-  }.property('dateObject')
+  }.property('dateObject'),
+
+  // Helper functions
+  timeFromString: function(prop) {
+    var split = this.get(prop).split(" ");
+    if (split.length == 1) return "00:00";
+    split = split[1].split(':');
+    split.pop();
+    return split.join(':');
+  }
 
 }) ;

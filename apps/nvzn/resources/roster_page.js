@@ -41,6 +41,8 @@ var tableColumns = [
 
 Nvzn.rosterPage = SC.Page.create({
 
+  mainContentView: SC.outlet('containerView.bottomRightView'),
+
   containerView:SC.SplitView.design({
     classNames: "container-view",
     layoutDirection: SC.LAYOUT_HORIZONTAL,
@@ -82,7 +84,7 @@ Nvzn.rosterPage = SC.Page.create({
     dividerView: SC.SplitDividerView,
 
     bottomRightView: Nvzn.UpcomingView.extend({
-      contentBinding: 'Nvzn.employeesController.content'
+      contentBinding: 'Nvzn.rosterContent'
     })
 
   })// end containerView

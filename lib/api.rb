@@ -27,7 +27,7 @@ post '/api/v1.1/login' do
       :status => "ok",
       :user => {
         :id   => 1,
-        :name => 'WESCHAT',
+        :name => 'NGVI1',
         :role => 'site'
       }
     }
@@ -35,7 +35,7 @@ post '/api/v1.1/login' do
     user = {
       :status => "ok",
       :user => {
-        :id   => 3,
+        :id   => 12450,
         :name => 'Mr Employee',
         :role => 'employee'
       }
@@ -54,11 +54,11 @@ get '/api/v1.1/site/timecards' do
   connection = ActiveRecord::Base.connection
 
   #customer = params[:customer]
-  customer = 'WESCHAT'
+  customer = 'NGVI1'
   #this_monday = Date.today.monday.to_formatted_s("%d %d %Y")
   #next_friday = Date.today.next_week(:sunday).to_formatted_s("%d %d %Y")
-  this_monday = '14 FEB 2011'
-  next_friday = '20 FEB 2011'
+  this_monday = '2010-09-27'
+  next_friday = '2010-10-03'
 
   sql =<<SQL
     SELECT ROSTER_TIMECARD.roster_date, ROSTER_TIMECARD.customer, ROSTER_TIMECARD.employee,
@@ -67,10 +67,11 @@ get '/api/v1.1/site/timecards' do
           EMPLOYEE ON ROSTER_TIMECARD.employee = EMPLOYEE.employee INNER JOIN
           CNA ON ROSTER_TIMECARD.customer = CNA.code
 
-    WHERE roster_date >= '#{this_monday}' AND roster_date <= '#{next_friday}'
+    WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_friday}'
     AND  customer = '#{customer}'
     ORDER BY customer,  employee, roster_date, stime, ftime
 SQL
+  # WHERE roster_date >= '#{this_monday}' AND roster_date <= '#{next_friday}'
 
   response = {
       :name => customer,
@@ -99,6 +100,58 @@ SQL
 
   response[:employees] = employees.map {|key| key[1] }
   employees.collect
+
+  ActiveRecord::Base.clear_active_connections!
+
+  response.to_json
+
+end
+
+get '/api/v1.1/employee/timecards' do
+
+  ActiveRecord::Base.establish_connection( config )
+  connection = ActiveRecord::Base.connection
+
+  #customer = params[:customer]
+  employee = '12450'
+  #this_monday = Date.today.monday.to_formatted_s("%d %d %Y")
+  #next_friday = Date.today.next_week(:sunday).to_formatted_s("%d %d %Y")
+  this_monday = '2010-09-27'
+  next_friday = '2010-10-03'
+
+  sql =<<SQL
+    SELECT ROSTER_TIMECARD.roster_date, ROSTER_TIMECARD.customer, ROSTER_TIMECARD.employee,
+    ROSTER_TIMECARD.ftime, ROSTER_TIMECARD.stime, employee.surname, employee.first_name
+    FROM  ROSTER_TIMECARD INNER JOIN
+          EMPLOYEE ON ROSTER_TIMECARD.employee = EMPLOYEE.employee INNER JOIN
+          CNA ON ROSTER_TIMECARD.customer = CNA.code
+
+    WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_friday}'
+    AND  EMPLOYEE.EMPLOYEE = '#{employee}'
+    ORDER BY employee, customer, roster_date, stime, ftime
+SQL
+  # WHERE roster_date >= '#{this_monday}' AND roster_date <= '#{next_friday}'
+
+  response = nil
+  results = connection.execute(sql)
+  employees = {}
+
+  results.each do |r|
+
+    response ||= {
+      :first_name => r['first_name'],
+      :last_name => r['surname'],
+      :id => employee,
+      :timeCards => []
+    }
+
+    response[:timeCards] << {
+      :customer => r['customer'],
+      :date => r['roster_date'],
+      :start => r['stime'],
+      :finish => r['ftime']
+    }
+  end
 
   ActiveRecord::Base.clear_active_connections!
 
