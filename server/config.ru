@@ -4,6 +4,7 @@
   'nvzn' => File.open('VERSION') {|version| version.read}
 }
 
+require 'rubygems'
 require './lib/static_asset'
 require './lib/api'
 

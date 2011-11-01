@@ -10,7 +10,7 @@ SC.mixin(Nvzn, {
   loadSiteData: function(res) {
     var body = res.get('body');
     Nvzn.store.pushRetrieve(Nvzn.Customer, body.name, body);
-    console.log("Did Load site Data");
+//    console.log("Did Load site Data");
     Nvzn.statechart.sendEvent('dataDidLoad');
   },
 
@@ -22,7 +22,7 @@ SC.mixin(Nvzn, {
   loadEmployeeData: function(res) {
     var body = res.get('body');
     Nvzn.store.pushRetrieve(Nvzn.Employee, body.id, body);
-    console.log("Did Load employee Data");
+//    console.log("Did Load employee Data");
     Nvzn.statechart.sendEvent('dataDidLoad');
   }
 

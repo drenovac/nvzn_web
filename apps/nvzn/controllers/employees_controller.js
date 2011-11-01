@@ -15,10 +15,10 @@ Nvzn.employeesController = SC.ArrayController.create(
 
   contentBinding: 'Nvzn.customerController.employees',
 
-  allowsEmptySelection: NO,
+  allowsEmptySelection: NO
 
-  lengthDidChange: function() {
-    console.log('employees controller length did change', this.get('length'));
-  }.observes('length')
+//  lengthDidChange: function() {
+//    console.log('employees controller length did change', this.get('length'));
+//  }.observes('length')
 
 }) ;

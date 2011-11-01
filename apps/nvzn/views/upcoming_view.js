@@ -16,7 +16,7 @@ Nvzn.UpcomingView = SC.View.extend(SC.ContentDisplay,
   contentDisplayProperties: ['length', 'timeCards', 'employees'],
 
   lengthDidChange: function() {
-    console.log('upcomingView length did change', this.get('length'));
+//    console.log('upcomingView length did change', this.get('length'));
   }.observes('length'),
 
   classNames: 'upcoming-view'.w(),
@@ -140,7 +140,7 @@ Nvzn.UpcomingView = SC.View.extend(SC.ContentDisplay,
   },
 
   update: function(ctx) {
-    console.log('update!');
+//    console.log('update!');
     var content = this.get('content') || [],
         date, cards, self = this, ret = [];
     var d = SC.$('tbody').empty();
@@ -148,14 +148,14 @@ Nvzn.UpcomingView = SC.View.extend(SC.ContentDisplay,
     if (content.isCustomerController) {
       console.log('rendering Site');
       content.get('employees').forEach(function(employee) {
-        console.log('Rendering Employee', employee.get('fullName'));
+//        console.log('Rendering Employee', employee.get('fullName'));
         self.renderEmployeeRow(ret, employee);
       });
     } else if(SC.instanceOf(content, Nvzn.Employee)) {
-      console.log('rendering Employee');
+//      console.log('rendering Employee');
      self.renderTimeCards(ret, content.get('timeCards'));
     } else {
-      console.log('No Renderable Content');
+//      console.log('No Renderable Content');
 //      debugger;
     }
 
