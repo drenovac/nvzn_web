@@ -158,3 +158,7 @@ SQL
   response.to_json
 
 end
+
+get 'favicon.ico' do
+  return
+end
