@@ -5,7 +5,7 @@
 
 # Add initial buildfile information here
 config :all,
-    :required => [:sproutcore, 'sproutcore/table', 'ki'],
+    :required => [:sproutcore],
     :load_fixtures => true
 
 config :aristo_theme, :theme_name => 'aristo-theme'

@@ -1,4 +1,4 @@
-Nvzn.SHOW_LOGIN = Ki.State.design({
+Nvzn.SHOW_LOGIN = SC.State.design({
   enterState: function() {
 //    SC.routes.add(':pageName/:paneName', Nvzn.routes, 'route');
 //    SC.routes.add(':', Nvzn.routes, 'route');
@@ -17,10 +17,10 @@ Nvzn.SHOW_LOGIN = Ki.State.design({
         password = controller.get('passInput'),
         url = "/api/v1.1/login";
 
-    if (SC.empty(username) || SC.empty(password)) {
-      controller.set('errorMessage', "Please enter Login and Password.");
-      return;
-    }
+//    if (SC.empty(username) || SC.empty(password)) {
+//      controller.set('errorMessage', "Please enter Login and Password.");
+//      return;
+//    }
 
     // send to server
     controller.set('errorMessage', "Logging in ...");
@@ -41,7 +41,8 @@ Nvzn.SHOW_LOGIN = Ki.State.design({
       controller.set('content', SC.Object.create(body.user));
       this.gotoState('APP');
     } else {
-      debugger;
+//      debugger;
+      console.log("didLogin errored.");
     }
 
   }

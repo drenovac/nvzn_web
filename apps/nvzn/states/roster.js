@@ -1,4 +1,4 @@
-Nvzn.ROSTER = Ki.State.design({
+Nvzn.ROSTER = SC.State.design({
 
   initialSubstate: 'START',
 
@@ -20,9 +20,9 @@ Nvzn.ROSTER = Ki.State.design({
     
   },
 
-  START: Ki.State.design(),
+  START: SC.State.design(),
 
-  ROSTER_SITE: Ki.State.design({
+  ROSTER_SITE: SC.State.design({
     enterState: function() {
       Nvzn.getSiteData();
     },
@@ -44,7 +44,7 @@ Nvzn.ROSTER = Ki.State.design({
 
   }),
 
-  ROSTER_EMPLOYEE: Ki.State.design({
+  ROSTER_EMPLOYEE: SC.State.design({
     enterState: function() {
       Nvzn.getEmployeeData();
     },
@@ -53,10 +53,10 @@ Nvzn.ROSTER = Ki.State.design({
       var lController = Nvzn.loginController,
           id = lController.get('id');
       if ((!this._employee) || this._employee.get('id') !== id) {
-        console.log("w00t?");
+//        console.log("w00t?");
         this._employee = Nvzn.store.find(Nvzn.Employee, id);
       } else {
-        console.log("what?");
+//        console.log("what?");
       }
 
       Nvzn.set('rosterContent', this._employee);

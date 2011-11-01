@@ -1,4 +1,4 @@
-Nvzn.CHECK_LOGIN = Ki.State.design({
+Nvzn.CHECK_LOGIN = SC.State.design({
   enterState: function() {
     // TODO: Check to see if we are already logged in.
 

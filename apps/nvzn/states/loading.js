@@ -1,4 +1,4 @@
-Nvzn.LOADING = Ki.State.design({
+Nvzn.LOADING = SC.State.design({
   enterState: function() {
 
   }
