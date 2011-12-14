@@ -1,13 +1,13 @@
-Nvzn.statechart = SC.Statechart.create({
+Nvzn.statechart = Ki.Statechart.create({
 
-//  trace: YES,
+  trace: YES,
 
-  rootState: SC.State.design({
+  rootState: Ki.State.design({
     initialSubstate: 'LOGIN',
 
-    LOGIN: SC.State.plugin('Nvzn.LOGIN'),
-    LOADING: SC.State.plugin('Nvzn.LOADING'),
-    APP: SC.State.plugin('Nvzn.APP')
+    LOGIN: Ki.State.plugin('Nvzn.LOGIN'),
+    LOADING: Ki.State.plugin('Nvzn.LOADING'),
+    APP: Ki.State.plugin('Nvzn.APP')
 
   })
 });

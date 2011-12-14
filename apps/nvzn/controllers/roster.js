@@ -12,6 +12,8 @@
 */
 Nvzn.rosterController = SC.ArrayController.create(
 /** @scope Nvzn.rosterController.prototype */ {
+
+  loading: NO,
   
   sortStateDidChange: function() {
     var column = this.get('sortedColumn');
@@ -21,5 +23,10 @@ Nvzn.rosterController = SC.ArrayController.create(
     var query = SC.Query.local(Nvzn.Roster, { orderBy: column.get('key')+' '+sort });
     this.set('content', Nvzn.store.find(query));
   }.observes('*sortedColumn.sortState'),
+
+  week: 0,
+
+  startDate: null,
+  endDate: null
 
 }) ;

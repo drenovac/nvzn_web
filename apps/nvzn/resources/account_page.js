@@ -35,8 +35,8 @@ Nvzn.accountPage = SC.Page.create({
           contentIconKey:  'icon',
           hasContentIcon: YES,
           contentBinding: 'Nvzn.sidebarController.account_list',
-          selectionBinding: 'Nvzn.sidebarController.selection',
-        }),
+          selectionBinding: 'Nvzn.sidebarController.selection'
+        })
         
       }),
 
@@ -65,7 +65,8 @@ Nvzn.accountPage = SC.Page.create({
             layout: {left: 150, top: 30, width: 200, height: 30},
             hint: 'John',
             isPassword: NO,
-            isTextArea: NO
+            isTextArea: NO,
+            valueBinding: 'Nvzn.loginController.firstName'
           }),
 
           last_name: SC.LabelView.design({
@@ -80,7 +81,8 @@ Nvzn.accountPage = SC.Page.create({
             layout: {left: 150, top: 90, width: 200, height: 30},
             hint: 'Smith',
             isPassword: NO,
-            isTextArea: NO
+            isTextArea: NO,
+            valueBinding: 'Nvzn.loginController.lastName'
           }),
 
           password: SC.LabelView.design({
@@ -95,7 +97,8 @@ Nvzn.accountPage = SC.Page.create({
             layout: {left: 150, top: 150, width: 200, height: 30},
             hint: '*******',
             isPassword: YES,
-            isTextArea: NO
+            isTextArea: NO,
+            valueBinding: 'Nvzn.loginController.password'
           }),
 
           contact: SC.LabelView.design({
@@ -110,7 +113,8 @@ Nvzn.accountPage = SC.Page.create({
             layout: {left: 150, top: 210, width: 200, height: 30},
             hint: '0429736182',
             isPassword: YES,
-            isTextArea: NO
+            isTextArea: NO,
+            valueBinding: 'Nvzn.loginController.phone'
           }),
 
           email: SC.LabelView.design({
@@ -125,7 +129,8 @@ Nvzn.accountPage = SC.Page.create({
             layout: {left: 150, top: 270, width: 200, height: 30},
             hint: 'john.smith@js.com',
             isPassword: YES,
-            isTextArea: NO
+            isTextArea: NO,
+            valueBinding: 'Nvzn.loginController.email'
           }),
 
           cancel: SC.ButtonView.design({

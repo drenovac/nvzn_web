@@ -1,3 +1,5 @@
+/* @override http://localhost:4020/static/nvzn/en/current/stylesheet.css?1320741065 */
+
 /*
   Outline:
   1. class
@@ -10,9 +12,12 @@
 body.sc-theme,
 body.sc-theme > .sc-pane.sc-main{ 
   overflow: hidden;
-  background: #000 static_url('images/login-bg.png') repeat-x;
+  color: black;
 }
 
+body {
+
+}
 
 /* Overall style */
 a{
@@ -96,7 +101,7 @@ a:hover{
   background: none;
 }
 
-.nvzn.sc-toolbar-view {
+.sc-toolbar-view {
   background: static_url('images/toolbar-bg.png');
 }
 .tabs .sc-segmented-view .sc-segment.sc-first-segment,
@@ -179,6 +184,78 @@ body.sc-theme .sc-view.sc-black-border {
   overflow: scroll;
 }
 
-.upcoming-view #cal {
-  width:100%;
+.upcoming-view table {
+  width:98%;
+  margin-left: auto;
+  margin-right: auto;
+  border:1px solid orange;
+}
+
+.upcoming-view table, .upcoming-view td, .upcoming-view th {
+  
+  border-style: none;
+  border-collapse:collapse;
+}
+.upcoming-view col {
+  border-right: 1px solid #f1f1f1;
+}
+
+.upcoming-view col.day {
+  width: 11%;
+}
+.upcoming-view tr.odd {
+  background-color: rgba(255,255,255,0.5);
+}
+.upcoming-view tr:hover {
+  background-color: rgba(225, 255, 224, 0.46);
+}
+.upcoming-view td {
+  padding: 4px 0;
+}
+
+.upcoming-view td.name {
+  text-transform:capitalize;
+  padding-left: 6px;
+  cursor: pointer;
+}
+
+.upcoming-view .day {
+  text-align:center
+}
+.upcoming-view .day div {
+  cursor: pointer;
+ }
+
+.info {
+  background-color: #e6e6e6;
+  font-size: 150%;
+}
+.info ul {
+  margin-top: 16px;
+  margin-left: 16px;
+}
+.info ul li {
+  list-style: none;
+}
+.info ul label{
+  width: 70px;
+  margin-right: 16px;
+  display: inline-block;
+  color: grey;
+  text-shadow: 0px 1px 1px white;
+}
+/******** ICONS ********/
+.when {
+  background: static_url('images/clock.png') no-repeat;
+  background-size: 16px 16px;
+}
+
+.flag-yellow {
+  background: static_url('images/flag_yellow.png') no-repeat;
+  background-size: 16px 16px;
+}
+
+.person-16 {
+  background: static_url('images/person.png') no-repeat;
+  background-size: 16px 16px;
 }

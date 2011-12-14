@@ -13,6 +13,10 @@ Nvzn.loginPage = SC.Page.design({
     classNames: "login",
 
     defaultResponder: 'Nvzn.statechart',
+
+    focusFrom: function(pane) {
+      console.log('loginPane FocusFrom', pane);
+    },
  
     logo: SC.ImageView.design({
       layout: { width: 181, left: 25, top: 15, height: 61 },
@@ -42,6 +46,7 @@ Nvzn.loginPage = SC.Page.design({
  
     loginInput: SC.TextFieldView.design({
       layout: { left: 150, top: 110, width: 200, height: 30 },
+      applyImmediately: YES,
       hint: 'site or employee',
       valueBinding: 'Nvzn.loginController.loginInput'
     }),
@@ -56,6 +61,7 @@ Nvzn.loginPage = SC.Page.design({
  
     passInput: SC.TextFieldView.design({
       layout: { left: 150, top: 150, width: 200, height: 30 },
+      applyImmediately: YES,
       valueBinding: 'Nvzn.loginController.passInput',
       isPassword: YES,
       hint: '*******'
@@ -68,7 +74,7 @@ Nvzn.loginPage = SC.Page.design({
     }),
  
     submitButton: SC.ButtonView.design({
-      layout: { left: 250, top: 220, width: 100, height: 30 },
+      layout: { left: 250, top: 220, width: 100, height: 24 },
       isDefault: YES,
       supportFocusRing: YES,
       title: 'Login',
@@ -76,7 +82,7 @@ Nvzn.loginPage = SC.Page.design({
     }),
      
     cancelButton: SC.ButtonView.design({
-      layout: {left: 90, top: 220, width: 100, height: 30},
+      layout: {left: 90, top: 220, width: 100, height: 24},
       title: 'Cancel'
     })
   })

@@ -1,20 +1,31 @@
-Nvzn.CHECK_LOGIN = SC.State.design({
+Nvzn.CHECK_LOGIN = Ki.State.design({
   enterState: function() {
-    // TODO: Check to see if we are already logged in.
+    SC.Request.getUrl('/api/v1.1/login').json().notify(this, 'checkedLogin').send();
 
-    // For now, just say we're not logged in:
-    this.gotoState('SHOW_LOGIN');
+  },
 
-//    var controller = Nvzn.loginController;
-//    controller.set('content', SC.Object.create({
-//      "id":12450,
-//      "first_name": "EDDIN",
-//      "last_name": "BARROW",
-//      "name": "EDDIN BARROW",
-//      "role":"employee"
-//    }));
-//    this.gotoState('APP');
+  checkedLogin: function(req) {
+    if(SC.ok(req)) {
+      var controller = Nvzn.loginController,
+          body = req.get('body');
+      if (req.status === 401) {
+        this.gotoState('SHOW_LOGIN');
+      } else {
+        if (body.user) {
+          controller.set('content', SC.Object.create(body.user));
+          this.gotoState('APP');
+        } else {
+          throw "Login error";
+        }
+      }
+    } else {
+      if (req.status === 401) {
+        this.gotoState('SHOW_LOGIN');
+      } else {
+        throw req.error;
+      }
 
+    }
   },
 
   loadUser: function() {

@@ -1,5 +1,5 @@
 // ==========================================================================
-// Project:   Nvzn.customersController
+// Project:   Nvzn.siteController
 // Copyright: @2011 My Company, Inc.
 // ==========================================================================
 /*globals Nvzn */
@@ -10,10 +10,9 @@
 
   @extends SC.Object
 */
-Nvzn.customersController = SC.ArrayController.create(
-/** @scope Nvzn.customersController.prototype */ {
+Nvzn.siteController = SC.ObjectController.create(
+/** @scope Nvzn.siteController.prototype */ {
 
-  allowsEmptySelection: NO,
-  allowsMultipleSelection: YES
+  // TODO: Add your own code here.
 
 }) ;

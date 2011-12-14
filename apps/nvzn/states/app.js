@@ -1,4 +1,4 @@
-Nvzn.APP = SC.State.design({
+Nvzn.APP = Ki.State.design({
 
   initialSubstate: 'ROSTER',
 
@@ -7,5 +7,5 @@ Nvzn.APP = SC.State.design({
     Nvzn.getPath('mainPage.mainPane').append() ;
   },
 
-  ROSTER: SC.State.plugin('Nvzn.ROSTER')
+  ROSTER: Ki.State.plugin('Nvzn.ROSTER')
 });

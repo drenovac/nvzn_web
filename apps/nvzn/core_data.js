@@ -1,9 +1,10 @@
 SC.mixin(Nvzn, {
 
-  getSiteData: function(){
+  getSiteData: function(week){
 //    var customer = this.getPath('selection.firstObject'),
 //        url = "/api/v1.1/site/%@/timecards".fmt(customer.get('name'));
-    var url = "/api/v1.1/site/timecards";
+    var week = Nvzn.rosterController.get('week'),
+        url = ("/api/v1.1/site/timecards"+ (week ? "?week="+week : ""));
     SC.Request.getUrl(url).notify(this, 'loadSiteData').json().send();
   },
 

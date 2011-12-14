@@ -14,6 +14,7 @@
 Nvzn.Customer = SC.Record.extend(
 /** @scope Nvzn.Customer.prototype */ {
 
+  primaryKey: 'name',
   name: SC.Record.attr('String'),
 
 //  employees: function() {

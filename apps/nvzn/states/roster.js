@@ -1,4 +1,4 @@
-Nvzn.ROSTER = SC.State.design({
+Nvzn.ROSTER = Ki.State.design({
 
   initialSubstate: 'START',
 
@@ -20,10 +20,11 @@ Nvzn.ROSTER = SC.State.design({
     
   },
 
-  START: SC.State.design(),
+  START: Ki.State.design(),
 
-  ROSTER_SITE: SC.State.design({
+  ROSTER_SITE: Ki.State.design({
     enterState: function() {
+      Nvzn.rosterController.set('loading', YES);
       Nvzn.getSiteData();
     },
 
@@ -32,19 +33,28 @@ Nvzn.ROSTER = SC.State.design({
         this._customers = Nvzn.store.find(Nvzn.Customer);
         Nvzn.customersController.set('content', this._customers);
       }
-      var view = Nvzn.rosterPage.get('mainContentView');
-      var bindings = view.bindings.filterProperty("_toPropertyPath", 'content');
-//      bindings.forEach(function(b) {
-//        b.disconnect();
-//        bindings.removeObject(b);
-//      });
-//      view.bind('content', Nvzn.employeesController, 'content');
+//      var view = Nvzn.rosterPage.get('mainContentView');
+//      var bindings = view.bindings.filterProperty("_toPropertyPath", 'content');
+
       Nvzn.set('rosterContent', Nvzn.customerController);
+      Nvzn.rosterController.set('loading', NO);
+    },
+
+    prev_week: function(){
+      Nvzn.rosterController.set('loading', YES);
+      Nvzn.rosterController.decrementProperty('week');
+      Nvzn.getSiteData();
+    },
+
+    next_week: function() {
+      Nvzn.rosterController.set('loading', YES);
+      Nvzn.rosterController.incrementProperty('week');
+      Nvzn.getSiteData();
     }
 
   }),
 
-  ROSTER_EMPLOYEE: SC.State.design({
+  ROSTER_EMPLOYEE: Ki.State.design({
     enterState: function() {
       Nvzn.getEmployeeData();
     },

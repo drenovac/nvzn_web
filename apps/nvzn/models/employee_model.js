@@ -17,10 +17,12 @@ Nvzn.Employee = SC.Record.extend(
   primaryKey: 'id',
   firstName: SC.Record.attr('String', {key: 'first_name'}),
   lastName:  SC.Record.attr('String', {key: 'last_name' }),
-//  employer:  SC.Record.toOne('Nvzn.Customer'),
+  contactNumbers: SC.Record.attr('Array', {key: 'contact_numbers' }),
+  address: SC.Record.attr('String'),
+  photoPath: SC.Record.attr('String', {key: 'photo_path'}),
 
   fullName: function() {
-    return [this.get('firstName'), this.get('lastName')].join(" ");
+    return [this.get('firstName'), this.get('lastName')].join(" ").titleize();
   }.property('firstName', 'lastName').cacheable(),
 
 //  timeCards: function() {
