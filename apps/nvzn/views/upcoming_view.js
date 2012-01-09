@@ -43,6 +43,13 @@ Nvzn.UpcomingView = SC.View.extend(SC.ContentDisplay,
   daysToShow: 7,
 
   render: function(ctx, firstTime) {
+
+//    var content = this.get('content');
+//    if (!content || (content.isCustomerController && !content.content)) {
+//      ctx.push("No Data");
+//      return;
+//    }
+
     if (firstTime) {
       ctx.push(
         "<table id='cal'>",
@@ -161,7 +168,7 @@ Nvzn.UpcomingView = SC.View.extend(SC.ContentDisplay,
     ctx.push("</tr>");
   },
 
-    updateRows: function(ctx) {
+  updateRows: function(ctx) {
 //    console.log('update!');
     var content = this.get('content') || [],
         self = this, ret = [];
@@ -169,7 +176,16 @@ Nvzn.UpcomingView = SC.View.extend(SC.ContentDisplay,
     
     if (content.isCustomerController) {
       console.log('rendering Site');
-      content.get('employees').forEach(function(employee, idx) {
+      var employees = content.get('employees');
+      if (!employees) {
+        d.append("Loading data...");
+        return;
+      }
+      if (employees.get('length') === 0) {
+        d.append("No Timecards for this period.");
+        return;
+      }
+      employees.forEach(function(employee, idx) {
 //        console.log('Rendering Employee', employee.get('fullName'));
         self.renderEmployeeRow(ret, employee, idx % 2);
       });

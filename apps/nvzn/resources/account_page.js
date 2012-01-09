@@ -112,7 +112,7 @@ Nvzn.accountPage = SC.Page.create({
           contact_input: SC.TextFieldView.design({
             layout: {left: 150, top: 210, width: 200, height: 30},
             hint: '0429736182',
-            isPassword: YES,
+            isPassword: NO,
             isTextArea: NO,
             valueBinding: 'Nvzn.loginController.phone'
           }),
@@ -128,7 +128,7 @@ Nvzn.accountPage = SC.Page.create({
           email_input: SC.TextFieldView.design({
             layout: {left: 150, top: 270, width: 200, height: 30},
             hint: 'john.smith@js.com',
-            isPassword: YES,
+            isPassword: NO,
             isTextArea: NO,
             valueBinding: 'Nvzn.loginController.email'
           }),

@@ -20,39 +20,24 @@ Nvzn.ROSTER = Ki.State.design({
     
   },
 
+  customerSelectionChanged: function() {
+    var sel = Nvzn.customersController.get('selection');
+    if (!sel) return;
+
+    var customerId = sel.firstObject(),
+      customer = Nvzn.store.find(Nvzn.Customer, customerId);
+    console.log(customerId);
+    if (customer) {
+      Nvzn.customerController.set('content', customer);
+    } else {
+      Nvzn.customerController.set('content', null);
+      Nvzn.getSiteData(customerId);
+    }
+  },
+
   START: Ki.State.design(),
 
-  ROSTER_SITE: Ki.State.design({
-    enterState: function() {
-      Nvzn.rosterController.set('loading', YES);
-      Nvzn.getSiteData();
-    },
-
-    dataDidLoad: function() {
-      if (Nvzn.customersController.get('length') === 0){
-        this._customers = Nvzn.store.find(Nvzn.Customer);
-        Nvzn.customersController.set('content', this._customers);
-      }
-//      var view = Nvzn.rosterPage.get('mainContentView');
-//      var bindings = view.bindings.filterProperty("_toPropertyPath", 'content');
-
-      Nvzn.set('rosterContent', Nvzn.customerController);
-      Nvzn.rosterController.set('loading', NO);
-    },
-
-    prev_week: function(){
-      Nvzn.rosterController.set('loading', YES);
-      Nvzn.rosterController.decrementProperty('week');
-      Nvzn.getSiteData();
-    },
-
-    next_week: function() {
-      Nvzn.rosterController.set('loading', YES);
-      Nvzn.rosterController.incrementProperty('week');
-      Nvzn.getSiteData();
-    }
-
-  }),
+  ROSTER_SITE: Ki.State.plugin('Nvzn.ROSTER_SITE'),
 
   ROSTER_EMPLOYEE: Ki.State.design({
     enterState: function() {

@@ -5,9 +5,12 @@
 
 # Add initial buildfile information here
 config :all,
-    :required => [:sproutcore],
+    :required => [:sproutcore, :ki],
     :load_fixtures => true
 
 config :aristo_theme, :theme_name => 'aristo-theme'
 
-proxy '/api', :to => 'localhost:9292'
+#server = "localhost:9292"
+server = "www.roster-me.com.au:9292"
+
+proxy '/api', :to => server

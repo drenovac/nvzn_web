@@ -14,7 +14,7 @@ Nvzn.mainPage = SC.Page.create({
       
       logo: SC.ImageView.design({
 	      layout: { width: 200, left: 10 },
-        value: sc_static('images/toolbar-logo.png')
+        value: sc_static('images/envizion-logo.png')
       }),
       
       greet:SC.LabelView.design({
@@ -22,7 +22,7 @@ Nvzn.mainPage = SC.Page.create({
         escapeHTML: NO,
         textAlign: SC.ALIGN_RIGHT,
         escapeHTML: NO,
-        valueBinding: 'Nvzn.loginController.name',
+        valueBinding: 'Nvzn.loginController.fullName',
         icon: 'sc-icon-user-16'
       }),
       
@@ -56,12 +56,12 @@ Nvzn.mainPage = SC.Page.create({
           value: "Nvzn.rosterPage.containerView",
           icon: sc_static("images/icons/briefcase.png")
         },
-        { 
-          classNames: 'menu',
-          title: "Payslip", 
-          value: "Nvzn.payslipPage.mainView",
-          icon: sc_static("images/icons/payslips.png")
-        },
+//        {
+//          classNames: 'menu',
+//          title: "Payslip",
+//          value: "Nvzn.payslipPage.mainView",
+//          icon: sc_static("images/icons/payslips.png")
+//        },
         { 
           classNames: 'menu',
           title: "Account", 

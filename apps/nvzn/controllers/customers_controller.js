@@ -13,7 +13,12 @@
 Nvzn.customersController = SC.ArrayController.create(
 /** @scope Nvzn.customersController.prototype */ {
 
+  contentBinding: 'Nvzn.loginController.customers',
   allowsEmptySelection: NO,
-  allowsMultipleSelection: YES
+  allowsMultipleSelection: YES,
+
+  selectionDidChange: function() {
+    Nvzn.statechart.sendEvent('customerSelectionChanged');
+  }.observes('selection')
 
 }) ;

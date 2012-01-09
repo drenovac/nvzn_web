@@ -41,10 +41,8 @@ Nvzn.SHOW_LOGIN = Ki.State.design({
     }
     
     if (body.user) {
-      controller.set('content', SC.Object.create(body.user));
-      this.gotoState('APP');
+      this.statechart.sendEvent('loggedIn', body.user);
     } else {
-//      debugger;
       console.log("didLogin errored.");
     }
 

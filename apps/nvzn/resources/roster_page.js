@@ -18,7 +18,7 @@ Nvzn.rosterPage = SC.Page.create({
     dividerView:SC.SplitDividerView,
 
     topLeftView: SC.View.design({
-      childViews: "when loading prev next place where".w(),
+      childViews: "when loading prev next weekEnding place where".w(),
       backgroundColor: '#f6f6f6',
 
       when: SC.LabelView.design({
@@ -50,19 +50,28 @@ Nvzn.rosterPage = SC.Page.create({
         action: 'next_week'
       }),
 
+      weekEnding: SC.LabelView.design({
+        layout: {left:10, right:10, top: 80, height:24},
+        isVisibleBinding: SC.Binding.not('Nvzn.rosterController.loading'),
+        valueBinding: SC.Binding.from('Nvzn.customerController.finish')
+          .transform(function(value) {
+            return "Week ending "+value;
+          })
+      }),
+
       place:SC.LabelView.design({
-        layout:{left:10, width:140, top:90, height:24},
+        layout:{left:10, width:150, top:100, height:24},
         classNames: "title",
         value: "Where",
         icon: 'flag-yellow'
       }),
 
       where: SC.ListView.design({
-        layout:{top:115},
+        layout:{top:135},
         backgroundColor: '#f6f6f6',
 //        contentIconKey:  'icon',
 //        hasContentIcon: YES,
-        contentValueKey: 'name',
+//        contentValueKey: 'name',
         contentBinding: 'Nvzn.customersController',
         selectionBinding: 'Nvzn.customersController.selection'
       })
