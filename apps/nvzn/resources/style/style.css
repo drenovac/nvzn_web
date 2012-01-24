@@ -1,0 +1,303 @@
+.sc-main {
+  background: #C0C0C0;
+}
+
+.sidebar {
+  background-image: static_url('resources/image/envizion-logo.png');
+  background-repeat: no-repeat;
+  background-position: 5px 10px;
+}
+
+.sidebar-calendar-today-button, .sidebar-jobs-edit {
+  text-align: right;
+  
+  border: 0px none;
+  color: #555;
+  text-shadow: white 0px 1px 1px;
+}
+
+.sidebar-calendar-header, .sidebar-jobs-header {
+  font-weight: bold;
+  color: #222;
+}
+
+.sidebar-jobs-list-item.sel {
+  background: #b81237 !important;
+  text-shadow: black 0px 1px 1px;
+  color: white !important; 
+}
+
+.sidebar-jobs-item-number, .sidebar-jobs-item-name, .header-project-name, .header-project-number, .date-value {
+  position: absolute;
+  font-weight: bold;
+  line-height: 31px;
+}
+  
+.sidebar-jobs-item-number, .header-project-number, .date-value {
+  font-size: 14px;
+  left: 13px;
+}
+
+.sidebar-jobs-item-name, .header-project-name {
+  position: absolute;
+  left: 75px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  right: 20px;
+  color: #333;
+  font-weight: normal;
+}
+  .sel .sidebar-jobs-item-name {
+    color: white;
+    font-weight: bold;
+  }
+  
+  .header-project-name {
+    font-size: 14px;
+    font-weight: 300 !important;
+  }
+  
+.page .main {
+  background: static_url('resources/image/paper1.png') top left no-repeat #f8f8f8;
+}
+
+.page-shadow div {
+  position: absolute;
+  background-image: static_url('resources/image/shadow.png');
+}
+  .page-shadow * {
+    opacity: .5;
+  }
+
+  .page-shadow .top-left {
+    top: 0px;
+    left: 0px;
+    width: 29px;
+    height: 29px;
+    background-position: 0px 0px;
+  }
+  
+  .page-shadow .top-right {
+    top: 0px;
+    right: 0px;
+    width: 29px;
+    height: 29px;
+    background-position: -31px 0px;
+  }
+  
+  .page-shadow .bottom-left {
+    bottom: 0px;
+    left: 0px;
+    width: 29px;
+    height: 29px;
+    background-position: 0px -30px;
+  }
+  
+  .page-shadow .bottom-right {
+    bottom: 0px;
+    right: 0px;
+    width: 29px;
+    height: 29px;
+    background-position: -31px -30px;
+  }
+
+  .page-shadow .top {
+    top: 0px;
+    left: 29px;
+    height: 29px;
+    right: 29px;
+    background-position: 0px -119px;
+    background-repeat: repeat-x;
+  }
+  
+  .page-shadow .bottom {
+    bottom: 0px;
+    left: 29px;
+    height: 29px;
+    right: 29px;
+    background-position: 0px -64px;
+    background-repeat: repeat-x;
+  }
+
+  .page-shadow .left {
+    top: 29px;
+    left: 0px;
+    width: 29px;
+    bottom: 29px;
+    background-position: 2px 0px;
+    background-repeat: repeat-y;
+    background-image: static_url('resources/image/shadow2.png');
+  }
+  
+  .page-shadow .right {
+    top: 29px;
+    right: 0px;
+    width: 29px;
+    bottom: 29px;
+    background-position: -30px 0px;
+    background-repeat: repeat-y;
+    background-image: static_url('resources/image/shadow2.png');
+  }
+  
+.page-header {
+  background: static_url('resources/image/paper2.png') 11px right no-repeat;
+}  
+  
+.page-header .label {
+  font-size: 14px;
+  color: #808080;
+  text-align: right;
+}
+
+.page-header .weather-radio .button {
+  display: none;
+}
+
+.page-header .weather-radio .sc-radio-button {
+  padding: 3px 7px;
+  padding-left: 7px !important;
+  padding-right: 7px !important;
+  margin-right: 0px !important;
+  color: #333;
+}
+
+  .page-header .weather-radio .sc-radio-button.sel {
+    background-color: #a8a8a8;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    color: white;
+  }
+
+.page-header .weather-radio .sc-button-label {
+  font-size: 14px !important;
+}
+
+.page-header .search {
+  background: transparent !important;
+  outline: none !important;
+  border: 0px !important;
+}
+
+.page-header .search .border {
+  right: 14px !important;
+  -webkit-appearance: none !important;
+  background: static_url('resources/image/search-left.png') no-repeat top left;
+  outline: none !important;
+  border: 0px !important;
+}
+
+.page-header .search .padding {
+  -webkit-appearance: none !important;
+  background: static_url('resources/image/search-right.png') no-repeat top right;
+  padding-right: 14px !important;
+  border: 0px !important;
+}
+
+.page-header .search input {
+  right: 11px !important;
+  left: 20px !important;
+  width: auto !important;
+  outline: none !important;
+  line-height: 22px !important;
+}
+
+.page .well {
+  border: 0px !important;
+}
+
+.page .sc-tab-view .sc-segmented-view {
+  background: static_url('resources/image/tab-shadow.png');
+  text-align: left !important;
+  padding-left: 25px !important;
+}
+
+.page .sc-tab-view .sc-segment-view {
+  height: 44px !important;
+}
+
+.page .sc-tab-view .sc-segmented-view label {
+  font-size: 12px !important;
+  line-height: 44px !important;
+  color: #7A7A7A;
+}
+
+.page .sc-tab-view .sc-segmented-view .sel label {
+  color: #333 !important;
+/*  font-weight: bold !important;*/
+  text-shadow: none !important;
+}
+
+
+.page .sc-tab-view .sc-segmented-view * {
+  background-image: none !important;
+}
+
+.page .sc-tab-view .indicator {
+  background: static_url('resources/image/tab-arrow.png');
+}
+
+.page .sc-tab-view label {
+  padding: 4px !important;
+}
+
+  .page .sc-tab-view .sc-segment-view:hover label {
+    background-color: #D0D0D0;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+  }
+  
+    .page .sc-tab-view .sc-segment-view.sel:hover label {
+      background-color: transparent;
+      border-radius: 4px;
+      -moz-border-radius: 4px;
+      -webkit-border-radius: 4px;
+    }
+    
+.autofillButton .right {
+  background-image: static_url('resources/image/autofill-div.png') !important;
+  background-repeat: no-repeat;
+}
+
+.autofillCalendarButton .left {
+  display: none !important;
+}
+
+.autofillCalendarButton label {
+  background: static_url('/resources/image/autofill-icon.png') no-repeat center 5px;
+}
+
+.username-sheet .top-left-edge {
+  display: none;
+}
+.username-sheet .top-edge {
+  display: none;
+}
+.username-sheet .top-right-edge {
+  display: none;
+}
+.username-sheet .right-edge {
+  display: none;
+}
+.username-sheet .bottom-right-edge {
+  display: none;
+}
+.username-sheet .bottom-edge {
+  display: none;
+}
+.username-sheet .bottom-left-edge {
+  display: none;
+}
+.username-sheet .left-edge {
+  display: none;
+}
+
+.loading-spinner {
+  background-image: static_url('spinner-black');
+}
+
+.dashboard-cell.day {
+  width: 11%;
+}

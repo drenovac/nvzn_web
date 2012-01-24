@@ -22,7 +22,26 @@ Nvzn = SC.Application.create(
   // to any fixtures you define.
   store: SC.Store.create().from(SC.Record.fixtures),
   
-  rosterContent: null
+  rosterContent: null,
+
+//  selectedDate: SC.DateTime.create(),
+  selectedDate:SC.DateTime.create({ year:2010, month:10, day:31 }),
+
+    selectedWeekDidChange: function() {
+    if (Nvzn.didChangeFor('core', 'selectedWeek')) {
+      Nvzn.statechart.sendEvent('selectedNewDay');
+    }
+  }.observes('selectedWeek'),
+
+  weekEnding: function() {
+     return Nvzn.weekEndingFor(this.get('selectedDate'));
+  }.property('selectedDate').cacheable(),
+
+  selectedWeek: function() {
+    var date = this.get('selectedDate');
+    return date.get('week0');
+  }.property('selectedDate').cacheable()
+
 
 }) ;
 

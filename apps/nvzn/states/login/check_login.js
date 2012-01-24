@@ -21,7 +21,7 @@ Nvzn.CHECK_LOGIN = Ki.State.design({
       if (req.status === 401) {
         this.gotoState('SHOW_LOGIN');
       } else {
-        throw req.error;
+        console.error(req.error);
       }
 
     }

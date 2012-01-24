@@ -4,11 +4,11 @@
 # ===========================================================================
 
 # Add initial buildfile information here
-config :all,
-    :required => [:sproutcore, :ki],
+config :nvzn,
+    :required => [:sproutcore, :"more_cowbell", :ki, :tableview, :calendar],
+    :theme => 'sproutcore/ace',
     :load_fixtures => true
 
-config :aristo_theme, :theme_name => 'aristo-theme'
 
 #server = "localhost:9292"
 server = "www.roster-me.com.au:9292"

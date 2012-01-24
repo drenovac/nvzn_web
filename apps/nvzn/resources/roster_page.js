@@ -30,7 +30,7 @@ Nvzn.rosterPage = SC.Page.create({
 
       loading: SC.ImageView.design({
         layout: {top: 10, right: 15, width: 16, height: 16},
-        value: static_url('images/loading-spinner.gif'),
+        value: static_url('image/loading-spinner.gif'),
         isVisibleBinding: 'Nvzn.rosterController.loading'
       }),
 
@@ -38,7 +38,7 @@ Nvzn.rosterPage = SC.Page.create({
         layout: {left: 5, top: 45, width: 75 },
         title: "Prev",
         isEnabledBinding: SC.Binding.not('Nvzn.rosterController.loading'),
-        icon: static_url('images/up.png'),
+        icon: static_url('image/up.png'),
         action: 'prev_week'
       }),
 
@@ -46,7 +46,7 @@ Nvzn.rosterPage = SC.Page.create({
         layout: {right: 5, top: 45, width: 75 },
         title: "Next",
         isEnabledBinding: SC.Binding.not('Nvzn.rosterController.loading'),
-        icon: static_url('images/down.png'),
+        icon: static_url('image/down.png'),
         action: 'next_week'
       }),
 

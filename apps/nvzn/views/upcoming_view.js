@@ -189,13 +189,11 @@ Nvzn.UpcomingView = SC.View.extend(SC.ContentDisplay,
 //        console.log('Rendering Employee', employee.get('fullName'));
         self.renderEmployeeRow(ret, employee, idx % 2);
       });
-//      debugger;
     } else if(SC.instanceOf(content, Nvzn.Employee)) {
 //      console.log('rendering Employee');
      self.renderTimeCards(ret, content.get('timeCards'));
     } else {
 //      console.log('No Renderable Content');
-//      debugger;
     }
 
     d.append(ret.join(''));

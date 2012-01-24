@@ -6,11 +6,13 @@ Nvzn.ROSTER_SITE = Ki.State.design({
   LOADING_SITE: Ki.State.design({
     enterState: function() {
       Nvzn.rosterController.set('loading', YES);
+      Nvzn.loadingSheet.append();
       Nvzn.getSiteData();
     },
 
     exitState: function() {
       Nvzn.rosterController.set('loading', NO);
+      Nvzn.loadingSheet.remove();
     },
 
     dataDidLoad: function() {
@@ -28,14 +30,12 @@ Nvzn.ROSTER_SITE = Ki.State.design({
 
   SHOWING_SITE: Ki.State.design({
 
-    prev_week: function(){
-      Nvzn.rosterController.decrementProperty('week');
-      this.gotoState('LOADING_SITE')
+    selectedNewDay: function() {
+      this.gotoState('LOADING_SITE');
     },
 
-    next_week: function() {
-      Nvzn.rosterController.incrementProperty('week');
-      this.gotoState('LOADING_SITE')
+    customerSelectionChanged: function() {
+      this.gotoState('LOADING_SITE');
     }
   })
 });

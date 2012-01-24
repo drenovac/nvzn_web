@@ -8,6 +8,10 @@ Nvzn.ROSTER = Ki.State.design({
 
     SC.routes.set('location', "mainPage/mainPane");
 
+    window.setTimeout(function() {
+      Nvzn.mainPage.mainPane.get('calendar').resetToSelectedDate()
+    }, 100);
+
     if (role === 'site') {
       this.gotoState(this.ROSTER_SITE)
     } else {
@@ -26,7 +30,6 @@ Nvzn.ROSTER = Ki.State.design({
 
     var customerId = sel.firstObject(),
       customer = Nvzn.store.find(Nvzn.Customer, customerId);
-    console.log(customerId);
     if (customer) {
       Nvzn.customerController.set('content', customer);
     } else {
@@ -48,10 +51,7 @@ Nvzn.ROSTER = Ki.State.design({
       var lController = Nvzn.loginController,
           id = lController.get('id');
       if ((!this._employee) || this._employee.get('id') !== id) {
-//        console.log("w00t?");
         this._employee = Nvzn.store.find(Nvzn.Employee, id);
-      } else {
-//        console.log("what?");
       }
 
       Nvzn.set('rosterContent', this._employee);

@@ -20,7 +20,6 @@ Nvzn.customerController = SC.ObjectController.create(
 //  selectionDidChange: function() {
 //    var customerId = this.get('selection'),
 //        customer = Nvzn.store.find(Nvzn.Customer, customerId);
-////    debugger;
 //    console.log(customerId);
 //    console.log(Nvzn.customerController.get('selection'));
 //    if (customer) {

@@ -32,7 +32,6 @@ Nvzn.InfoView = SC.View.extend(SC.ContentDisplay,
       this.renderEmployee(ctx, firstTime, record);
     } else {
       console.log("Found unknown type");
-//      debugger;
     }
   },
 

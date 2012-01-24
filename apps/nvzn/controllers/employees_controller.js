@@ -17,8 +17,5 @@ Nvzn.employeesController = SC.ArrayController.create(
 
   allowsEmptySelection: NO
 
-//  lengthDidChange: function() {
-//    console.log('employees controller length did change', this.get('length'));
-//  }.observes('length')
 
 }) ;

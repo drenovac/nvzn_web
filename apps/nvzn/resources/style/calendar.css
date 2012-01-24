@@ -1,0 +1,145 @@
+
+/* Calendar
+---------------------------------------------- */
+
+/* Reset */
+
+.sc-pane.scui-calendar > .sc-view {
+  border: 0;
+  background: none;
+}
+
+/* Header */
+
+.scui-calendar .header {
+  width: 204px;
+/*  padding: 0px 20px;*/
+  height: 31px;
+  margin-top: -3px;
+  background: transparent;
+}
+
+.scui-calendar .month {
+/*  margin: 0 29px;*/
+  color: #fff;
+  font-size: 14px;
+  line-height: 31px;
+  text-align: center;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .85);
+}
+
+.scui-calendar .button {
+  width: 9px;
+  height: 10px;
+  position: absolute;
+  top: 9px;
+  opacity: .25;
+  background: static_url('resources/image/calendar.png');
+}
+
+.scui-calendar .previous {
+  left: 15px;
+}
+
+.scui-calendar .previous.active {
+  background-position: 0 -10px;
+}
+
+.scui-calendar .next {
+  right: 23px;
+  background-position: -9px 0;
+}
+
+.scui-calendar .active {
+  background-position: -9px -10px;
+}
+
+/* Body */
+
+.scui-calendar .body {
+/*  display: inline-block;*/
+  padding: 1px 10px;
+  width: 184px;
+  background: transparent;
+  
+}
+
+.scui-calendar .grid {
+  width: 182px;
+  overflow: hidden;
+  border: 1px solid #b8b9b6;
+  border-top: 0px;
+  margin: 0px !important;
+}
+
+.scui-calendar .day {
+  width: 25px;
+  height: 25px;
+  float: left;
+  border-bottom: 1px solid transparent;
+  border-right: 1px solid transparent;
+  line-height: 27px;
+  text-align: center;
+}
+
+.scui-calendar .day.name {
+  height: 12px;
+  border-color: transparent;
+  font-size: 10px;
+  line-height: 12px;
+  padding-bottom: 4px;
+}
+
+  .scui-calendar .day.name:first-child {
+    margin-left: 1px;
+  }
+
+.scui-calendar .day.present {
+  color: #353535;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .7);
+  background: transparent;
+}
+
+.scui-calendar .day.past {
+  color: #909090;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .7);
+  background: transparent;
+}
+
+.scui-calendar .day.today {
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, .7);
+  background: #a2a8ae;
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .5);
+  -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .5);
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, .5);
+}
+
+.scui-calendar .day.sel {
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, .7);
+  background: #b81237;
+  border-right: 0px;
+  margin-right: 1px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+}
+
+.scui-calendar .date-today,
+.scui-calendar .date-none {
+  border: 1px solid #a6a09c;
+  font-size: 11px;
+  line-height: 16px;
+  text-align: center;
+  background: #fff;
+}
+
+.scui-calendar.picker .month {
+  color: #444 !important;
+  text-shadow: none;
+}
+
+.scui-calendar.picker .grid {
+  border: 0px;
+}

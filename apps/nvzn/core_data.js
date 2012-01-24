@@ -1,5 +1,23 @@
 SC.mixin(Nvzn, {
 
+  weeksBetweenDates: function(dateA, dateB) {
+    var yearDiff = dateB.get('year') - dateA.get('year');
+    var weekDiff = dateB.get('week1') - dateA.get('week1');
+    return Math.round(yearDiff * 52.177457) + weekDiff;
+  },
+
+  weeksFromWeekEnding: function() {
+    return this.weeksBetweenDates(this.weekEndingFor(SC.DateTime.create()), Nvzn.get('weekEnding'));
+  },
+
+  weekEndingFor: function(date) {
+    var isSunday = !date.get('dayOfWeek');
+    if (!isSunday) {
+      date = date.get('nextSunday');
+    }
+    return date;
+  },
+
   getSiteData: function(customer){
 //    var customer = this.getPath('selection.firstObject'),
 //        url = "/api/v1.1/site/%@/timecards".fmt(customer.get('name'));
@@ -9,7 +27,7 @@ SC.mixin(Nvzn, {
     }
 
     if(SC.empty(customer)) return;
-    var week = Nvzn.rosterController.get('week'),
+    var week = Nvzn.weeksFromWeekEnding(),
         url = ("/api/v1.1/site/%@/timecards".fmt(customer)+ (week ? "?week="+week : ""));
     SC.Request.getUrl(url).notify(this, 'loadSiteData').json().send();
   },
