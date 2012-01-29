@@ -298,6 +298,6 @@
   background-image: static_url('spinner-black');
 }
 
-.dashboard-cell.day {
+.dashboard-cell.day, .dashboard-header.day {
   width: 11%;
 }

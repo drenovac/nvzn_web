@@ -8,8 +8,12 @@ Nvzn.APP = Ki.State.design({
   },
 
   tabDidChange:function () {
-    switch (Timesheet.mainPage.getPath('tabView.nowShowing')) {
-      case 'all':
+    switch (Nvzn.mainPage.getPath('tabView.nowShowing')) {
+      case 'all_employees':
+        this.gotoState('APP.ROSTER');
+        break;
+
+      case 'all_sites':
         this.gotoState('APP.ROSTER');
         break;
 

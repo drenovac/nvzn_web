@@ -19,18 +19,19 @@ Nvzn.loginPage = SC.Page.design({
     },
 
     logo: SC.ImageView.design({
-      layout: { width: 181, left: 25, top: 15, height: 61 },
-      value: sc_static('image/login-logo.png')
+      layout: { width: 181, right: 100, top: 0, height: 61 },
+      value: sc_static('image/envizion-logo.png')
     }),
 
     prompt: SC.LabelView.design({
-      layout: { top: 70, left: 28 },
+      layout: { top: 75, right: 100 },
+      textAlign:SC.ALIGN_RIGHT,
       value: 'Enter your user name and password below to login.',
       classNames: 'black'
     }),
 
     errorMessage: SC.LabelView.design({
-      layout: { top: 85, left: 10, height: 20, width: 300 },
+      layout: { top: 95, left: 10, height: 20, width: 300 },
       classNames: ['error-message'],
       textAlign: SC.ALIGN_RIGHT,
       valueBinding: 'Nvzn.loginController.errorMessage'

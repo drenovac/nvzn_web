@@ -28,7 +28,7 @@ Nvzn.Employee = SC.Record.extend(
   }.property('firstName', 'lastName').cacheable(),
 
   timeCardsByDate: function(sunday) {
-    if (this._timeCardsBuDate) return this._timeCardsByDate;
+//    if (this._timeCardsBuDate) return this._timeCardsByDate;
     // EVIL!!!! WHAT BETTER WAY IS THERE?!?!?!
     if (!sunday) sunday = Nvzn.get('weekEnding').adjust({hour:23, minute:59, second:59});
     var monday = sunday.get('lastMonday').adjust({hour:0, minute:0}), date, timecards,ms,
@@ -41,7 +41,7 @@ Nvzn.Employee = SC.Record.extend(
       6:"",
       0:""  // Sunday
     };
-    this._timeCardsByDate = timecards = this.get('timeCards').forEach(function(tc) {
+    this.get('timeCards').forEach(function(tc) {
       date = tc.get('dateObject');
       ms = date.get('milliseconds');
       if (ms >= monday.get('milliseconds') && ms <= sunday.get('milliseconds')) {

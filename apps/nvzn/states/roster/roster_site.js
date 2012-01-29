@@ -1,12 +1,17 @@
 Nvzn.ROSTER_SITE = Ki.State.design({
   initialSubstate: 'LOADING_SITE',
 
-
+  enterState: function() {
+    Nvzn.set('mode', 'site');
+  },
 
   LOADING_SITE: Ki.State.design({
     enterState: function() {
       Nvzn.rosterController.set('loading', YES);
       Nvzn.loadingSheet.append();
+      Nvzn.getPath('mainPage.mainPane.tabView').set('items', [
+        {title:'All Employees', value:'all_employees'}
+      ]).set('nowShowing', 'all_employees');
       Nvzn.getSiteData();
     },
 
@@ -16,13 +21,6 @@ Nvzn.ROSTER_SITE = Ki.State.design({
     },
 
     dataDidLoad: function() {
-//        if (Nvzn.customersController.get('length') === 0){
-//          this._customers = Nvzn.store.find(Nvzn.Customer);
-//          Nvzn.customersController.set('content', this._customers);
-//        }
-      //      var view = Nvzn.rosterPage.get('mainContentView');
-      //      var bindings = view.bindings.filterProperty("_toPropertyPath", 'content');
-
       Nvzn.setIfChanged('rosterContent', Nvzn.customerController);
       this.gotoState('SHOWING_SITE');
     }

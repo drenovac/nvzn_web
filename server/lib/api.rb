@@ -26,7 +26,7 @@ get '/api/v1.1/login' do
   halt 401, {'status' => "not authorised"}.to_json if !session || session[:username].blank?
   
   url = "#{COUCH}/#{session[:username]}"
-  
+  # TODO: Remove Password
   begin
     data = '{"status":"ok", "user":'+RestClient.get(url)+"}"
   rescue => e
@@ -59,15 +59,21 @@ post '/api/v1.1/login' do
   end
 end
 
-get '/api/v1.1/site/timecards' do
+post '/api/v1.1/user' do
+  request.body.rewind  # in case someone already read it
+  post = JSON.parse request.body.read
+  # TODO: read full user from the session, and update with new values
+end
+
+get '/api/v1.1/site/:customer/timecards' do
   
   halt 401, {'status' => "not authorised"}.to_json if session[:username].blank?
 
   ActiveRecord::Base.establish_connection( config )
   connection = ActiveRecord::Base.connection
 
-  #customer = params[:customer]
-  customer = session[:id]
+  customer = params[:customer]
+  # customer = session[:id]
   if !params[:week] || params[:week] == 0
     date = Date.today
   else
@@ -96,7 +102,7 @@ SQL
       :name => customer,
       :employees => {},
       :start => this_monday,
-      :finish => next_friday
+      :finish => next_sunday
   }
   results = connection.execute(sql)
   employees = {}
@@ -132,16 +138,23 @@ SQL
 end
 
 get '/api/v1.1/employee/timecards' do
+  
+  halt 401, {'status' => "not authorised"}.to_json if session[:username].blank?
 
   ActiveRecord::Base.establish_connection( config )
   connection = ActiveRecord::Base.connection
 
   #customer = params[:customer]
-  employee = '12450'
-  #this_monday = Date.today.monday.to_formatted_s("%d %d %Y")
-  #next_friday = Date.today.next_week(:sunday).to_formatted_s("%d %d %Y")
-  this_monday = '2010-09-27'
-  next_friday = '2010-10-03'
+  employee = session[:id]
+  if !params[:week] || params[:week] == 0
+    date = Date.today
+  else
+    date = Date.today + params[:week].to_i.weeks
+  end
+  this_monday = date.monday.to_formatted_s("%Y-%m-%d")
+  next_sunday = date.sunday.to_formatted_s("%Y-%m-%d")
+  # this_monday = '2010-09-27'
+  # next_friday = '2010-10-03'
 
   sql =<<SQL
     SELECT ROSTER_TIMECARD.roster_date, ROSTER_TIMECARD.customer, ROSTER_TIMECARD.employee,
@@ -150,11 +163,10 @@ get '/api/v1.1/employee/timecards' do
           EMPLOYEE ON ROSTER_TIMECARD.employee = EMPLOYEE.employee INNER JOIN
           CNA ON ROSTER_TIMECARD.customer = CNA.code
 
-    WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_friday}'
+    WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_sunday}'
     AND  EMPLOYEE.EMPLOYEE = '#{employee}'
     ORDER BY employee, customer, roster_date, stime, ftime
 SQL
-  # WHERE roster_date >= '#{this_monday}' AND roster_date <= '#{next_friday}'
 
   response = nil
   results = connection.execute(sql)
@@ -176,6 +188,8 @@ SQL
       :finish => r['ftime']
     }
   end
+  
+  response = {:id => employee, :timeCards => []} unless response
 
   ActiveRecord::Base.clear_active_connections!
 
@@ -183,29 +197,29 @@ SQL
 
 end
 
-get '/api/:path' do
-  path = params[:path]
-  url = "#{COUCH}/#{path}"
-  puts "GET #{url}"
-  begin
-    data = RestClient.get url
-  rescue => e
-    e.response
-  end
-end
-
-post '/api/:path' do
-  path = params[:path]
-  # this is a preferences request
-  url = "#{DB}/#{path}"
-  puts "POST #{url}"
-  puts request.body.string
-  begin
-    data = RestClient.post url, request.body
-  rescue => e
-    e.response
-  end
-end
+# get '/api/:path' do
+#   path = params[:path]
+#   url = "#{COUCH}/#{path}"
+#   puts "GET #{url}"
+#   begin
+#     data = RestClient.get url
+#   rescue => e
+#     e.response
+#   end
+# end
+# 
+# post '/api/:path' do
+#   path = params[:path]
+#   # this is a preferences request
+#   url = "#{DB}/#{path}"
+#   puts "POST #{url}"
+#   puts request.body.string
+#   begin
+#     data = RestClient.post url, request.body
+#   rescue => e
+#     e.response
+#   end
+# end
 
 get '/favicon.ico' do
   return

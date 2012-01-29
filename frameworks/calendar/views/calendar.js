@@ -25,7 +25,7 @@ SCUI.CalendarView = SC.View.extend({
     var date = this._parseSelectedDate(evt.target.id);
     if (date) this.set('selectedDate', date);
     
-    console.log(date)
+//    console.log(date)
     
     if (evt.target.className === 'button previous') {
       this.$('.button.previous').addClass('active');

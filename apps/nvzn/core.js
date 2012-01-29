@@ -27,11 +27,12 @@ Nvzn = SC.Application.create(
 //  selectedDate: SC.DateTime.create(),
   selectedDate:SC.DateTime.create({ year:2010, month:10, day:31 }),
 
-    selectedWeekDidChange: function() {
+  selectedWeekDidChange: function() {
     if (Nvzn.didChangeFor('core', 'selectedWeek')) {
+//      console.log('selectedWeek', this.get('selectedWeek'));
       Nvzn.statechart.sendEvent('selectedNewDay');
     }
-  }.observes('selectedWeek'),
+  }.observes('selectedWeek').cacheable(),
 
   weekEnding: function() {
      return Nvzn.weekEndingFor(this.get('selectedDate'));
@@ -39,9 +40,17 @@ Nvzn = SC.Application.create(
 
   selectedWeek: function() {
     var date = this.get('selectedDate');
-    return date.get('week0');
-  }.property('selectedDate').cacheable()
+    return date.get('week1');
+  }.property('selectedDate').cacheable(),
 
+  mode: 'none',
+  isSite: function() {
+    return this.get('mode') === 'site';
+  }.property('mode'),
+
+  isEmployee:function () {
+    return this.get('mode') === 'employee';
+  }.property('mode')
 
 }) ;
 

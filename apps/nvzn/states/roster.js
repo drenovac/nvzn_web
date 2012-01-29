@@ -42,21 +42,6 @@ Nvzn.ROSTER = Ki.State.design({
 
   ROSTER_SITE: Ki.State.plugin('Nvzn.ROSTER_SITE'),
 
-  ROSTER_EMPLOYEE: Ki.State.design({
-    enterState: function() {
-      Nvzn.getEmployeeData();
-    },
-
-    dataDidLoad: function() {
-      var lController = Nvzn.loginController,
-          id = lController.get('id');
-      if ((!this._employee) || this._employee.get('id') !== id) {
-        this._employee = Nvzn.store.find(Nvzn.Employee, id);
-      }
-
-      Nvzn.set('rosterContent', this._employee);
-    }
-
-  })
+  ROSTER_EMPLOYEE: Ki.State.plugin('Nvzn.ROSTER_EMPLOYEE')
 
 });
