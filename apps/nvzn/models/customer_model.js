@@ -17,6 +17,11 @@ Nvzn.Customer = SC.Record.extend(
   primaryKey: 'name',
   name: SC.Record.attr('String'),
 
+
+  displayName: function() {
+    return this.get('name');
+  }.property('name'),
+
 //  employees: function() {
 //    // Return a record array of all employees of this customer
 //    return this.get('store').find(

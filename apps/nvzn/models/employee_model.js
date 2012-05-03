@@ -27,6 +27,10 @@ Nvzn.Employee = SC.Record.extend(
     return [this.get('firstName'), this.get('lastName')].join(" ").titleize();
   }.property('firstName', 'lastName').cacheable(),
 
+  displayName: function() {
+    return this.get('fullName');
+  }.property('fullName'),
+
   timeCardsByDate: function(sunday) {
 //    if (this._timeCardsBuDate) return this._timeCardsByDate;
     // EVIL!!!! WHAT BETTER WAY IS THERE?!?!?!

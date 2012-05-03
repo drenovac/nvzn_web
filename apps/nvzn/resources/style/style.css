@@ -27,18 +27,18 @@
   color: white !important; 
 }
 
-.sidebar-jobs-item-number, .sidebar-jobs-item-name, .header-project-name, .header-project-number, .date-value {
+.sidebar-jobs-item-number, .sidebar-jobs-item-name, .header-name, .date-value {
   position: absolute;
   font-weight: bold;
   line-height: 31px;
 }
   
-.sidebar-jobs-item-number, .header-project-number, .date-value {
+.sidebar-jobs-item-number, .date-value {
   font-size: 14px;
   left: 13px;
 }
 
-.sidebar-jobs-item-name, .header-project-name {
+.sidebar-jobs-item-name, .header-name {
   position: absolute;
   left: 75px;
   overflow: hidden;
@@ -48,15 +48,20 @@
   color: #333;
   font-weight: normal;
 }
-  .sel .sidebar-jobs-item-name {
-    color: white;
-    font-weight: bold;
-  }
-  
-  .header-project-name {
-    font-size: 14px;
-    font-weight: 300 !important;
-  }
+.sel .sidebar-jobs-item-name {
+  color: white;
+  font-weight: bold;
+}
+
+.header-name {
+  font-size: 14px;
+  font-weight: 300 !important;
+}
+
+.header-contact {
+  font-size: 20px;
+  font-weight: 300;
+}
   
 .page .main {
   background: static_url('resources/image/paper1.png') top left no-repeat #f8f8f8;

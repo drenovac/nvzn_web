@@ -36,7 +36,7 @@ Nvzn.mainPage = SC.Page.create({
           classNames:'main'.w(),
           layout:{ top:9, left:17, right:12, bottom:9 },
 
-          childViews:'headerView contentView'.w(),
+          childViews:'headerView contentView footerView'.w(),
 
           //// HEADER
           headerView:SC.View.extend({
@@ -44,21 +44,26 @@ Nvzn.mainPage = SC.Page.create({
             layout:{
               height:100
             },
-            childViews:'dateLabel dateView'.w(),
-            projectLabel:SC.View.extend({
+            childViews:'nameLabel nameView dateLabel dateView contactLabel contactView logoutButton'.w(),
+            nameLabel:SC.View.extend({
               classNames:'label project'.w(),
+              isVisibleBinding:SC.Binding.from('Nvzn.isSite'),
               layout:{
                 top:35, left:40, width:110, height:18},
               render:function (context, firstTime) {
-                return context.text('Project:');
+                return context.text('Name:');
               }
             }),
-            weatherLabel:SC.View.extend({
-              classNames:'label weather'.w(),
+            nameView:SC.View.extend(SC.ContentDisplay, {
+              classNames:'header-name'.w(),
+              displayProperties:'content'.w(),
+              contentDisplayProperties:'displayName'.w(),
               layout:{
-                top:70, left:40, width:110, height:18},
-              render:function (context, firstTime) {
-                return context.text('Weather Report:');
+                top:29, left:153, width:300, height:31
+              },
+              contentBinding:'Nvzn.selectedRecord',
+              render:function (context) {
+                return context.text(this.getPath('content.displayName'));
               }
             }),
             dateLabel:SC.View.extend({
@@ -82,97 +87,37 @@ Nvzn.mainPage = SC.Page.create({
                 return context.text(display);
               }
             }),
-            projectView:SC.View.extend(SC.ContentDisplay, {
-              classNames:'project-value'.w(),
-              displayProperties:'content'.w(),
-              contentDisplayProperties:'id description'.w(),
+            contactLabel:SC.View.extend({
+              classNames:'label contact'.w(),
+              isVisibleBinding:SC.Binding.from('Nvzn.isSite'),
               layout:{
-                top:29, left:153, width:300, height:31
-              },
-              contentBinding:'Nvzn.jobController',
-              render:function (context) {
-                context.begin('div').addClass('header-project-number').text(this.getPath('content.id')).end();
-                context.begin('div').addClass('header-project-name').text(this.getPath('content.description')).end();
-                return context;
+                top:70, left:10, width:110, height:18},
+              render:function (context, firstTime) {
+                return context.text('Contact Details:');
               }
             }),
-            weatherRadioView:SC.RadioView.extend({
-              classNames:'weather-radio'.w(),
-              layout:{
-                top:66,
-                left:160,
-                height:31
-              },
-
-              items:[
-                {
-                  title:"Fine",
-                  value:"fine"
-                },
-                {
-                  title:"Cloudy",
-                  value:"cloudy"
-                },
-                {
-                  title:"Windy",
-                  value:"windy"
-                },
-                {
-                  title:"Rain",
-                  value:"rain"
-                }
-              ],
-              valueBinding:'Nvzn.weather',
-              itemTitleKey:'title',
-              itemValueKey:'value',
-              isEnabled:YES,
-              layoutDirection:SC.LAYOUT_HORIZONTAL
+            contactView: SC.View.extend({
+              classNames: 'header-contact'.w(),
+              layout: { top: 66, left: 130, right: 20, height: 24 },
+              displayProperties: 'content'.w(),
+              contentDisplayProperties: 'contactNumbers'.w(),
+              contentBinding: 'Nvzn.selectedRecord',
+              render: function(context) {
+                var numbers = this.getPath('content.contactNumbers');
+                return context.text(numbers ? numbers.without(" ").join(", ") : "");
+              }
             }),
-            searchView:SC.TextFieldView.extend({
-              classNames:'search'.w(),
-              hint:"Search...",
-              layout:{
-                top:67, left:430, right:250, height:22
+            logoutButton: SC.ButtonView.extend({
+              classNames: 'header-logout'.w(),
+              layout: {
+                right: 10,
+                top: 20,
+                width: 80,
+                height: 24
               },
-              valueBinding:'Nvzn.searchValue'
-            }),
-            filterView:SC.SegmentedView.extend({
-              layout:{
-                top:65,
-                right:80,
-                height:31,
-                width:170
-              },
-
-              items:[
-                {
-                  title:"All",
-                  value:"all"
-                },
-                {
-                  title:"Updated",
-                  value:"updated"
-                },
-                {
-                  title:"Blank",
-                  value:"blank"
-                }
-              ],
-              valueBinding:'Nvzn.filter',
-              itemTitleKey:'title',
-              itemValueKey:'value',
-              isEnabled:YES,
-              layoutDirection:SC.LAYOUT_HORIZONTAL
-            }),
-            editButton:SC.ButtonView.extend({
-              layout:{
-                top:65,
-                right:32,
-                height:24,
-                width:55
-              },
-              title:'Edit',
-              target:Nvzn.statechart, action:'edit' // FIXME
+              title: 'Logout',
+              target: Nvzn.statechart,
+              action: 'logout'
             })
           }),
 
@@ -242,7 +187,7 @@ Nvzn.mainPage = SC.Page.create({
           }),
 
           footerView:SC.View.extend({
-            childViews:'autofillButton autofillCalendarButton saveButton approveButton'.w(),
+            childViews:'saveButton approveButton'.w(),
 
             layout:{
               bottom:0,
@@ -283,12 +228,12 @@ Nvzn.mainPage = SC.Page.create({
             saveButton:SC.ButtonView.extend({
               layout:{
                 centerY:0,
-                right:130,
+                right:140,
                 height:24,
                 width:80
               },
               target:Nvzn.statechart,
-              action:'saveNvzn',
+              action:'saveRoster',
               title:'Save'
             }),
 
@@ -297,11 +242,11 @@ Nvzn.mainPage = SC.Page.create({
                 centerY:0,
                 right:40,
                 height:24,
-                width:80
+                width:90
               },
               target:Nvzn.statechart,
-              action:'approveNvzn',
-              title:'Approve'
+              action:'approveAllRoster',
+              title:'Approve All'
             })
 
           })
@@ -444,7 +389,8 @@ Nvzn.mainPage = SC.Page.create({
       {
         title:"Mon",
         classNames:'day mon',
-        key:1
+        key:1,
+        isEditable: YES
       },
       {
         title:"Tue",
@@ -481,11 +427,13 @@ Nvzn.mainPage = SC.Page.create({
     }),
 
     contentBinding:'Nvzn.employeesController.arrangedObjects',
+    selectedBinding: 'Nvzn.selectedRecord',
     click: function(evt) {
       var employeeId = evt.target.parentElement.getAttribute('row-id');
       if (!employeeId) return;
-
-      debugger;
+//      console.log("Employee CLicked: ", employeeId);
+      var employee = this.content.findProperty('id', employeeId);
+      this.set('selected', employee);
     }
   }),
 
@@ -540,7 +488,6 @@ Nvzn.mainPage = SC.Page.create({
       var employeeId = evt.target.parentElement.getAttribute('row-id');
       if (!employeeId) return;
 
-      debugger;
     }
   })
 

@@ -24,6 +24,8 @@ Nvzn = SC.Application.create(
   
   rosterContent: null,
 
+  selectedRecord: null,
+
 //  selectedDate: SC.DateTime.create(),
   selectedDate:SC.DateTime.create({ year:2010, month:10, day:31 }),
 

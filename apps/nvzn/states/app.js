@@ -25,5 +25,14 @@ Nvzn.APP = Ki.State.design({
     return YES;
   },
 
+  logout: function() {
+    var url = "/api/v1.1/logout";
+    SC.Request.getUrl(url).notify(this, function(){ Nvzn.statechart.sendEvent('didLogout')}).json().send();
+  },
+
+  didLogout: function() {
+    window.location.reload();
+  },
+
   ROSTER: Ki.State.plugin('Nvzn.ROSTER')
 });

@@ -59,6 +59,11 @@ post '/api/v1.1/login' do
   end
 end
 
+get '/api/v1.1/logout' do
+  session.clear
+  body ({ :status => "ok" }).to_json
+end
+
 post '/api/v1.1/user' do
   request.body.rewind  # in case someone already read it
   post = JSON.parse request.body.read
