@@ -1,0 +1,21 @@
+{
+  "name"          : "Envision",
+  "repository"    : {
+    "type" : "git",
+    "url"  : "https://github.com/drenovac/nvzn_web.git"
+  },
+  "author"        : "Geoffrey Donaldson <geoffreyd@gmail.com>",
+  "contributors"  : [],
+  "engines": {
+    "node":       ">=0.6.0"
+  },
+  "dependencies": {
+    "blossom" :       ">= 1.0.0-beta-49"
+  },
+  "devDependencies": {
+
+  },
+  "main"          : "./node/buildfile",
+  "version"       : "0.0.1",
+  "scripts"       : {}
+}
