@@ -1,1 +1,1 @@
-rvm gemset use nvzn
+rvm use default@nvzn

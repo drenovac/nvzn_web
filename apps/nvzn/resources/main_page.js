@@ -131,7 +131,7 @@ Nvzn.mainPage = SC.Page.create({
               top:105
             },
 
-            tabView:SC.TabView.extend(EO.TargetAction, {
+            tabView:SC.TabView.extend({
               items:[],
               nowShowing:'all',
               itemTitleKey:'title',
@@ -139,7 +139,7 @@ Nvzn.mainPage = SC.Page.create({
               tabLocation:SC.BOTTOM_LOCATION,
 
               nowShowingDidChange:function () {
-                this.performAction(null, Nvzn.statechart, 'tabDidChange');
+                Nvzn.statechart.sendEvent('tabDidChange');
               }.observes('nowShowing'),
 
               createChildViews:function () {
@@ -187,197 +187,197 @@ Nvzn.mainPage = SC.Page.create({
           }),
 
           footerView:SC.View.extend({
-            childViews:'saveButton approveButton'.w(),
+          childViews:'saveButton approveButton'.w(),
 
-            layout:{
-              bottom:0,
-              right:0,
-              width:320,
-              height:44
-            },
-
-            autofillButton:SC.ButtonView.extend({
-              classNames:'autofillButton'.w(),
-              layout:{
-                centerY:0,
-                right:245,
-                height:24,
-                width:66
-              },
-              target:Nvzn.statechart,
-              action:'autofill',
-              title:'Autofill'
-            }),
-
-            autofillCalendarButton:SC.ButtonView.extend(EO.TargetAction, {
-              classNames:'autofillCalendarButton'.w(),
-              layout:{
-                centerY:0,
-                right:220,
-                height:24,
-                width:28
-              },
-              target:null,
-              action:'popupCalendar',
-              popupCalendar:function () {
-                Nvzn.AutofillCalendarPane.popup(this);
-                this.performAction(null, Nvzn.statechart, 'autofill');
-              }
-            }),
-
-            saveButton:SC.ButtonView.extend({
-              layout:{
-                centerY:0,
-                right:140,
-                height:24,
-                width:80
-              },
-              target:Nvzn.statechart,
-              action:'saveRoster',
-              title:'Save'
-            }),
-
-            approveButton:SC.ButtonView.extend({
-              layout:{
-                centerY:0,
-                right:40,
-                height:24,
-                width:90
-              },
-              target:Nvzn.statechart,
-              action:'approveAllRoster',
-              title:'Approve All'
-            })
-
-          })
-        })
-      }),
-
-
-      // SIDEBAR
-
-      sidebarView:SC.View.extend({
-        classNames:'sidebar'.w(),
-
-        layout:{
-          width:210
-        },
-
-        childViews:'calendarView jobsView'.w(),
-
-        calendarView:SC.View.extend({
           layout:{
-            top: 70
+            bottom:0,
+            right:0,
+            width:320,
+            height:44
           },
 
-          childViews:'headerView todayButtonView calendarView'.w(),
+//          autofillButton:SC.ButtonView.extend({
+//                                            classNames:'autofillButton'.w(),
+//                                            layout:{
+//                                            centerY:0,
+//                                            right:245,
+//                                            height:24,
+//                                            width:66
+//                                            },
+//                                            target:Nvzn.statechart,
+//                                            action:'autofill',
+//                                            title:'Autofill'
+//                                            }),
+//
+//          autofillCalendarButton:SC.ButtonView.extend(EO.TargetAction, {
+//                                                                     classNames:'autofillCalendarButton'.w(),
+//                                                                     layout:{
+//                                                                     centerY:0,
+//                                                                     right:220,
+//                                                                     height:24,
+//                                                                     width:28
+//                                                                     },
+//                                                                     target:null,
+//                                                                     action:'popupCalendar',
+//                                                                     popupCalendar:function () {
+//                                                                     Nvzn.AutofillCalendarPane.popup(this);
+//                                                                     this.performAction(null, Nvzn.statechart, 'autofill');
+//                                                                     }
+//                                                                     }),
 
-          headerView:SC.View.extend({
-            classNames:'sidebar-calendar-header'.w(),
+          saveButton:SC.ButtonView.extend({
             layout:{
-              height:16,
-              left:13,
+              centerY:0,
+              right:140,
+              height:24,
               width:80
             },
-
-            render:function (context, firstTime) {
-              return context.addClass('sidebar-header').text('TIMESHEETS');
-            }
+            target:Nvzn.statechart,
+            action:'saveRoster',
+            title:'Save'
           }),
 
-          todayButtonView:SC.ButtonView.extend({
-            classNames:'sidebar-calendar-today-button'.w(),
+          approveButton:SC.ButtonView.extend({
             layout:{
-              height:16,
-              width:80,
-              right:20
+              centerY:0,
+              right:40,
+              height:24,
+              width:90
             },
-
-            target:SC.outlet('parentView.calendarView'),
-            action:'selectToday',
-
-            render:function (context, firstTime) {
-              return context.addClass('sidebar-today-button').text('Today');
-            }
-          }),
-
-          calendarView:SCUI.CalendarView.extend({
-            layout:{
-              left:2,
-              top:18
-            },
-//            monthStartOn:SC.DateTime.create({day:7}),
-//            weekdayStrings:["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-            weekStartMonday:  YES,
-            selectedDateBinding:'Nvzn.selectedDate',
-            selectToday:function () {
-              console.log("select today");
-              this.set('selectedDate', SC.DateTime.create());
-              this.resetToSelectedDate();
-            }
+            target:Nvzn.statechart,
+            action:'approveAllRoster',
+            title:'Approve All'
           })
-        }),
 
-        jobsView:SC.View.extend({
-          layout:{
-            top:300
-          },
-
-          childViews:'headerView listView'.w(),
-
-          headerView:SC.View.extend({
-            classNames:'sidebar-jobs-header'.w(),
-            layout:{
-              height:16,
-              left:13,
-              width:80
-            },
-            isVisibleBinding: SC.Binding.from('Nvzn.isSite'),
-
-            render:function (context, firstTime) {
-              return context.text('Where');
-            }
-          }),
-
-          editView:SC.View.extend({
-            classNames:'sidebar-jobs-edit'.w(),
-            layout:{
-              height:16,
-              width:80,
-              right:20
-            },
-
-            render:function (context, firstTime) {
-              return context.text('Edit');
-            }
-          }),
-
-          listView:SC.ScrollView.extend({
-            layout:{
-              top:20, bottom:13, right:13
-            },
-            contentView:SC.ListView.extend({
-              rowHeight:31,
-              contentBinding:'Nvzn.customersController.arrangedObjects',
-              selectionBinding:'Nvzn.customersController.selection',
-              exampleView:SC.ListItemView.extend({
-                displayProperties:'isSelected'.w(),
-                classNames:'sidebar-jobs-list-item',
-
-                render:function (context) {
-                  if (this.get('isSelected')) context.addClass('sel');
-
-                  context.begin('div').addClass('sidebar-jobs-item-number').text(this.getPath('content')).end();
-//                  context.begin('div').addClass('sidebar-jobs-item-name').text(this.getPath('content')).end();
-                }
-
-              })
-            })
-          })
         })
-
       })
     }),
+
+
+    // SIDEBAR
+
+    sidebarView:SC.View.extend({
+                             classNames:'sidebar'.w(),
+
+                             layout:{
+                             width:210
+                             },
+
+                             childViews:'calendarView jobsView'.w(),
+
+                             calendarView:SC.View.extend({
+                             layout:{
+                             top: 70
+                             },
+
+                             childViews:'headerView todayButtonView calendarView'.w(),
+
+                             headerView:SC.View.extend({
+                             classNames:'sidebar-calendar-header'.w(),
+                             layout:{
+                             height:16,
+                             left:13,
+                             width:80
+                             },
+
+                             render:function (context, firstTime) {
+                             return context.addClass('sidebar-header').text('TIMESHEETS');
+                             }
+                             }),
+
+                             todayButtonView:SC.ButtonView.extend({
+                             classNames:'sidebar-calendar-today-button'.w(),
+                             layout:{
+                             height:16,
+                             width:80,
+                             right:20
+                             },
+
+                             target:SC.outlet('parentView.calendarView'),
+                             action:'selectToday',
+
+                             render:function (context, firstTime) {
+                             return context.addClass('sidebar-today-button').text('Today');
+                             }
+                             }),
+
+                             calendarView:SCUI.CalendarView.extend({
+                             layout:{
+                             left:2,
+                             top:18
+                             },
+                             //            monthStartOn:SC.DateTime.create({day:7}),
+                             //            weekdayStrings:["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                             weekStartMonday:  YES,
+                             selectedDateBinding:'Nvzn.selectedDate',
+                             selectToday:function () {
+                             console.log("select today");
+                             this.set('selectedDate', SC.DateTime.create());
+                             this.resetToSelectedDate();
+                             }
+                             })
+                             }),
+
+                             jobsView:SC.View.extend({
+                             layout:{
+                             top:300
+                             },
+
+                             childViews:'headerView listView'.w(),
+
+                             headerView:SC.View.extend({
+                             classNames:'sidebar-jobs-header'.w(),
+                             layout:{
+                             height:16,
+                             left:13,
+                             width:80
+                             },
+                             isVisibleBinding: SC.Binding.from('Nvzn.isSite'),
+
+                             render:function (context, firstTime) {
+                             return context.text('Where');
+                             }
+                             }),
+
+                             editView:SC.View.extend({
+                             classNames:'sidebar-jobs-edit'.w(),
+                             layout:{
+                             height:16,
+                             width:80,
+                             right:20
+                             },
+
+                             render:function (context, firstTime) {
+                             return context.text('Edit');
+                             }
+                             }),
+
+                             listView:SC.ScrollView.extend({
+                             layout:{
+                             top:20, bottom:13, right:13
+                             },
+                             contentView:SC.ListView.extend({
+                             rowHeight:31,
+                             contentBinding:'Nvzn.customersController.arrangedObjects',
+                             selectionBinding:'Nvzn.customersController.selection',
+                             exampleView:SC.ListItemView.extend({
+                             displayProperties:'isSelected'.w(),
+                             classNames:'sidebar-jobs-list-item',
+
+                             render:function (context) {
+                             if (this.get('isSelected')) context.addClass('sel');
+
+                             context.begin('div').addClass('sidebar-jobs-item-number').text(this.getPath('content')).end();
+                             //                  context.begin('div').addClass('sidebar-jobs-item-name').text(this.getPath('content')).end();
+                             }
+
+                             })
+                             })
+                             })
+                             })
+
+                             })
+  }),
 
   all_employees: EO.TableView.design({
     columns:[
@@ -447,6 +447,7 @@ Nvzn.mainPage = SC.Page.create({
       {
         title:"Mon",
         classNames:'day mon',
+        isEditable: true,
         key:1
       },
       {
