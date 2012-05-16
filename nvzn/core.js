@@ -11,7 +11,8 @@ var YES = true, NO = false;
 
  @extends SC.Object
  */
-Nvzn = SC.Application.create(
+//Nvzn = SC.Application.create(
+Nvzn = global.Nvzn = SC.Object.create(
 /** @scope Nvzn.prototype */ {
 
   NAMESPACE: 'Nvzn',

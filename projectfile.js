@@ -5,7 +5,12 @@ require('blossom/buildtools'); // adds the SC and BT namespaces as globals
 var path = require('path');
 
 var nvzn = BT.Project.create({
-  "app": BT.App.create({
+  "api": BT.Proxy.create({
+    proxyHost: 'www.roster-me.com.au',
+    proxyPort: 9292,
+    proxyPrefix: '/api'
+  }),
+  "nvzn": BT.App.create({
     frameworks: 'blossom'.w(),
     // frameworks: 'foundation datastore application'.w(),
     sourceTree: path.join(__dirname, 'nvzn')

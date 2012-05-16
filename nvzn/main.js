@@ -1,6 +1,7 @@
-Nvzn.main = function main() {
+function main() {
 
+  console.log('Starting');
   Nvzn.statechart.initStatechart();
 
-} ;
+}
 
