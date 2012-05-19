@@ -1,7 +1,13 @@
 function main() {
 
   console.log('Starting');
-  Nvzn.statechart.initStatechart();
+ if (Nvzn.loadingImages > 0) {
+   console.log('running, but images are not ready yet');
+   Nvzn.ready = true;
+ } else {
+   console.log('Images are ready, good to go.');
+   Nvzn.start();
+ }
 
 }
 

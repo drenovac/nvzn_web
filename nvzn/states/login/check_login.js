@@ -1,17 +1,35 @@
 Nvzn.CHECK_LOGIN = SC.State.design({
   enterState: function() {
-//    SC.app.set('ui', SC.View.create());
-//
-//    console.log("created ui");
-//    var panel = Nvzn.form;
-//    var titleBar = Nvzn.titleBar;
-////    titleBar.set('frame', SC.MakeRect(0, 0, 800, 20));
-//
-//    panel.get('subsurfaces').pushObject(titleBar);
-//    SC.app.addSurface(panel);
+    var loadingLabel = this.loadingLabel;
+
+    if (!loadingLabel) {
+      this.loadingLabel = loadingLabel = Nvzn.View.create({
+        layout: {height: 40, width: 150, centerX:0, centerY:0},
+        childLayers: "label".w(),
+//        backgroundColor: 'transparent',
+        clearBackground: true,
+
+        label: SC.LabelLayer.extend({
+          layout: {top:0, right: 10, bottom: 0, left: 0},
+          backgroundColor: 'transparent',
+          font: "18pt Helvetica, Arial, sans",
+          color: '#fff',
+          value: 'Loading ...'
+        })
+      });
+    }
+    loadingLabel.set('backgroundColor', 'transparent');
+
+    var uiSurfaces = SC.app.getPath('ui.subsurfaces');
+    uiSurfaces.pushObject(loadingLabel);
 
     SC.Request.getUrl('/api/v1.1/login').json().notify(this, 'checkedLogin').send();
 
+  },
+
+  exitState: function() {
+    var uiSurfaces = SC.app.getPath('ui.subsurfaces');
+    uiSurfaces.removeObject(this.loadingLabel);
   },
 
   checkedLogin: function(req) {

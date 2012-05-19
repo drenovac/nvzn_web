@@ -3,32 +3,16 @@ Nvzn.SHOW_LOGIN = SC.State.design({
 //    SC.routes.add(':pageName/:paneName', Nvzn.routes, 'route');
 //    SC.routes.add(':', Nvzn.routes, 'route');
 
-    SC.app.set('ui', SC.LayoutSurface.create());
+    var uiSurfaces = SC.app.getPath('ui.subsurfaces');
 
-    var panel = SC.LayoutSurface.create({
-      layout: {height: 200, width: 400, centerX:0, centerY: 0}
-    });
-//    panel.set('frame', SC.MakeRect(50, 50, 400, 200));
-    panel.set('backgroundColor', base3);
-    panel.set('cornerRadius', 10);
-
-    var titleBar = Nvzn.titleBar;
-    titleBar.set('title', "Login");
-//    titleBar.set('frame', SC.MakeRect(0, 0, 800, 20));
-
-    var form = Nvzn.loginForm.create({
-      layout: { top: 21, left: 10, right: 10, bottom:0, minLayoutWidth: 100, minLayoutHeight: 50}
-    });
-//    form.set('frame', SC.MakeRect(0, 20, 800, 300));
-
-    panel.get('subsurfaces').pushObjects([titleBar, form]);
-
-    SC.app.addSurface(panel);
+    if (!this._loginPanel) this._loginPanel = Nvzn.loginPanel.create();
+    uiSurfaces.pushObject(this._loginPanel );
 
   },
 
   exitState: function() {
-    Nvzn.getPath('loginPage.loginPane').remove();
+    var uiSurfaces = SC.app.getPath('ui.subsurfaces');
+    uiSurfaces.removeObject(this._loginPanel);
   },
 
   submitLogin: function() {

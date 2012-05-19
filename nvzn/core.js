@@ -11,7 +11,8 @@ var YES = true, NO = false;
 
  @extends SC.Object
  */
-//Nvzn = SC.Application.create(
+SC.Application.create();
+
 Nvzn = global.Nvzn = SC.Object.create(
 /** @scope Nvzn.prototype */ {
 
@@ -57,3 +58,37 @@ Nvzn = global.Nvzn = SC.Object.create(
   }.property('mode')
 
 }) ;
+
+Nvzn.start = function() {
+    Nvzn.statechart.initStatechart();
+};
+Nvzn.imageLoaded = function(name) {
+  if (!Nvzn.ready) {
+    console.log('image "%@" loaded, but apps not ready.'.fmt(name));
+    return;
+  }
+  if (Nvzn.loadingImages === 0){
+    console.log('image "%@" loaded, Last one, lets go.'.fmt(name));
+    SC.run(function(){ Nvzn.start() });
+//    Nvzn.start();
+  } else {
+    console.log('image "%@" loaded, Still %@ more to come.'.fmt(name, Nvzn.loadingImages));
+  }
+};
+
+Nvzn.images = {};
+Nvzn.loadingImages = 0;
+Nvzn.loadImage = function(name, url) {
+  Nvzn.loadingImages += 1;
+  var img = new Image();
+  img.onload = function() {
+    Nvzn.loadingImages -= 1;
+    Nvzn.images[name] = img;
+    Nvzn.imageLoaded(name);
+  }
+  img.src = url;
+};
+
+SC.ready(function(){
+  Nvzn.loadImage('logo', '/static/envizion-logo.png');
+});

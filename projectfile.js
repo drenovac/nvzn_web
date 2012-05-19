@@ -10,11 +10,25 @@ var nvzn = BT.Project.create({
     proxyPort: 9292,
     proxyPrefix: '/api'
   }),
+
   "nvzn": BT.App.create({
     frameworks: 'blossom'.w(),
     // frameworks: 'foundation datastore application'.w(),
     sourceTree: path.join(__dirname, 'nvzn')
   }),
+
+  "static": BT.Directory.create({
+    // no sc_static() support yet, so give our image a nice and easy path
+    "envizion-logo.png": BT.File.create({
+      sourcePath: path.join(__dirname, "nvzn/images/envizion-logo.png"),
+      mimeType: 'image/png'
+    }),
+    "NSTexturedFullScreenBackgroundColor.png": BT.File.create({
+      sourcePath: path.join(__dirname, "nvzn/images/NSTexturedFullScreenBackgroundColor.png"),
+      mimeType: 'image/png'
+    })
+  }),
+
   "blossom": require('blossom')
   // "foundation": require('blossom/foundation'),
   // "datastore": require('blossom/datastore'),
