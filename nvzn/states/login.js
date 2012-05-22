@@ -6,7 +6,7 @@ Nvzn.LOGIN = SC.State.design({
       didCreateElement: function(div) {
         // We don't want SC.View's implementation; don't call it.
         var style = div.style;
-        style.backgroundImage = "url(/static/NSTexturedFullScreenBackgroundColor.png)";
+        style.backgroundImage = "url(/static/background-light.png)";
         style.backgroundPosition = 'left top';
         style.backgroundRepeat = 'repeat';
       }

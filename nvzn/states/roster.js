@@ -9,7 +9,7 @@ Nvzn.ROSTER = SC.State.design({
     SC.routes.set('location', "mainPage/mainPane");
 
     window.setTimeout(function() {
-      Nvzn.mainPage.mainPane.get('calendar').resetToSelectedDate()
+//      Nvzn.mainPage.mainPane.get('calendar').resetToSelectedDate()
     }, 100);
 
     if (role === 'site') {

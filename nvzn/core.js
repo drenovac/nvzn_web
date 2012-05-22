@@ -91,4 +91,6 @@ Nvzn.loadImage = function(name, url) {
 
 SC.ready(function(){
   Nvzn.loadImage('logo', '/static/envizion-logo.png');
+  Nvzn.loadImage('paper1', '/static/paper1.png');
+  Nvzn.loadImage('paper2', '/static/paper2.png');
 });

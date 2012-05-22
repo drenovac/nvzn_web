@@ -4,7 +4,12 @@ Nvzn.APP = SC.State.design({
 
   enterState: function() {
     SC.routes.set('location', "mainPage/mainPane");
-    Nvzn.getPath('mainPage.mainPane').append() ;
+//    Nvzn.getPath('mainPage.mainPane').append() ;
+    var uiSurfaces = SC.app.getPath('ui.subsurfaces');
+
+    if (!this._panel) this._panel = Nvzn.mainPane.create();
+    this._panel.set('backgroundColor', 'transparent');
+    uiSurfaces.pushObject(this._panel );
   },
 
   tabDidChange:function () {

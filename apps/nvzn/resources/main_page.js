@@ -256,128 +256,128 @@ Nvzn.mainPage = SC.Page.create({
 
     // SIDEBAR
 
-    sidebarView:SC.View.extend({
-                             classNames:'sidebar'.w(),
+      sidebarView:SC.View.extend({
+        classNames:'sidebar'.w(),
 
-                             layout:{
-                             width:210
-                             },
+        layout:{
+          width:210
+        },
 
-                             childViews:'calendarView jobsView'.w(),
+        childViews:'calendarView jobsView'.w(),
 
-                             calendarView:SC.View.extend({
-                             layout:{
-                             top: 70
-                             },
+        calendarView:SC.View.extend({
+          layout:{
+            top:70
+          },
 
-                             childViews:'headerView todayButtonView calendarView'.w(),
+          childViews:'headerView todayButtonView calendarView'.w(),
 
-                             headerView:SC.View.extend({
-                             classNames:'sidebar-calendar-header'.w(),
-                             layout:{
-                             height:16,
-                             left:13,
-                             width:80
-                             },
+          headerView:SC.View.extend({
+            classNames:'sidebar-calendar-header'.w(),
+            layout:{
+              height:16,
+              left:13,
+              width:80
+            },
 
-                             render:function (context, firstTime) {
-                             return context.addClass('sidebar-header').text('TIMESHEETS');
-                             }
-                             }),
+            render:function (context, firstTime) {
+              return context.addClass('sidebar-header').text('TIMESHEETS');
+            }
+          }),
 
-                             todayButtonView:SC.ButtonView.extend({
-                             classNames:'sidebar-calendar-today-button'.w(),
-                             layout:{
-                             height:16,
-                             width:80,
-                             right:20
-                             },
+          todayButtonView:SC.ButtonView.extend({
+            classNames:'sidebar-calendar-today-button'.w(),
+            layout:{
+              height:16,
+              width:80,
+              right:20
+            },
 
-                             target:SC.outlet('parentView.calendarView'),
-                             action:'selectToday',
+            target:SC.outlet('parentView.calendarView'),
+            action:'selectToday',
 
-                             render:function (context, firstTime) {
-                             return context.addClass('sidebar-today-button').text('Today');
-                             }
-                             }),
+            render:function (context, firstTime) {
+              return context.addClass('sidebar-today-button').text('Today');
+            }
+          }),
 
-                             calendarView:SCUI.CalendarView.extend({
-                             layout:{
-                             left:2,
-                             top:18
-                             },
-                             //            monthStartOn:SC.DateTime.create({day:7}),
-                             //            weekdayStrings:["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-                             weekStartMonday:  YES,
-                             selectedDateBinding:'Nvzn.selectedDate',
-                             selectToday:function () {
-                             console.log("select today");
-                             this.set('selectedDate', SC.DateTime.create());
-                             this.resetToSelectedDate();
-                             }
-                             })
-                             }),
+          calendarView:SCUI.CalendarView.extend({
+            layout:{
+              left:2,
+              top:18
+            },
+            //            monthStartOn:SC.DateTime.create({day:7}),
+            //            weekdayStrings:["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            weekStartMonday:YES,
+            selectedDateBinding:'Nvzn.selectedDate',
+            selectToday:function () {
+              console.log("select today");
+              this.set('selectedDate', SC.DateTime.create());
+              this.resetToSelectedDate();
+            }
+          })
+        }),
 
-                             jobsView:SC.View.extend({
-                             layout:{
-                             top:300
-                             },
+        jobsView:SC.View.extend({
+          layout:{
+            top:300
+          },
 
-                             childViews:'headerView listView'.w(),
+          childViews:'headerView listView'.w(),
 
-                             headerView:SC.View.extend({
-                             classNames:'sidebar-jobs-header'.w(),
-                             layout:{
-                             height:16,
-                             left:13,
-                             width:80
-                             },
-                             isVisibleBinding: SC.Binding.from('Nvzn.isSite'),
+          headerView:SC.View.extend({
+            classNames:'sidebar-jobs-header'.w(),
+            layout:{
+              height:16,
+              left:13,
+              width:80
+            },
+            isVisibleBinding:SC.Binding.from('Nvzn.isSite'),
 
-                             render:function (context, firstTime) {
-                             return context.text('Where');
-                             }
-                             }),
+            render:function (context, firstTime) {
+              return context.text('Where');
+            }
+          }),
 
-                             editView:SC.View.extend({
-                             classNames:'sidebar-jobs-edit'.w(),
-                             layout:{
-                             height:16,
-                             width:80,
-                             right:20
-                             },
+          editView:SC.View.extend({
+            classNames:'sidebar-jobs-edit'.w(),
+            layout:{
+              height:16,
+              width:80,
+              right:20
+            },
 
-                             render:function (context, firstTime) {
-                             return context.text('Edit');
-                             }
-                             }),
+            render:function (context, firstTime) {
+              return context.text('Edit');
+            }
+          }),
 
-                             listView:SC.ScrollView.extend({
-                             layout:{
-                             top:20, bottom:13, right:13
-                             },
-                             contentView:SC.ListView.extend({
-                             rowHeight:31,
-                             contentBinding:'Nvzn.customersController.arrangedObjects',
-                             selectionBinding:'Nvzn.customersController.selection',
-                             exampleView:SC.ListItemView.extend({
-                             displayProperties:'isSelected'.w(),
-                             classNames:'sidebar-jobs-list-item',
+          listView:SC.ScrollView.extend({
+            layout:{
+              top:20, bottom:13, right:13
+            },
+            contentView:SC.ListView.extend({
+              rowHeight:31,
+              contentBinding:'Nvzn.customersController.arrangedObjects',
+              selectionBinding:'Nvzn.customersController.selection',
+              exampleView:SC.ListItemView.extend({
+                displayProperties:'isSelected'.w(),
+                classNames:'sidebar-jobs-list-item',
 
-                             render:function (context) {
-                             if (this.get('isSelected')) context.addClass('sel');
+                render:function (context) {
+                  if (this.get('isSelected')) context.addClass('sel');
 
-                             context.begin('div').addClass('sidebar-jobs-item-number').text(this.getPath('content')).end();
-                             //                  context.begin('div').addClass('sidebar-jobs-item-name').text(this.getPath('content')).end();
-                             }
+                  context.begin('div').addClass('sidebar-jobs-item-number').text(this.getPath('content')).end();
+                  //                  context.begin('div').addClass('sidebar-jobs-item-name').text(this.getPath('content')).end();
+                }
 
-                             })
-                             })
-                             })
-                             })
+              })
+            })
+          })
+        })
 
-                             })
-  }),
+      })
+    }),
 
   all_employees: EO.TableView.design({
     columns:[

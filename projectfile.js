@@ -23,8 +23,20 @@ var nvzn = BT.Project.create({
       sourcePath: path.join(__dirname, "nvzn/images/envizion-logo.png"),
       mimeType: 'image/png'
     }),
-    "NSTexturedFullScreenBackgroundColor.png": BT.File.create({
+    "background-dark.png": BT.File.create({
       sourcePath: path.join(__dirname, "nvzn/images/NSTexturedFullScreenBackgroundColor.png"),
+      mimeType: 'image/png'
+    }),
+    "background-light.png": BT.File.create({
+      sourcePath: path.join(__dirname, "nvzn/images/NSLinenBackgroundPattern.png"),
+      mimeType: 'image/png'
+    }),
+    "paper1.png": BT.File.create({
+      sourcePath: path.join(__dirname, "nvzn/images/paper1.png"),
+      mimeType: 'image/png'
+    }),
+    "paper2.png": BT.File.create({
+      sourcePath: path.join(__dirname, "nvzn/images/paper2.png"),
       mimeType: 'image/png'
     })
   }),

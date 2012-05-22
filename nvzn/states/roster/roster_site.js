@@ -8,16 +8,16 @@ Nvzn.ROSTER_SITE = SC.State.design({
   LOADING_SITE: SC.State.design({
     enterState: function() {
       Nvzn.rosterController.set('loading', YES);
-      Nvzn.loadingSheet.append();
-      Nvzn.getPath('mainPage.mainPane.tabView').set('items', [
-        {title:'All Employees', value:'all_employees'}
-      ]).set('nowShowing', 'all_employees');
+//      Nvzn.loadingSheet.append();
+//      Nvzn.getPath('mainPage.mainPane.tabView').set('items', [
+//        {title:'All Employees', value:'all_employees'}
+//      ]).set('nowShowing', 'all_employees');
       Nvzn.getSiteData();
     },
 
     exitState: function() {
       Nvzn.rosterController.set('loading', NO);
-      Nvzn.loadingSheet.remove();
+//      Nvzn.loadingSheet.remove();
     },
 
     dataDidLoad: function() {
