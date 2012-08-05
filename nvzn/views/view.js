@@ -43,11 +43,16 @@ Nvzn.LayoutSurface = SC.LayoutSurface.extend({
     var surfaces = this.get('subsurfaces'), layer,
       self = this,
       children = this.get('childSurfaces') || [];
+    sc_assert(SC.isArray(children), "childSurfaces needs to be an array.");
     children.forEach(function(layerName) {
       layer = self[layerName];
       sc_assert(layer, "You've given a surface named '%@' to childSurfaces. It can't be found".fmt(layerName));
       sc_assert(layer.create, "The object at %@ is not a Surface class, have you already created it?".fmt(layerName));
-      surfaces.pushObject(layer.create());
+      layer = layer.create();
+      surfaces.pushObject(layer);
+//      if (layer.backgroundColor) {
+//
+//      }
     })
   }
 });

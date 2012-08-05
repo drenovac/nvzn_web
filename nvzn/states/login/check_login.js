@@ -23,6 +23,16 @@ Nvzn.CHECK_LOGIN = SC.State.design({
     var uiSurfaces = SC.app.getPath('ui.subsurfaces');
     uiSurfaces.pushObject(loadingLabel);
 
+    var self = this;
+//    Nvzn.loginController.set('role', "site");
+//    setTimeout(function() {
+//      SC.run(function(){
+//        console.log("11");
+//        var user = '{"status":"ok","user":{"_id":"site","_rev":"6-b3e0663d6e72854a8e04e7e139a723b2","type":"user","role":"site","firstName":"John","lastName":"Smith","phone":"0410444999","email":"john@smith.name","password":"5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8","db_id":"NVGI1","customers":["NVGI1","CENPARK-S","SIMBARR","DIIRD","CLCC","CNLR"]}}'
+//        self.statechart.sendEvent('loggedIn', SC.json.decode(user).user);
+//      })
+//    }, 500);
+
     SC.Request.getUrl('/api/v1.1/login').json().notify(this, 'checkedLogin').send();
 
   },
