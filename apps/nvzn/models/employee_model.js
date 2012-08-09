@@ -21,7 +21,8 @@ Nvzn.Employee = SC.Record.extend(
   address: SC.Record.attr('String'),
   photoPath: SC.Record.attr('String', {key: 'photo_path'}),
 
-  timeCards: SC.Record.toMany('Nvzn.TimeCard', {nested: YES}),
+//  timeCards: SC.Record.toMany('Nvzn.TimeCard', {nested: YES}),
+  timeCards: SC.Record.toMany('Nvzn.TimeCard'),
 
   fullName: function() {
     return [this.get('firstName'), this.get('lastName')].join(" ").titleize();
@@ -35,21 +36,21 @@ Nvzn.Employee = SC.Record.extend(
 //    if (this._timeCardsBuDate) return this._timeCardsByDate;
     // EVIL!!!! WHAT BETTER WAY IS THERE?!?!?!
     if (!sunday) sunday = Nvzn.get('weekEnding').adjust({hour:23, minute:59, second:59});
-    var monday = sunday.get('lastMonday').adjust({hour:0, minute:0}), date, timecards,ms,
+    var monday = sunday.get('lastMonday').adjust({hour:0, minute:0}), date, ms,
     hash = {
-      1:"", // Monday
-      2:"",
-      3:"",
-      4:"",
-      5:"",
-      6:"",
-      0:""  // Sunday
+      1:[], // Monday
+      2:[],
+      3:[],
+      4:[],
+      5:[],
+      6:[],
+      0:[]  // Sunday
     };
     this.get('timeCards').forEach(function(tc) {
       date = tc.get('dateObject');
       ms = date.get('milliseconds');
       if (ms >= monday.get('milliseconds') && ms <= sunday.get('milliseconds')) {
-        hash[date.get('dayOfWeek')] += tc.get('timeDisplay')+" ";
+        hash[date.get('dayOfWeek')].push(tc);
       }
     });
     return hash;

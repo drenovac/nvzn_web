@@ -38,10 +38,15 @@ SC.mixin(Nvzn, {
   },
 
   loadSiteData: function(res) {
+    if (Nvzn.editScope) Nvzn.editScope.destroy();
     var body = res.get('body'),
         S = Nvzn.store,
-        storeKey = S.pushRetrieve(Nvzn.Customer, body.name, body),
-        customer = S.materializeRecord(storeKey);
+        storeKey = S.pushRetrieve(Nvzn.Customer, body.customer.id, body.customer),
+        editScope = S.chain(),
+        customer = editScope.materializeRecord(storeKey);
+    Nvzn.editScope = editScope;
+    if (body.employees && body.employees.length) S.loadRecords(Nvzn.Employee, body.employees);
+    if (body.timecards && body.timecards.length) S.loadRecords(Nvzn.TimeCard, body.timecards);
     Nvzn.customerController.set('content', customer);
 //    console.log("Did Load site Data");
     Nvzn.statechart.sendEvent('dataDidLoad');
@@ -68,6 +73,23 @@ SC.mixin(Nvzn, {
 
   createUser: function(data) {
 
+  },
+
+  submitTimeCards: function(changeset) {
+    var url = "/api/v1.1/timecards";
+    SC.Request.postUrl(url).notify(this, 'timeCardsDidSubmit').json().send(changeset);
+  },
+
+  timeCardsDidSubmit: function() {
+    // Load timecards into store
+    var custCon = Nvzn.customerController,
+        storeKey = custCon.get('storeKey');
+    if (Nvzn.editScope) Nvzn.editScope.destroy();
+    Nvzn.editScope = Nvzn.store.chain();
+    var customer = Nvzn.editScope.materializeRecord(storeKey);
+    custCon.set('content', customer);
+
+    Nvzn.statechart.sendEvent('timeCardsSubmitted');
   }
 
 });

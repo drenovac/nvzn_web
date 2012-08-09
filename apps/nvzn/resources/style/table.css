@@ -1,0 +1,127 @@
+.scrollbars {
+  position: absolute;
+  overflow-x: auto;
+  overflow-y: scroll;
+  top: 32px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+
+.dashboard-table {
+  display: table;
+  width: 100%;
+}
+
+.dashboard-header-group {
+  display: table-header-group;
+/*  background-color: #F8F8F8 !important;*/
+}
+
+.dashboard-row-group  {
+  display: table-row-group;
+}
+
+.dashboard-row  {
+  display: table-row;
+  background-color: #F8F8F8;
+  height: 26px;
+  font-family: arial;
+  font-size: 13px;
+}
+
+.dashboard-row:nth-child(odd) {
+  background-color: #e6e6e6;
+}
+
+
+.dashboard-cell {
+  display: table-cell;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-bottom: none;/* 1px solid #888;*/
+  border-right: 1px solid #888;
+  vertical-align: middle;
+}
+
+.dashboard-cell.name {
+  width: 140px;
+  min-width: 140px;
+}
+
+.dashboard-cell.day {
+  text-align: center;
+  width: 40px;
+  min-width: 40px;
+}
+
+.dashboard-cell.tick-all {
+  text-align: center;
+  width: 20px;
+  min-width: 20px;
+}
+
+.dashboard-cell:last-child {
+  border-right: none;
+}
+
+.dashboard-row:last-child > .dashboard-cell {
+  border-bottom: 1px solid #888;
+}
+
+.dashboard-header {
+  display: table-cell;
+  height: 20px;
+  padding-top: 1px;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: gray;
+  font-weight: normal;
+  font-family: arial;
+  font-size: 11px;
+  border-right: 1px solid transparent;
+  text-align: center;
+  text-shadow: white 0px 1px 1px;
+  vertical-align: bottom;
+}
+
+.dashboard-header:last-child {
+  border-right: none;
+}
+
+.dashboard-header.name {
+  width: 140px;
+  min-width: 140px;
+}
+
+.dashboard-header.days {
+  width: 40px;
+  min-width: 40px;
+}
+
+.dashboard-header.tick-all {
+  width: 20px;
+  min-width: 20px;
+}
+
+.borders {
+  border-top: 1px solid #888;
+/*  border-bottom: 1px solid #888; */
+}
+
+.cell-dirty {
+  color: blue;
+}
+
+.approve {
+  float:right;
+  cursor: pointer;
+  background-color: rgba(193, 41, 0, 0.65);
+  width: 1em;
+  height: 1em;
+  margin-top:1px;
+}
+
+.approve.changed {
+  background-color: #8fbc8f;
+}

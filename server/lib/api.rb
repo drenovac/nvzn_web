@@ -20,6 +20,14 @@ config = {
     :driver => 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
 }
 
+#config = {
+#  :url => "jdbc:sqlserver://203.44.138.69;databaseName=NVZN11",
+#  :adapter => "jdbc",
+#  :username => "sa",
+#  :password => "edmen",
+#  :driver => 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
+#}
+
 use Rack::Deflater
 
 get '/api/v1.1/login' do
@@ -77,7 +85,7 @@ get '/api/v1.1/site/:customer/timecards' do
   ActiveRecord::Base.establish_connection( config )
   connection = ActiveRecord::Base.connection
 
-  customer = params[:customer]
+  customer_id = params[:customer]
   # customer = session[:id]
   if !params[:week] || params[:week] == 0
     date = Date.today
@@ -91,7 +99,8 @@ get '/api/v1.1/site/:customer/timecards' do
 
   sql =<<SQL
     SELECT ROSTER_TIMECARD.roster_date, ROSTER_TIMECARD.customer, ROSTER_TIMECARD.employee,
-    ROSTER_TIMECARD.ftime, ROSTER_TIMECARD.stime, employee.surname, employee.first_name,
+    convert(varchar, ROSTER_TIMECARD.ftime, 108) as finish, convert(varchar, ROSTER_TIMECARD.stime, 108) as start,
+    employee.surname, employee.first_name,
     employee.photo_path, employee.contact_numbers,
     employee.employee_a_street, employee.employee_a_suburb
     FROM  ROSTER_TIMECARD INNER JOIN
@@ -99,20 +108,24 @@ get '/api/v1.1/site/:customer/timecards' do
           CNA ON ROSTER_TIMECARD.customer = CNA.code
 
     WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_sunday}'
-    AND  customer = '#{customer}'
+    AND  customer = '#{customer_id}'
     ORDER BY customer,  employee, roster_date, stime, ftime
 SQL
 
-  response = {
-      :name => customer,
+  #puts sql
+
+  customer = {
+      :id => customer_id,
       :employees => {},
       :start => this_monday,
       :finish => next_sunday
   }
   results = connection.execute(sql)
   employees = {}
+  timecards = []
 
   results.each do |r|
+    tc_id = rand().to_s.slice(2..-1)
 
     employee_id = r['employee']
     employees[employee_id] ||= {
@@ -125,16 +138,25 @@ SQL
       :timeCards => []
     }
 
-    employees[employee_id][:timeCards] << {
+    employees[employee_id][:timeCards] << tc_id
+    timecards << {
+      :id => tc_id,
+      :employee => employee_id,
       :customer => r['customer'],
       :date => r['roster_date'],
-      :start => r['stime'],
-      :finish => r['ftime']
+      :start => r['start'],
+      :finish => r['finish']
     }
   end
 
-  response[:employees] = employees.map {|key| key[1] }
-  employees.collect
+  customer[:employees] = employees.map {|key| key[1][:id] }
+  #employees.collect
+
+  response = {
+    :customer => customer,
+    :employees => employees.map {|key| key[1] },
+    :timecards => timecards
+  }
 
   ActiveRecord::Base.clear_active_connections!
 
@@ -163,7 +185,7 @@ get '/api/v1.1/employee/timecards' do
 
   sql =<<SQL
     SELECT ROSTER_TIMECARD.roster_date, ROSTER_TIMECARD.customer, ROSTER_TIMECARD.employee,
-    ROSTER_TIMECARD.ftime, ROSTER_TIMECARD.stime, employee.surname, employee.first_name
+    substring(convert(varchar ROSTER_TIMECARD.ftime 108)), ROSTER_TIMECARD.stime, employee.surname, employee.first_name
     FROM  ROSTER_TIMECARD INNER JOIN
           EMPLOYEE ON ROSTER_TIMECARD.employee = EMPLOYEE.employee INNER JOIN
           CNA ON ROSTER_TIMECARD.customer = CNA.code
@@ -200,6 +222,36 @@ SQL
 
   response.to_json
 
+end
+
+post '/api/v1.1/timecards' do
+  json = request.body.read
+  changeset = JSON.parse json
+  puts "Got changeset: "+changeset.inspect
+  rows = []
+
+  sql =<<SQL
+    INSERT INTO APPROVED_TIMESHEETS (rtc_id, user_id, stime, ftime) VALUES
+SQL
+
+  changeset['TimeCard']['attributes'].each do |id, tc|
+    rows << "('#{id}', '#{session[:username]}', '#{tc['start']}', '#{tc['finish']}')"
+  end
+  sql << rows.join(", ")
+
+  json_sql =<<SQL
+    INSERT INTO APPROVED_TIMESHEETS (misc_2) VALUES
+    ('#{json}')
+SQL
+
+  ActiveRecord::Base.establish_connection( config )
+  connection = ActiveRecord::Base.connection
+  results = connection.execute(sql)
+  #connection.execute(json_sql)
+
+  ActiveRecord::Base.clear_active_connections!
+
+  body ( {:status => 'ok'} ).to_json
 end
 
 # get '/api/:path' do

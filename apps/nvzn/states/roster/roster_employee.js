@@ -11,7 +11,7 @@ Nvzn.ROSTER_EMPLOYEE = Ki.State.design({
       Nvzn.rosterController.set('loading', YES);
       Nvzn.loadingSheet.append();
       Nvzn.getPath('mainPage.tabView').set('items', [
-        {title:'All Sites', value:'all_sites'}
+        {title: 'My Rosters', value:'all_sites'}
       ]).set('nowShowing', 'all_sites');
       Nvzn.getEmployeeData();
     },
@@ -22,10 +22,10 @@ Nvzn.ROSTER_EMPLOYEE = Ki.State.design({
     },
 
     dataDidLoad: function() {
-      Nvzn.setIfChanged('rosterContent', Nvzn.employeeController);
+//      Nvzn.setIfChanged('rosterContent', Nvzn.employeeController);
       this.gotoState('SHOWING_EMPLOYEE');
       this.invokeLater(function(){
-        Nvzn.employeeController.propertyDidChange('customerTimecards')
+        Nvzn.employeeController.propertyDidChange('customerTimecards');
       });
     }
   }),

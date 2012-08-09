@@ -16,10 +16,12 @@ Nvzn.TimeCard = SC.Record.extend(
 
 //  employee:  SC.Record.toOne('Nvzn.Employee'),
 
+  primaryKey: 'id',
   date: SC.Record.attr('String'),
   start: SC.Record.attr('String'),
   finish: SC.Record.attr('String'),
   customer: SC.Record.attr('String'),
+  employee: SC.Record.toOne('Nvzn.Employee'),
 
   timeDisplay: function() {
     var start = this.timeFromString('start'),
@@ -29,7 +31,7 @@ Nvzn.TimeCard = SC.Record.extend(
 
   dateObject: function() {
     return SC.DateTime.parse(
-      this.get('date')+" "+this.get('start').split(" ")[1],
+      this.get('date')+" "+this.get('start'),
       "%Y-%m-%d %H:%M:%S"
     );
   }.property('date').cacheable(),
@@ -48,11 +50,34 @@ Nvzn.TimeCard = SC.Record.extend(
 
   // Helper functions
   timeFromString: function(prop) {
-    var split = this.get(prop).split(" ");
-    if (split.length == 1) return "00:00";
-    split = split[1].split(':');
+//    return this.get(prop);
+//    var split = this.get(prop).split(" ");
+//    if (split.length == 1) return "00:00";
+    split = this.get(prop).split(':');
     split.pop();
     return split.join(':');
   }
 
 }) ;
+
+Nvzn.TimeCard.fieldFormatter = function(items) {
+  var ret = "", classes = "editable-cell timecard-cell ", allClasses,
+    status, approveClass = 'approve';
+  items.forEach(function(item) {
+    status = item.get('status');
+    if (status & SC.Record.DIRTY) approveClass += ' changed'
+    ret += "<span class='"+approveClass+"' storeKey='"+item.get('storeKey')+"'> </span>";
+//    console.log("Rendering cell", item.get('storeKey'), item.statusString());
+    allClasses = classes + (items.get('status') & SC.Record.DIRTY ? "cell-dirty" : "");
+    ret += "<span id='tc-s-"+item.get('storeKey')+"' class='"+allClasses+"'>"
+      +item.timeFromString('start')
+      +"</span>&nbsp;-&nbsp;";
+
+    ret += "<span id='tc-f-"+item.get('storeKey')+"' class='"+allClasses+"'>"
+      +item.timeFromString('finish')
+      +"</span><br>"
+    ;
+  });
+  return ret;
+};
+

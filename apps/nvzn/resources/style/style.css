@@ -302,7 +302,7 @@
 .loading-spinner {
   background-image: static_url('spinner-black');
 }
-
+/*
 .dashboard-row-group {
   display: table-row-group;
 }
@@ -316,3 +316,4 @@
 .dashboard-cell.day, .dashboard-header.day {
   width: 11%;
 }
+*/

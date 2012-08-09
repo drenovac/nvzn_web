@@ -29,6 +29,7 @@ Nvzn.Customer = SC.Record.extend(
 //    );
 //  }.property().cacheable()
 
-  employees: SC.Record.toMany('Nvzn.Employee', {nested: YES})
+//  employees: SC.Record.toMany('Nvzn.Employee', {nested: YES})
+  employees: SC.Record.toMany('Nvzn.Employee')
 
 }) ;

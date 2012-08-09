@@ -15,7 +15,7 @@ Nvzn.employeeController = SC.ObjectController.create(
 
     // Content left blank, this is the Employee mode rootController
 
-    timeCardsBinding: '.content.timeCards',
+//    timeCardsBinding: '.content.timeCards',
     weekEndingBinding: 'Nvzn.weekEnding',
 
     customerTimecards:function () {
