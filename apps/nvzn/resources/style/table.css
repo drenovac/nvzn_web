@@ -116,12 +116,26 @@
 .approve {
   float:right;
   cursor: pointer;
-  background-color: rgba(193, 41, 0, 0.65);
+  background-color: rgba(193, 0, 11, 0.65);
   width: 1em;
   height: 1em;
   margin-top:1px;
 }
 
+/*
 .approve.changed {
-  background-color: #8fbc8f;
+  background-color: rgba(199, 104, 67, 0.65);
+}
+*/
+
+.approve.submitted {
+  background-color: rgba(49, 188, 182, 0.66);
+}
+
+.approve.approved {
+  background-color: rgba(143, 188, 143, 0.66);
+}
+
+.approve.changed {
+  background-color: rgba(231, 216, 4, 0.64);
 }

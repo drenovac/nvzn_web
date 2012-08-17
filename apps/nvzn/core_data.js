@@ -49,6 +49,7 @@ SC.mixin(Nvzn, {
     if (body.timecards && body.timecards.length) S.loadRecords(Nvzn.TimeCard, body.timecards);
     Nvzn.customerController.set('content', customer);
 //    console.log("Did Load site Data");
+    Nvzn.cleanLocal();
     Nvzn.statechart.sendEvent('dataDidLoad');
   },
 
@@ -75,21 +76,66 @@ SC.mixin(Nvzn, {
 
   },
 
-  submitTimeCards: function(changeset) {
-    var url = "/api/v1.1/timecards";
-    SC.Request.postUrl(url).notify(this, 'timeCardsDidSubmit').json().send(changeset);
+  cleanLocal: function() {
+    var tooOld = SC.DateTime.create().advance({day: -1}).get('milliseconds');
+    var sent = Nvzn.local.get('sent'),
+        data = Nvzn.local.get('data');
+    for (i in sent){
+      if (sent.hasOwnProperty(i)) {
+        if (sent[i] < tooOld) {
+          delete sent[i];
+          delete data[i];
+        }
+      }
+    }
+    Nvzn.local.set('sent', sent);
+    Nvzn.local.set('data', data);
   },
 
-  timeCardsDidSubmit: function() {
-    // Load timecards into store
-    var custCon = Nvzn.customerController,
-        storeKey = custCon.get('storeKey');
-    if (Nvzn.editScope) Nvzn.editScope.destroy();
-    Nvzn.editScope = Nvzn.store.chain();
-    var customer = Nvzn.editScope.materializeRecord(storeKey);
-    custCon.set('content', customer);
+  submitTimeCards: function(changeset) {
+    var url = "/api/v1.1/timecards";
+    SC.Request.postUrl(url).notify(this, 'timeCardsDidSubmit', changeset)
+      .json().send(changeset);
+  },
 
-    Nvzn.statechart.sendEvent('timeCardsSubmitted');
+  timeCardsDidSubmit: function(res, changeset) {
+    // Load timecards into store
+    if (SC.ok(res)) {
+      var custCon = Nvzn.customerController,
+          storeKey = custCon.get('storeKey'),
+          timecards = changeset.TimeCard,
+        now = SC.DateTime.create().get('milliseconds');
+
+      var sent = Nvzn.local.get('sent') || {},
+          data = Nvzn.local.get('data') || {};
+      // Mark all Timecards as approved
+      if(timecards) {
+        timecards.updated.forEach(function(id) {
+//          timecards.attributes[id]['approved'] = true;
+          // remember that we've sent this to the server
+          sent[id] = now;
+          data[id] = timecards.attributes[id];
+        });
+      }
+      Nvzn.local.set('sent', sent);
+      Nvzn.local.set('data', data);
+      this.invokeLater('cleanLocal', 50);
+
+      // Load the approved data into the real store
+      Nvzn.store.applyChangeset(changeset, 'Nvzn');
+
+      // Clean up old nested store, and make a new one.
+      if (Nvzn.editScope) Nvzn.editScope.destroy();
+      Nvzn.editScope = Nvzn.store.chain();
+
+      // Get nested version of customer
+      var customer = Nvzn.editScope.materializeRecord(storeKey);
+      custCon.set('content', customer);
+
+      Nvzn.statechart.sendEvent('timeCardsSubmitted');
+    } else {
+      throw "Bad Response from server ... do something useful here.";
+    }
   }
 
 });

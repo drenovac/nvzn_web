@@ -100,6 +100,7 @@ get '/api/v1.1/site/:customer/timecards' do
   sql =<<SQL
     SELECT ROSTER_TIMECARD.roster_date, ROSTER_TIMECARD.customer, ROSTER_TIMECARD.employee,
     convert(varchar, ROSTER_TIMECARD.ftime, 108) as finish, convert(varchar, ROSTER_TIMECARD.stime, 108) as start,
+    ROSTER_TIMECARD.ftime, ROSTER_TIMECARD.stime,
     employee.surname, employee.first_name,
     employee.photo_path, employee.contact_numbers,
     employee.employee_a_street, employee.employee_a_suburb
@@ -125,9 +126,9 @@ SQL
   timecards = []
 
   results.each do |r|
-    tc_id = rand().to_s.slice(2..-1)
-
     employee_id = r['employee']
+    tc_id = [employee_id,customer_id,r['roster_date'],r['start'],r['finish']].join("*")
+
     employees[employee_id] ||= {
       :first_name => r['first_name'],
       :last_name => r['surname'],
@@ -240,7 +241,7 @@ SQL
   sql << rows.join(", ")
 
   json_sql =<<SQL
-    INSERT INTO APPROVED_TIMESHEETS (misc_2) VALUES
+    INSERT INTO APPROVED_TIMESHEETS (misc_1) VALUES
     ('#{json}')
 SQL
 

@@ -412,12 +412,8 @@ Nvzn.mainPage = SC.Page.create({
     cellEditorFinished: function(item, value, target) {
       var matches = target.id.match(/tc-(\w)-(\d+)/),
         start = matches[1] === 's',
-        storeKey = parseInt(matches[2], 10),
-        timeCard = Nvzn.editScope.materializeRecord(storeKey);
-      console.log('updating timeCard: '+storeKey, "with value", value);
-
-      timeCard.setIfChanged(start ? 'start' : 'finish', value.trim()+":00");
-      Nvzn.mainPage.all_employees.displayDidChange();
+        storeKey = parseInt(matches[2], 10);
+      Nvzn.statechart.sendEvent('valueChanged', storeKey, [start, value]);
     },
 
     click: function(evt) {
@@ -439,7 +435,6 @@ Nvzn.mainPage = SC.Page.create({
       {
         title:"Mon",
         classNames:'day mon',
-        isEditable: true,
         key:1
       },
       {

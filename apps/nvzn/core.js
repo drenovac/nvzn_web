@@ -21,6 +21,8 @@ Nvzn = SC.Application.create(
   // connect to a backend server.  The default setup below connects the store
   // to any fixtures you define.
   store: SC.Store.create().from(SC.Record.fixtures),
+
+  local: SC.UserDefaults.create({ appDomain: "Nvzn" }),
   
   rosterContent: null,
 

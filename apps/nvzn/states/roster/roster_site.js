@@ -40,8 +40,29 @@ Nvzn.ROSTER_SITE = Ki.State.design({
       this.gotoState('SAVING_SITE');
     },
 
+    valueChanged: function(storeKey, params) {
+      var start = params[0],
+          value = params[1];
+      console.log('updating timeCard: '+storeKey, "with value", value);
+      var timeCard = Nvzn.editScope.materializeRecord(storeKey),
+          param = start ? 'start' : 'finish',
+          oldValue = timeCard.get(param),
+          newValue = value.trim()+":00";
+
+      if (newValue !== oldValue) {
+        timeCard.set(param, newValue);
+//        timeCard.set('approved', true);
+        Nvzn.mainPage.all_employees.displayDidChange();
+      }
+    },
+
     clickedApprove: function(storeKey) {
+      var timecard = Nvzn.editScope.materializeRecord(storeKey);
+      if (timecard.get('approved') || Nvzn.local.get('sent')[timecard.get('id')]) {
+        return;
+      }
       console.log("APPROVE!!", storeKey);
+//      timecard.set('approved', true);
       Nvzn.editScope.recordDidChange(null, null, storeKey, undefined, YES);
       Nvzn.mainPage.all_employees.displayDidChange();
     }
