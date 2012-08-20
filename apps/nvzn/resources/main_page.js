@@ -429,6 +429,12 @@ Nvzn.mainPage = SC.Page.create({
       if (target.className.indexOf("approve") >= 0)  {
         var storeKey = parseInt(target.getAttribute('storeKey'), 10);
         Nvzn.statechart.sendEvent('clickedApprove', storeKey);
+      } else if (target.className.indexOf('name')) {
+        var idx = target.parentNode.getAttribute('tvidx');
+        var content = this.get('content');
+        var item = content.objectAt(idx);
+//        console.log(item, item.toString());
+        this.set('selected', item);
       }
     }
   }),
