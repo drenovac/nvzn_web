@@ -44,7 +44,7 @@ Nvzn.mainPage = SC.Page.create({
             layout:{
               height:100
             },
-            childViews:'nameLabel nameView dateLabel dateView contactLabel contactView logoutButton'.w(),
+            childViews:'nameLabel nameView dateLabel dateView contactLabel contactView greetingLabel logoutButton'.w(),
             nameLabel:SC.View.extend({
               classNames:'label project'.w(),
               isVisibleBinding:SC.Binding.from('Nvzn.isSite'),
@@ -106,6 +106,14 @@ Nvzn.mainPage = SC.Page.create({
                 var numbers = this.getPath('content.contactNumbers');
                 return context.text(numbers ? numbers.without(" ").join(", ") : "");
               }
+            }),
+            greetingLabel: SC.LabelView.extend({
+              layout: {right: 100, width: 300, height:24, top:23},
+              textAlign: SC.ALIGN_RIGHT,
+              valueBinding: SC.Binding.from('Nvzn.loginController.fullName')
+                .transform(function(value) {
+                  return "You are logged in as: "+value;
+                })
             }),
             logoutButton: SC.ButtonView.extend({
               classNames: 'header-logout'.w(),
