@@ -6,4 +6,4 @@
 	url = git://github.com/erichocean/more_cowbell.git
 [submodule "frameworks/tableview"]
 	path = frameworks/tableview
-	url = git@github.com:erichocean/tableview.git
+	url=git@bitbucket.org:geoffreyd/tableview.git
