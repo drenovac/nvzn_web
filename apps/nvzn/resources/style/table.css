@@ -44,6 +44,20 @@
   vertical-align: middle;
 }
 
+.dashboard-cell.customer {
+  width: 10px;
+  min-width: 5px;
+  padding:0;
+  position: relative;
+}
+.dashboard-cell.customer>span {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
 .dashboard-cell.name {
   width: 140px;
   min-width: 140px;
@@ -87,6 +101,12 @@
 
 .dashboard-header:last-child {
   border-right: none;
+}
+
+.dashboard-header.customer {
+  width: 10px;
+  min-width: 5px;
+  padding:0;
 }
 
 .dashboard-header.name {

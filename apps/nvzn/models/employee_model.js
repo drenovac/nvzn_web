@@ -20,6 +20,7 @@ Nvzn.Employee = SC.Record.extend(
   contactNumbers: SC.Record.attr('Array', {key: 'contact_numbers' }),
   address: SC.Record.attr('String'),
   photoPath: SC.Record.attr('String', {key: 'photo_path'}),
+  customer: SC.Record.attr('String'),
 
 //  timeCards: SC.Record.toMany('Nvzn.TimeCard', {nested: YES}),
   timeCards: SC.Record.toMany('Nvzn.TimeCard'),

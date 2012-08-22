@@ -14,7 +14,7 @@ Nvzn = SC.Application.create(
   /** @scope Nvzn.prototype */ {
 
   NAMESPACE: 'Nvzn',
-  VERSION: '0.1.0',
+  VERSION: '20120822455-0-gec5225f-41',
 
   // This is your application store.  You will use this store to access all
   // of your model data.  You can also set a data source on this store to
@@ -54,7 +54,36 @@ Nvzn = SC.Application.create(
 
   isEmployee:function () {
     return this.get('mode') === 'employee';
-  }.property('mode')
+  }.property('mode'),
+
+  colors: {},
+  nextH: 30,
+  nextL: 50,
+  nextS: 50,
+  colorFor: function(id) {
+    var color = this.colors[id];
+    if (color) return color;
+    var h = this.nextH, s = this.nextS, l = this.nextL;
+    color=this.colors[id]="hsl(%@,%@%,%@%)".fmt(h,s,l);
+    h = this.nextH += 50;
+    if (h > 360) {
+      // start the h loop again, with an overset
+      this.nextH = h - 360;
+      // then start the next set of colors.
+      if (l == 30) { // vibrant
+        this.nextL = 50;
+        this.nextS = 50;
+      } else if( l == 50 ) { // dark
+        this.nextL = 70;
+        this.nextS = 30;
+      } else { // light
+        this.nextL = 30;
+        this.nextS = 70;
+      }
+    }
+
+    return color;
+  }
 
 }) ;
 

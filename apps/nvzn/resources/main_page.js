@@ -44,7 +44,7 @@ Nvzn.mainPage = SC.Page.create({
             layout:{
               height:100
             },
-            childViews:'nameLabel nameView dateLabel dateView contactLabel contactView logoutButton'.w(),
+            childViews:'nameLabel nameView dateLabel dateView contactLabel contactView greetingLabel logoutButton'.w(),
             nameLabel:SC.View.extend({
               classNames:'label project'.w(),
               isVisibleBinding:SC.Binding.from('Nvzn.isSite'),
@@ -106,6 +106,14 @@ Nvzn.mainPage = SC.Page.create({
                 var numbers = this.getPath('content.contactNumbers');
                 return context.text(numbers ? numbers.without(" ").join(", ") : "");
               }
+            }),
+            greetingLabel: SC.LabelView.extend({
+              layout: {right: 100, width: 300, height:24, top:23},
+              textAlign: SC.ALIGN_RIGHT,
+              valueBinding: SC.Binding.from('Nvzn.loginController.fullName')
+                .transform(function(value) {
+                  return "You are logged in as: "+value;
+                })
             }),
             logoutButton: SC.ButtonView.extend({
               classNames: 'header-logout'.w(),
@@ -233,11 +241,21 @@ Nvzn.mainPage = SC.Page.create({
         width:210
       },
 
-      childViews:'calendarView jobsView'.w(),
+      childViews:'logo calendarView jobsView'.w(),
+
+      logo: SC.View.extend({
+        layout: {height: 70},
+        didCreateLayer: function() {
+          var el = this.$()[0];
+          el.title = Nvzn.VERSION;
+//          debugger;
+        }
+      }),
 
       calendarView:SC.View.extend({
         layout:{
-          top:70
+          top:70,
+          height: 240
         },
 
         childViews:'headerView todayButtonView calendarView'.w(),
@@ -335,9 +353,16 @@ Nvzn.mainPage = SC.Page.create({
               classNames:'sidebar-jobs-list-item',
 
               render:function (context) {
-                if (this.get('isSelected')) context.addClass('sel');
+                if (this.get('isSelected')) {
+                  context.addClass('sel');
+                }
 
-                context.begin('div').addClass('sidebar-jobs-item-number').text(this.getPath('content')).end();
+                context.begin('div').addClass('sidebar-jobs-item-number')
+                  .text(this.getPath('content'))
+                .end()
+                .begin('span')
+                  .addStyle('background-color', Nvzn.colorFor(this.get('content')))
+                .end();
                 //                  context.begin('div').addClass('sidebar-jobs-item-name').text(this.getPath('content')).end();
               }
 
@@ -351,6 +376,15 @@ Nvzn.mainPage = SC.Page.create({
 
   all_employees: EO.TableView.design({
     columns:[
+      {
+        title:"",
+        classNames:'customer',
+        key: 'customer',
+        formatter: function(value) {
+          var color = Nvzn.colorFor(value);
+          return "<span style='background-color:%@'></span>".fmt(color);
+        }
+      },
       {
         title:"Employee",
         classNames:'name',
@@ -421,6 +455,12 @@ Nvzn.mainPage = SC.Page.create({
       if (target.className.indexOf("approve") >= 0)  {
         var storeKey = parseInt(target.getAttribute('storeKey'), 10);
         Nvzn.statechart.sendEvent('clickedApprove', storeKey);
+      } else if (target.className.indexOf('name')) {
+        var idx = target.parentNode.getAttribute('tvidx');
+        var content = this.get('content');
+        var item = content.objectAt(idx);
+//        console.log(item, item.toString());
+        this.set('selected', item);
       }
     }
   }),

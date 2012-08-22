@@ -1,3 +1,9 @@
 [submodule "frameworks/ki"]
 	path = frameworks/ki
 	url = git://github.com/FrozenCanuck/Ki.git
+[submodule "frameworks/more_cowbell"]
+	path = frameworks/more_cowbell
+	url = git://github.com/erichocean/more_cowbell.git
+[submodule "frameworks/tableview"]
+	path = frameworks/tableview
+	url=git@bitbucket.org:geoffreyd/tableview.git

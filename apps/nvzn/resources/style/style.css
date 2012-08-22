@@ -27,6 +27,15 @@
   color: white !important; 
 }
 
+.sidebar-jobs-list-item>span {
+  position: absolute;
+  right: 5px;
+  height: 24px;
+  width: 24px;
+  top: 50%;
+  margin-top: -12px ;
+}
+
 .sidebar-jobs-item-number, .sidebar-jobs-item-name, .header-name, .date-value {
   position: absolute;
   font-weight: bold;
@@ -302,18 +311,3 @@
 .loading-spinner {
   background-image: static_url('spinner-black');
 }
-/*
-.dashboard-row-group {
-  display: table-row-group;
-}
-.dashboard-row {
-  display: table-row;
-}
-.dashboard-cell, .dashboard-header {
-  display: table-cell;
-}
-
-.dashboard-cell.day, .dashboard-header.day {
-  width: 11%;
-}
-*/

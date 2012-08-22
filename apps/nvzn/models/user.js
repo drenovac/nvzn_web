@@ -30,7 +30,7 @@ Nvzn.User = SC.Record.extend(
     "email": SC.Record.attr(String),
 
     fullName: function() {
-      return [this.get('firstName'), this.get('lastName')].join(" ").strip();
+      return [this.get('firstName'), this.get('lastName')].join(" ").trim();
     }.property('firstName', 'lastName')
 
 }) ;
