@@ -353,9 +353,16 @@ Nvzn.mainPage = SC.Page.create({
               classNames:'sidebar-jobs-list-item',
 
               render:function (context) {
-                if (this.get('isSelected')) context.addClass('sel');
+                if (this.get('isSelected')) {
+                  context.addClass('sel');
+                }
 
-                context.begin('div').addClass('sidebar-jobs-item-number').text(this.getPath('content')).end();
+                context.begin('div').addClass('sidebar-jobs-item-number')
+                  .text(this.getPath('content'))
+                .end()
+                .begin('span')
+                  .addStyle('background-color', Nvzn.colorFor(this.get('content')))
+                .end();
                 //                  context.begin('div').addClass('sidebar-jobs-item-name').text(this.getPath('content')).end();
               }
 
@@ -369,6 +376,15 @@ Nvzn.mainPage = SC.Page.create({
 
   all_employees: EO.TableView.design({
     columns:[
+      {
+        title:"",
+        classNames:'customer',
+        key: 'customer',
+        formatter: function(value) {
+          var color = Nvzn.colorFor(value);
+          return "<span style='background-color:%@'></span>".fmt(color);
+        }
+      },
       {
         title:"Employee",
         classNames:'name',

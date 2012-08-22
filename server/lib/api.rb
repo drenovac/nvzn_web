@@ -133,6 +133,7 @@ SQL
 
     employees[employee_id] ||= {
       :first_name => r['first_name'],
+      :customer => r['customer'],
       :last_name => r['surname'],
       :photo_path=> r['photo_path'],
       :contact_numbers => r['contact_numbers'].to_s.split('<vm/>'),
