@@ -24,7 +24,10 @@ Nvzn.ROSTER = Ki.State.design({
     
   },
 
-  customerSelectionChanged: function() {
+  customerSelectionChangedOFF: function() {
+    console.log("You changed your Site Selection");
+//    return;
+
     var sel = Nvzn.customersController.get('selection');
     if (!sel) return;
 

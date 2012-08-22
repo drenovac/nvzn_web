@@ -28,7 +28,7 @@ SC.mixin(Nvzn, {
 
     if(SC.empty(customer)) {
       var sel = Nvzn.customersController.get('selection');
-      if (sel) customer = sel.firstObject();
+      if (sel && sel.get('length')) customer = sel.toArray().join(",");
     }
 
     if(SC.empty(customer)) return;

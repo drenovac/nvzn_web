@@ -85,7 +85,9 @@ get '/api/v1.1/site/:customer/timecards' do
   ActiveRecord::Base.establish_connection( config )
   connection = ActiveRecord::Base.connection
 
-  customer_id = params[:customer]
+  customer_id = params[:customer].gsub(/['"]/, "").split(",").map do |c|
+    "'#{c}'"
+  end.join(",")
   # customer = session[:id]
   if !params[:week] || params[:week] == 0
     date = Date.today
@@ -109,7 +111,7 @@ get '/api/v1.1/site/:customer/timecards' do
           CNA ON ROSTER_TIMECARD.customer = CNA.code
 
     WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_sunday}'
-    AND  customer = '#{customer_id}'
+    AND  customer IN (#{customer_id})
     ORDER BY customer,  employee, roster_date, stime, ftime
 SQL
 
@@ -131,6 +133,7 @@ SQL
 
     employees[employee_id] ||= {
       :first_name => r['first_name'],
+      :customer => r['customer'],
       :last_name => r['surname'],
       :photo_path=> r['photo_path'],
       :contact_numbers => r['contact_numbers'].to_s.split('<vm/>'),
