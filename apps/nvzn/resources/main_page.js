@@ -241,11 +241,21 @@ Nvzn.mainPage = SC.Page.create({
         width:210
       },
 
-      childViews:'calendarView jobsView'.w(),
+      childViews:'logo calendarView jobsView'.w(),
+
+      logo: SC.View.extend({
+        layout: {height: 70},
+        didCreateLayer: function() {
+          var el = this.$()[0];
+          el.title = Nvzn.VERSION;
+//          debugger;
+        }
+      }),
 
       calendarView:SC.View.extend({
         layout:{
-          top:70
+          top:70,
+          height: 240
         },
 
         childViews:'headerView todayButtonView calendarView'.w(),
