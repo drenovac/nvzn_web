@@ -1,5 +1,5 @@
 Nvzn.ROSTER_SITE = Ki.State.design({
-  initialSubstate: 'LOADING_SITE',
+  initialSubstate: 'START_SITE',
 
   enterState: function() {
     Nvzn.set('mode', 'site');
@@ -7,6 +7,13 @@ Nvzn.ROSTER_SITE = Ki.State.design({
       {title:'All Employees', value:'all_employees'}
     ]).set('nowShowing', 'all_employees');
   },
+
+  START_SITE: Ki.State.design({
+    customerSelectionChanged: function() {
+      console.log('first site selection changed...');
+      this.gotoState('LOADING_SITE');
+    }
+  }),
 
   LOADING_SITE: Ki.State.design({
     enterState: function() {
@@ -33,6 +40,7 @@ Nvzn.ROSTER_SITE = Ki.State.design({
     },
 
     customerSelectionChanged: function() {
+      console.log('site selection changed...');
       this.gotoState('LOADING_SITE');
     },
 
