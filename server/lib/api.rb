@@ -129,7 +129,7 @@ SQL
 
   results.each do |r|
     employee_id = r['employee']
-    tc_id = [employee_id,customer_id,r['roster_date'],r['start'],r['finish']].join("*")
+    tc_id = [employee_id,r['customer'],r['roster_date'],r['start'],r['finish']].join("*")
 
     employees[employee_id] ||= {
       :first_name => r['first_name'],
