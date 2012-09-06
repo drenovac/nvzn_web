@@ -369,7 +369,32 @@ Nvzn.mainPage = SC.Page.create({
     })
   }),
 
+  ohs_report: SC.FormView.design({
+    layout:{top:0, left:0, right:0, bottom:0},
+    flowPadding: { left: 0, bottom: 0, right: 0, top: 10 },
+//            isVisibleBinding: SC.Binding.bool('.guid'),
+    contentBinding:'Nvzn.formController',
+    childViews:"title surname givenName clientName weekEnding".w(),
 
+    title:SC.FormView.row("", SC.LabelView.design({
+      layout:{centerY:0, width:200, height:30},
+      textAlign: SC.ALIGN_CENTER,
+      value:"OHS Concern/Hazard Report"
+    })),
+    surname:SC.FormView.row("Surname:", SC.TextFieldView.design({
+      layout:{ width:120, height:18 }
+    })),
+    givenName:SC.FormView.row("Given Name:".loc(), SC.TextFieldView.design({
+      flowPadding: { left: 0, bottom: 0, right: 0, top: 10 },
+      layout:{width:120, height:18}
+    })),
+    clientName:SC.FormView.row("Total:", SC.TextFieldView.design({
+      layout:{width:120, height:18}
+    })),
+    weekEnding: SC.FormView.row('Week Ending:', SC.TextFieldView.design({
+      layout: {width: 80, height: 18}
+    }))
+  }),
 
   all_employees: EO.TableView.design({
     columns:[

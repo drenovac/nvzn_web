@@ -5,6 +5,19 @@ Nvzn.APP = Ki.State.design({
   enterState: function() {
     SC.routes.set('location', "mainPage/mainPane");
     Nvzn.getPath('mainPage.mainPane').append() ;
+
+    // Set Tabs
+    if (Nvzn.loginController.get('role') == 'site') {
+      Nvzn.getPath('mainPage.tabView').set('items', [
+        {title:'All Employees', value:'all_employees'}
+      ]);
+    } else {
+      Nvzn.getPath('mainPage.tabView').set('items', [
+        {title: 'My Rosters', value:'all_sites'},
+        {title: 'OSH Report', value:'ohs_report'}
+      ]);
+    }
+
   },
 
   tabDidChange:function () {
@@ -15,6 +28,10 @@ Nvzn.APP = Ki.State.design({
 
       case 'all_sites':
         this.gotoState('APP.ROSTER');
+        break;
+
+      case 'ohs_report':
+        this.gotoState('OHS_REPORT');
         break;
 
 //      case 'subcontractors':
@@ -34,5 +51,6 @@ Nvzn.APP = Ki.State.design({
     window.location.reload();
   },
 
-  ROSTER: Ki.State.plugin('Nvzn.ROSTER')
+  ROSTER: Ki.State.plugin('Nvzn.ROSTER'),
+  OHS_REPORT: Ki.State.plugin('Nvzn.OHS_REPORT')
 });

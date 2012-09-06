@@ -3,9 +3,7 @@ Nvzn.ROSTER_SITE = Ki.State.design({
 
   enterState: function() {
     Nvzn.set('mode', 'site');
-    Nvzn.getPath('mainPage.mainPane.tabView').set('items', [
-      {title:'All Employees', value:'all_employees'}
-    ]).set('nowShowing', 'all_employees');
+    Nvzn.getPath('mainPage.tabView').set('nowShowing', 'all_employees');
   },
 
   START_SITE: Ki.State.design({

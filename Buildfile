@@ -5,7 +5,7 @@
 
 # Add initial buildfile information here
 config :nvzn,
-    :required => [:sproutcore, :"more_cowbell", :ki, :tableview, :calendar],
+    :required => [:sproutcore, :"more_cowbell", :ki, :tableview, :calendar, :'sproutcore/forms'],
     :theme => 'sproutcore/ace',
     :load_fixtures => true
 

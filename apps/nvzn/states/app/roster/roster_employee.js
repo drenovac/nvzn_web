@@ -4,15 +4,13 @@ Nvzn.ROSTER_EMPLOYEE = Ki.State.design({
 
   enterState: function() {
     Nvzn.set('mode', 'employee');
+    Nvzn.getPath('mainPage.tabView').set('nowShowing', 'all_sites');
   },
 
   LOADING_EMPLOYEE: Ki.State.design({
     enterState: function() {
       Nvzn.rosterController.set('loading', YES);
       Nvzn.loadingSheet.append();
-      Nvzn.getPath('mainPage.tabView').set('items', [
-        {title: 'My Rosters', value:'all_sites'}
-      ]).set('nowShowing', 'all_sites');
       Nvzn.getEmployeeData();
     },
 
