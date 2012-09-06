@@ -55,7 +55,7 @@ Nvzn.ROSTER_SITE = Ki.State.design({
       var timeCard = Nvzn.editScope.materializeRecord(storeKey),
           param = start ? 'start' : 'finish',
           oldValue = timeCard.get(param),
-          newValue = value.trim()+":00";
+          newValue = Nvzn.formatTime(value);
 
       if (newValue !== oldValue) {
         timeCard.set(param, newValue);
