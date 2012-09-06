@@ -189,7 +189,8 @@ get '/api/v1.1/employee/timecards' do
 
   sql =<<SQL
     SELECT ROSTER_TIMECARD.roster_date, ROSTER_TIMECARD.customer, ROSTER_TIMECARD.employee,
-    substring(convert(varchar ROSTER_TIMECARD.ftime 108)), ROSTER_TIMECARD.stime, employee.surname, employee.first_name
+    convert(varchar, ROSTER_TIMECARD.ftime, 108) as finish, convert(varchar, ROSTER_TIMECARD.stime, 108) as start,
+    ROSTER_TIMECARD.ftime, ROSTER_TIMECARD.stime, employee.surname, employee.first_name
     FROM  ROSTER_TIMECARD INNER JOIN
           EMPLOYEE ON ROSTER_TIMECARD.employee = EMPLOYEE.employee INNER JOIN
           CNA ON ROSTER_TIMECARD.customer = CNA.code
@@ -199,28 +200,39 @@ get '/api/v1.1/employee/timecards' do
     ORDER BY employee, customer, roster_date, stime, ftime
 SQL
 
-  response = nil
+  emp = nil
   results = connection.execute(sql)
   employees = {}
+  timecards = []
 
   results.each do |r|
+    employee_id = r['employee']
+    tc_id = [employee_id,r['customer'],r['roster_date'],r['start'],r['finish']].join("*")
 
-    response ||= {
+    emp ||= {
       :first_name => r['first_name'],
       :last_name => r['surname'],
-      :id => employee,
+      :id => employee_id,
       :timeCards => []
     }
 
-    response[:timeCards] << {
+    emp[:timeCards] << tc_id
+    timecards << {
+      :id => tc_id,
+      :employee => employee_id,
       :customer => r['customer'],
       :date => r['roster_date'],
-      :start => r['stime'],
-      :finish => r['ftime']
+      :start => r['start'],
+      :finish => r['finish']
     }
   end
+
+  emp ||= {:id => employee, timeCards => []}
   
-  response = {:id => employee, :timeCards => []} unless response
+  response = {
+    :employee => emp,
+    :timecards => timecards
+  }
 
   ActiveRecord::Base.clear_active_connections!
 
