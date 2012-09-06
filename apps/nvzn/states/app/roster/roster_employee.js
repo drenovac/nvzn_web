@@ -5,6 +5,8 @@ Nvzn.ROSTER_EMPLOYEE = Ki.State.design({
   enterState: function() {
     Nvzn.set('mode', 'employee');
     Nvzn.getPath('mainPage.tabView').set('nowShowing', 'all_sites');
+    Nvzn.getPath('mainPage.submit').set('isVisible', NO);
+    Nvzn.getPath('mainPage.header').set('isVisible', YES);
   },
 
   LOADING_EMPLOYEE: Ki.State.design({

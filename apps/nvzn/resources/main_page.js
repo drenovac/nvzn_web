@@ -1,6 +1,8 @@
 Nvzn.mainPage = SC.Page.create({
 
   tabView: SC.outlet('mainPane.pageView.mainView.contentView.tabView'),
+  submit: SC.outlet('mainPane.pageView.mainView.footerView.submitButton'),
+  header: SC.outlet('mainPane.pageView.mainView.headerView'),
 
   mainPane:SC.MainPane.design({
     calendar: SC.outlet('sidebarView.calendarView.calendarView'),
@@ -43,7 +45,13 @@ Nvzn.mainPage = SC.Page.create({
 
           classNames:'page-header'.w(),
           layout:{height:100},
-          childViews:'nameLabel nameView dateLabel dateView contactLabel contactView greetingLabel logoutButton'.w(),
+          childViews: ('nameLabel nameView dateLabel dateView contactLabel ' +
+            'contactView titleView greetingLabel logoutButton').w(),
+
+          titleView: SC.LabelView.extend({
+            layout: { width: 300, top: 70, centerX: 0, height: 30 },
+            textAlign: SC.ALIGN_CENTER
+          }),
           nameLabel:SC.View.extend({
             classNames:'label project'.w(),
             isVisibleBinding:SC.Binding.from('Nvzn.isSite'),
@@ -103,7 +111,7 @@ Nvzn.mainPage = SC.Page.create({
             }
           }),
           greetingLabel: SC.LabelView.extend({
-            layout: {right: 100, width: 300, height:24, top:23},
+            layout: {right: 100, width: 300, height:24, top:15},
             textAlign: SC.ALIGN_RIGHT,
             valueBinding: SC.Binding.from('Nvzn.loginController.fullName')
               .transform(function(value) {
@@ -190,7 +198,7 @@ Nvzn.mainPage = SC.Page.create({
         }),
 
         footerView:SC.View.extend({
-          childViews:'approveButton'.w(),
+          childViews:'submitButton'.w(),
 
           layout:{
             bottom:0,
@@ -211,7 +219,7 @@ Nvzn.mainPage = SC.Page.create({
             title:'Save'
           }),
 
-          approveButton:SC.ButtonView.extend({
+          submitButton:SC.ButtonView.extend({
             layout:{
               centerY:0,
               right:40,
@@ -219,7 +227,7 @@ Nvzn.mainPage = SC.Page.create({
               width:120
             },
             target:Nvzn.statechart,
-            action:'submitApprovals',
+            action:'submit',
             title:'Submit Approvals'
           })
 
@@ -369,32 +377,7 @@ Nvzn.mainPage = SC.Page.create({
     })
   }),
 
-  ohs_report: SC.FormView.design({
-    layout:{top:0, left:0, right:0, bottom:0},
-    flowPadding: { left: 0, bottom: 0, right: 0, top: 10 },
-//            isVisibleBinding: SC.Binding.bool('.guid'),
-    contentBinding:'Nvzn.formController',
-    childViews:"title surname givenName clientName weekEnding".w(),
-
-    title:SC.FormView.row("", SC.LabelView.design({
-      layout:{centerY:0, width:200, height:30},
-      textAlign: SC.ALIGN_CENTER,
-      value:"OHS Concern/Hazard Report"
-    })),
-    surname:SC.FormView.row("Surname:", SC.TextFieldView.design({
-      layout:{ width:120, height:18 }
-    })),
-    givenName:SC.FormView.row("Given Name:".loc(), SC.TextFieldView.design({
-      flowPadding: { left: 0, bottom: 0, right: 0, top: 10 },
-      layout:{width:120, height:18}
-    })),
-    clientName:SC.FormView.row("Total:", SC.TextFieldView.design({
-      layout:{width:120, height:18}
-    })),
-    weekEnding: SC.FormView.row('Week Ending:', SC.TextFieldView.design({
-      layout: {width: 80, height: 18}
-    }))
-  }),
+  ohs_report: Nvzn.OhsReportView,
 
   all_employees: EO.TableView.design({
     columns:[

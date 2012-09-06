@@ -4,6 +4,8 @@ Nvzn.ROSTER_SITE = Ki.State.design({
   enterState: function() {
     Nvzn.set('mode', 'site');
     Nvzn.getPath('mainPage.tabView').set('nowShowing', 'all_employees');
+    Nvzn.getPath('mainPage.submit').set('title', 'Submit Approvals');
+    Nvzn.getPath('mainPage.header').set('isVisible', YES);
   },
 
   START_SITE: Ki.State.design({
@@ -42,7 +44,7 @@ Nvzn.ROSTER_SITE = Ki.State.design({
       this.gotoState('LOADING_SITE');
     },
 
-    submitApprovals: function() {
+    submit: function() {
       this.gotoState('SAVING_SITE');
     },
 
