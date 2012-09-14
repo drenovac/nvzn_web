@@ -270,29 +270,6 @@ SQL
   body ( {:status => 'ok'} ).to_json
 end
 
-# get '/api/:path' do
-#   path = params[:path]
-#   url = "#{COUCH}/#{path}"
-#   puts "GET #{url}"
-#   begin
-#     data = RestClient.get url
-#   rescue => e
-#     e.response
-#   end
-# end
-# 
-# post '/api/:path' do
-#   path = params[:path]
-#   # this is a preferences request
-#   url = "#{DB}/#{path}"
-#   puts "POST #{url}"
-#   puts request.body.string
-#   begin
-#     data = RestClient.post url, request.body
-#   rescue => e
-#     e.response
-#   end
-# end
 
 get '/favicon.ico' do
   return
