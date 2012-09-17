@@ -16,6 +16,14 @@ Nvzn = SC.Application.create(
   NAMESPACE: 'Nvzn',
   VERSION: '20120822455-0-gec5225f-41',
 
+
+  /*
+   * Permissions
+   */
+  canEditManager: NO,
+  canApproveManager: NO,
+
+
   // This is your application store.  You will use this store to access all
   // of your model data.  You can also set a data source on this store to
   // connect to a backend server.  The default setup below connects the store
