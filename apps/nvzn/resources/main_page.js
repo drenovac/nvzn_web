@@ -333,7 +333,7 @@ Nvzn.mainPage = SC.Page.create({
             left:13,
             width:80
           },
-          isVisibleBinding:SC.Binding.from('Nvzn.isSite'),
+          //isVisibleBinding:SC.Binding.from('Nvzn.isSite'),
 
           render:function (context, firstTime) {
             return context.text('Where');
@@ -478,6 +478,11 @@ Nvzn.mainPage = SC.Page.create({
         this.set('selected', item);
       }
     }
+  }),
+
+  sites_by_week: Nvzn.WeeklyView.design({
+    contentBinding: 'Nvzn.timeCardsByWeekController.arrangedObjects',
+    weeksToShowBinding: 'Nvzn.timeCardsByWeekController.weeksToShow'
   }),
 
   all_sites: EO.TableView.design({

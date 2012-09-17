@@ -192,7 +192,11 @@ get '/api/v1.1/employee/timecards' do
     date = Date.today + params[:week].to_i.weeks
   end
   this_monday = date.monday.to_formatted_s("%Y-%m-%d")
-  next_sunday = date.sunday.to_formatted_s("%Y-%m-%d")
+  if params[:weeks]
+    next_sunday = (date+params[:weeks].to_i.weeks).sunday.to_formatted_s("%Y-%m-%d")
+  else
+    next_sunday = date.sunday.to_formatted_s("%Y-%m-%d")
+  end
   # this_monday = '2010-09-27'
   # next_friday = '2010-10-03'
 

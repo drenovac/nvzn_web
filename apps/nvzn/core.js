@@ -50,6 +50,10 @@ Nvzn = SC.Application.create(
      return Nvzn.weekEndingFor(this.get('selectedDate'));
   }.property('selectedDate').cacheable(),
 
+  startOfWeek: function() {
+    return Nvzn.startOfWeekFor(this.get('selectedDate'));
+  }.property('selectedDate').cacheable(),
+
   selectedWeek: function() {
     var date = this.get('selectedDate');
     return date.get('week1');

@@ -16,3 +16,25 @@ Nvzn.timeCardsController = SC.ArrayController.create(
   contentBinding: 'Nvzn.employeeController.timeCards'
 
 }) ;
+
+
+
+Nvzn.timeCardsByWeekController = SC.ArrayController.create(
+/** @scope Nvzn.timeCardsController.prototype */ {
+
+    timeCardsBinding: 'Nvzn.employeeController.timeCards',
+    weeksToShow: 2,
+    startOfWeekBinding: 'Nvzn.startOfWeek',
+
+    timeCardsDidChange: function() {
+      console.log('TimeCards or startOfWeek did change')
+
+      var timecards = this.get('timeCards'),
+        weeksToShow = this.get('weeksToShow'),
+        daysToShow = 7 * weeksToShow;
+
+
+
+    }.observes('timeCards', 'startOfWeek', 'weeksToShow')
+
+});
