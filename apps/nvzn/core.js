@@ -14,7 +14,15 @@ Nvzn = SC.Application.create(
   /** @scope Nvzn.prototype */ {
 
   NAMESPACE: 'Nvzn',
-  VERSION: '20120822455-0-gec5225f-41',
+  VERSION: '20120917-0-gb7244ae-52',
+
+
+  /*
+   * Permissions
+   */
+  canEditManager: NO,
+  canApproveManager: NO,
+
 
   // This is your application store.  You will use this store to access all
   // of your model data.  You can also set a data source on this store to
@@ -55,6 +63,16 @@ Nvzn = SC.Application.create(
   isEmployee:function () {
     return this.get('mode') === 'employee';
   }.property('mode'),
+
+  formatTime: function(str) {
+    str = str.trim();
+    var split = str.split(":");
+    if (split.length <= 2) split.push("00"); // we might have only minutes and hours
+    if (split.length <= 2) split.push("00"); // we will have had only the hour
+    if (split[0].length < 2) split[0] = "0"+split[0];
+    if (split[1].length < 2) split[1] = split[1]+"0";
+    return split.join(":");
+  },
 
   colors: {},
   nextH: 30,

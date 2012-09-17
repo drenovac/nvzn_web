@@ -61,15 +61,18 @@ Nvzn.TimeCard = SC.Record.extend(
 }) ;
 
 Nvzn.TimeCard.fieldFormatter = function(items) {
-  var ret = "", classes = "editable-cell timecard-cell ", allClasses,
+  var ret = "", classes = "timecard-cell ", allClasses,
     status, approveClass = 'approve',
     sent = Nvzn.local.getPath('sent');
+  if (Nvzn.canEditManager) classes = "editable-cell "+classes;
   items.forEach(function(item) {
     status = item.get('status');
     if (status & SC.Record.DIRTY) approveClass += ' changed';
     if (sent && sent[item.get('id')]) approveClass += " submitted";
     if (item.get('approved')) approveClass += ' approved';
-    ret += "<span class='"+approveClass+"' storeKey='"+item.get('storeKey')+"'> </span>";
+    if (Nvzn.canApproveManager) {
+      ret += "<span class='"+approveClass+"' storeKey='"+item.get('storeKey')+"'> </span>";
+    }
 //    console.log("Rendering cell", item.get('storeKey'), item.statusString());
     allClasses = classes + (items.get('status') & SC.Record.DIRTY ? "cell-dirty" : "");
     ret += "<span id='tc-s-"+item.get('storeKey')+"' class='"+allClasses+"'>"

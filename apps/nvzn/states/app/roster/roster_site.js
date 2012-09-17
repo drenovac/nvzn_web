@@ -3,9 +3,15 @@ Nvzn.ROSTER_SITE = Ki.State.design({
 
   enterState: function() {
     Nvzn.set('mode', 'site');
-    Nvzn.getPath('mainPage.mainPane.tabView').set('items', [
-      {title:'All Employees', value:'all_employees'}
-    ]).set('nowShowing', 'all_employees');
+    Nvzn.getPath('mainPage.tabView').set('nowShowing', 'all_employees');
+    var submit = Nvzn.getPath('mainPage.submit');
+    if (Nvzn.canApproveManager) {
+      submit.set('title', 'Submit Approvals');
+      submit.set('isVisible', YES);
+    } else {
+      submit.set('isVisible', NO);
+    }
+    Nvzn.getPath('mainPage.header').set('isVisible', YES);
   },
 
   START_SITE: Ki.State.design({
@@ -44,7 +50,7 @@ Nvzn.ROSTER_SITE = Ki.State.design({
       this.gotoState('LOADING_SITE');
     },
 
-    submitApprovals: function() {
+    submit: function() {
       this.gotoState('SAVING_SITE');
     },
 
@@ -55,7 +61,7 @@ Nvzn.ROSTER_SITE = Ki.State.design({
       var timeCard = Nvzn.editScope.materializeRecord(storeKey),
           param = start ? 'start' : 'finish',
           oldValue = timeCard.get(param),
-          newValue = value.trim()+":00";
+          newValue = Nvzn.formatTime(value);
 
       if (newValue !== oldValue) {
         timeCard.set(param, newValue);

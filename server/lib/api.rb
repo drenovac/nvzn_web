@@ -105,7 +105,8 @@ get '/api/v1.1/site/:customer/timecards' do
     ROSTER_TIMECARD.ftime, ROSTER_TIMECARD.stime,
     employee.surname, employee.first_name,
     employee.photo_path, employee.contact_numbers,
-    employee.employee_a_street, employee.employee_a_suburb
+    employee.employee_a_street, employee.employee_a_suburb,
+    CNA.address, CNA.suburb, CNA.state, CNA.pcode
     FROM  ROSTER_TIMECARD INNER JOIN
           EMPLOYEE ON ROSTER_TIMECARD.employee = EMPLOYEE.employee INNER JOIN
           CNA ON ROSTER_TIMECARD.customer = CNA.code
@@ -129,7 +130,14 @@ SQL
 
   results.each do |r|
     employee_id = r['employee']
-    tc_id = [employee_id,customer_id,r['roster_date'],r['start'],r['finish']].join("*")
+    tc_id = [employee_id,r['customer'],r['roster_date'],r['start'],r['finish']].join("*")
+
+    customer['address'] ||= {
+      :street => r['address'] || "",
+      :suburb => r['suburb'] || "",
+      :state  => r['state'] || "",
+      :postcode => r['pcode'] || ""
+    }
 
     employees[employee_id] ||= {
       :first_name => r['first_name'],
@@ -153,6 +161,7 @@ SQL
     }
   end
 
+  customer['address'] ||= {}
   customer[:employees] = employees.map {|key| key[1][:id] }
   #employees.collect
 
@@ -189,7 +198,8 @@ get '/api/v1.1/employee/timecards' do
 
   sql =<<SQL
     SELECT ROSTER_TIMECARD.roster_date, ROSTER_TIMECARD.customer, ROSTER_TIMECARD.employee,
-    substring(convert(varchar ROSTER_TIMECARD.ftime 108)), ROSTER_TIMECARD.stime, employee.surname, employee.first_name
+    convert(varchar, ROSTER_TIMECARD.ftime, 108) as finish, convert(varchar, ROSTER_TIMECARD.stime, 108) as start,
+    ROSTER_TIMECARD.ftime, ROSTER_TIMECARD.stime, employee.surname, employee.first_name
     FROM  ROSTER_TIMECARD INNER JOIN
           EMPLOYEE ON ROSTER_TIMECARD.employee = EMPLOYEE.employee INNER JOIN
           CNA ON ROSTER_TIMECARD.customer = CNA.code
@@ -199,28 +209,39 @@ get '/api/v1.1/employee/timecards' do
     ORDER BY employee, customer, roster_date, stime, ftime
 SQL
 
-  response = nil
+  emp = nil
   results = connection.execute(sql)
   employees = {}
+  timecards = []
 
   results.each do |r|
+    employee_id = r['employee']
+    tc_id = [employee_id,r['customer'],r['roster_date'],r['start'],r['finish']].join("*")
 
-    response ||= {
+    emp ||= {
       :first_name => r['first_name'],
       :last_name => r['surname'],
-      :id => employee,
+      :id => employee_id,
       :timeCards => []
     }
 
-    response[:timeCards] << {
+    emp[:timeCards] << tc_id
+    timecards << {
+      :id => tc_id,
+      :employee => employee_id,
       :customer => r['customer'],
       :date => r['roster_date'],
-      :start => r['stime'],
-      :finish => r['ftime']
+      :start => r['start'],
+      :finish => r['finish']
     }
   end
+
+  emp ||= {:id => employee, timeCards => []}
   
-  response = {:id => employee, :timeCards => []} unless response
+  response = {
+    :employee => emp,
+    :timecards => timecards
+  }
 
   ActiveRecord::Base.clear_active_connections!
 
@@ -258,29 +279,6 @@ SQL
   body ( {:status => 'ok'} ).to_json
 end
 
-# get '/api/:path' do
-#   path = params[:path]
-#   url = "#{COUCH}/#{path}"
-#   puts "GET #{url}"
-#   begin
-#     data = RestClient.get url
-#   rescue => e
-#     e.response
-#   end
-# end
-# 
-# post '/api/:path' do
-#   path = params[:path]
-#   # this is a preferences request
-#   url = "#{DB}/#{path}"
-#   puts "POST #{url}"
-#   puts request.body.string
-#   begin
-#     data = RestClient.post url, request.body
-#   rescue => e
-#     e.response
-#   end
-# end
 
 get '/favicon.ico' do
   return

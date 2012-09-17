@@ -56,6 +56,11 @@ SC.mixin(Nvzn, {
   /*
    * Employee Data
    */
+
+  /**
+   *
+   * @param {Object} [employee]
+   */
   getEmployeeData: function(employee) {
 
     var week = Nvzn.weeksFromWeekEnding(),
@@ -65,9 +70,10 @@ SC.mixin(Nvzn, {
 
   loadEmployeeData: function(res) {
     var body = res.get('body'),
-        S = Nvzn.store,
-        storeKey = S.pushRetrieve(Nvzn.Employee, body.id, body),
-        employee = S.materializeRecord(storeKey);
+      S = Nvzn.store,
+      storeKey = S.pushRetrieve(Nvzn.Employee, body.employee.id, body.employee),
+      employee = S.materializeRecord(storeKey);
+    if (body.timecards && body.timecards.length) S.loadRecords(Nvzn.TimeCard, body.timecards);
     Nvzn.employeeController.set('content', employee);
     Nvzn.statechart.sendEvent('dataDidLoad');
   },
