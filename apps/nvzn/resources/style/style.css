@@ -71,7 +71,12 @@
   font-size: 20px;
   font-weight: 300;
 }
-  
+
+.header-address {
+  font-size: 20px;
+  font-weight: 300;
+}
+
 .page .main {
   background: static_url('resources/image/paper1.png') top left no-repeat #f8f8f8;
 }

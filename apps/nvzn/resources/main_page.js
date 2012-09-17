@@ -46,6 +46,7 @@ Nvzn.mainPage = SC.Page.create({
           classNames:'page-header'.w(),
           layout:{height:100},
           childViews: ('nameLabel nameView dateLabel dateView contactLabel ' +
+            'customerAddress ' +
             'contactView titleView greetingLabel logoutButton').w(),
 
           titleView: SC.LabelView.extend({
@@ -82,13 +83,22 @@ Nvzn.mainPage = SC.Page.create({
             classNames:'date-value'.w(),
             displayProperties:'content'.w(),
             layout:{
-              top:29, left:496, width:300, height:31
+              top:29, left:496, width:200, height:31
             },
             contentBinding:'Nvzn.weekEnding',
             render:function (context) {
               var content = this.getPath('content');
               var display = content ? content.toFormattedString('%A, %d %B %Y') : "";
               return context.text(display);
+            }
+          }),
+          customerAddress: SC.View.extend(SC.ContentDisplay, {
+            classNames: 'header-address'.w(),
+            layout: { top: 29, left: 700, right: 200, height:31 },
+            contentBinding: 'Nvzn.customerController.fullAddress',
+            render:function (context) {
+              context.push("<span class='label'>Site Address:</span> ");
+              return context.text(this.get('content'));
             }
           }),
           contactLabel:SC.View.extend({
@@ -111,7 +121,7 @@ Nvzn.mainPage = SC.Page.create({
             }
           }),
           greetingLabel: SC.LabelView.extend({
-            layout: {right: 100, width: 300, height:24, top:15},
+            layout: {right: 10, width: 300, height:24, top:15},
             textAlign: SC.ALIGN_RIGHT,
             valueBinding: SC.Binding.from('Nvzn.loginController.fullName')
               .transform(function(value) {
@@ -122,7 +132,7 @@ Nvzn.mainPage = SC.Page.create({
             classNames: 'header-logout'.w(),
             layout: {
               right: 10,
-              top: 20,
+              top: 40,
               width: 80,
               height: 24
             },

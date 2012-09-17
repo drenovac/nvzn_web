@@ -22,6 +22,12 @@ Nvzn.Customer = SC.Record.extend(
     return this.get('name');
   }.property('name'),
 
+  fullAddress: function() {
+    var address = this.get('address');
+    //return "1 South Street, South Kempsey 2440";
+    return address.street + ", "+address.suburb+" "+address.postcode;
+  }.property('address').cacheable(),
+
 //  employees: function() {
 //    // Return a record array of all employees of this customer
 //    return this.get('store').find(
