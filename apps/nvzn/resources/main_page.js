@@ -94,7 +94,7 @@ Nvzn.mainPage = SC.Page.create({
           }),
           customerAddress: SC.View.extend(SC.ContentDisplay, {
             classNames: 'header-address'.w(),
-            layout: { top: 29, left: 700, right: 200, height:31 },
+            layout: { top: 55, left: 496, right: 200, height:31 },
             contentBinding: 'Nvzn.customerController.fullAddress',
             render:function (context) {
               context.push("<span class='label'>Site Address:</span> ");
@@ -104,14 +104,14 @@ Nvzn.mainPage = SC.Page.create({
           contactLabel:SC.View.extend({
             classNames:'label contact'.w(),
             isVisibleBinding:SC.Binding.from('Nvzn.isSite'),
-            layout:{top:70, left:10, width:110, height:18},
+            layout:{top:81, left:10, width:110, height:18},
             render:function (context, firstTime) {
               return context.text('Contact Details:');
             }
           }),
           contactView: SC.View.extend({
             classNames: 'header-contact'.w(),
-            layout: { top: 66, left: 130, right: 20, height: 24 },
+            layout: { top: 77, left: 130, right: 20, height: 24 },
             displayProperties: 'content'.w(),
             contentDisplayProperties: 'contactNumbers'.w(),
             contentBinding: 'Nvzn.selectedRecord',
@@ -376,7 +376,7 @@ Nvzn.mainPage = SC.Page.create({
                 .begin('span')
                   .addStyle('background-color', Nvzn.colorFor(this.get('content')))
                 .end();
-                //                  context.begin('div').addClass('sidebar-jobs-item-name').text(this.getPath('content')).end();
+                //context.begin('div').addClass('sidebar-jobs-item-name').text(this.getPath('content')).end();
               }
 
             })

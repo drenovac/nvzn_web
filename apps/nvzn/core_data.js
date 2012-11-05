@@ -84,6 +84,10 @@ SC.mixin(Nvzn, {
       storeKey = S.pushRetrieve(Nvzn.Employee, body.employee.id, body.employee),
       employee = S.materializeRecord(storeKey);
     if (body.timecards && body.timecards.length) S.loadRecords(Nvzn.TimeCard, body.timecards);
+    if (body.customers && body.customers.length) {
+      S.loadRecords(Nvzn.Customer, body.customers);
+      Nvzn.loginController.set('customers', body.customers.getEach('id'));
+    }
     Nvzn.employeeController.set('content', employee);
     Nvzn.statechart.sendEvent('dataDidLoad');
   },

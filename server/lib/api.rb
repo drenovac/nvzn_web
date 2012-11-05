@@ -203,7 +203,8 @@ get '/api/v1.1/employee/timecards' do
   sql =<<SQL
     SELECT ROSTER_TIMECARD.roster_date, ROSTER_TIMECARD.customer, ROSTER_TIMECARD.employee,
     convert(varchar, ROSTER_TIMECARD.ftime, 108) as finish, convert(varchar, ROSTER_TIMECARD.stime, 108) as start,
-    ROSTER_TIMECARD.ftime, ROSTER_TIMECARD.stime, employee.surname, employee.first_name
+    ROSTER_TIMECARD.ftime, ROSTER_TIMECARD.stime, employee.surname, employee.first_name,
+    CNA.code, CNA.address, CNA.suburb, CNA.state, CNA.pcode
     FROM  ROSTER_TIMECARD INNER JOIN
           EMPLOYEE ON ROSTER_TIMECARD.employee = EMPLOYEE.employee INNER JOIN
           CNA ON ROSTER_TIMECARD.customer = CNA.code
@@ -216,6 +217,7 @@ SQL
   emp = nil
   results = connection.execute(sql)
   employees = {}
+  customers = {}
   timecards = []
 
   results.each do |r|
@@ -227,6 +229,16 @@ SQL
       :last_name => r['surname'],
       :id => employee_id,
       :timeCards => []
+    }
+
+    customers[r['code']] ||= {
+      :id => r['code'],
+      :address => {
+        :street => r['address'] || "",
+        :suburb => r['suburb'] || "",
+        :state  => r['state'] || "",
+        :postcode => r['pcode'] || ""
+      }
     }
 
     emp[:timeCards] << tc_id
@@ -244,7 +256,8 @@ SQL
   
   response = {
     :employee => emp,
-    :timecards => timecards
+    :timecards => timecards,
+    :customers => customers.map {|key| key[1] }
   }
 
   ActiveRecord::Base.clear_active_connections!

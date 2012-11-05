@@ -53,7 +53,7 @@ Nvzn.TimeCard = SC.Record.extend(
 //    return this.get(prop);
 //    var split = this.get(prop).split(" ");
 //    if (split.length == 1) return "00:00";
-    split = this.get(prop).split(':');
+    var split = this.get(prop).split(':');
     split.pop();
     return split.join(':');
   }
@@ -62,7 +62,7 @@ Nvzn.TimeCard = SC.Record.extend(
 
 Nvzn.TimeCard.fieldFormatter = function(items) {
   var ret = "", classes = "timecard-cell ", allClasses,
-    status, approveClass = 'approve',
+    status, approveClass = 'approve', cid,
     sent = Nvzn.local.getPath('sent');
   if (Nvzn.canEditManager) classes = "editable-cell "+classes;
   items.forEach(function(item) {
@@ -72,6 +72,10 @@ Nvzn.TimeCard.fieldFormatter = function(items) {
     if (item.get('approved')) approveClass += ' approved';
     if (Nvzn.canApproveManager) {
       ret += "<span class='"+approveClass+"' storeKey='"+item.get('storeKey')+"'> </span>";
+    }
+    if (color) {
+      cid = item.getPath('customer');
+      ret += "<span class='customer-color' title='"+cid+"' style='border-left-color:"+Nvzn.colorFor(cid)+";'>";
     }
 //    console.log("Rendering cell", item.get('storeKey'), item.statusString());
     allClasses = classes + (items.get('status') & SC.Record.DIRTY ? "cell-dirty" : "");
@@ -83,6 +87,7 @@ Nvzn.TimeCard.fieldFormatter = function(items) {
       +item.timeFromString('finish')
       +"</span><br>"
     ;
+    if (color) ret += "</span>";
   });
   return ret;
 };

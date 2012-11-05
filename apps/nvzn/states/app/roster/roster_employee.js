@@ -26,6 +26,7 @@ Nvzn.ROSTER_EMPLOYEE = Ki.State.design({
       this.gotoState('SHOWING_EMPLOYEE');
       this.invokeLater(function(){
         Nvzn.employeeController.propertyDidChange('customerTimecards');
+        Nvzn.mainPage.sites_by_week.displayDidChange();
       });
     }
   }),
@@ -33,6 +34,15 @@ Nvzn.ROSTER_EMPLOYEE = Ki.State.design({
   SHOWING_EMPLOYEE: Ki.State.design({
     selectedNewDay: function() {
       this.gotoState('LOADING_EMPLOYEE');
+    },
+
+    customerSelectionChanged: function() {
+      var selection = Nvzn.customersController.get('selection');
+      var customerId = selection.firstObject();
+      if (customerId) {
+        var customer = Nvzn.store.find(Nvzn.Customer, customerId);
+        Nvzn.customerController.set('content', customer);
+      }
     }
 
   })

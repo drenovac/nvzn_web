@@ -159,3 +159,25 @@
 .approve.changed {
   background-color: rgba(231, 216, 4, 0.64);
 }
+
+.weekly-view table {
+  border: none;
+}
+.weekly-view table td, .weekly-view table th {
+  border: solid 1px rgba(134, 134, 134, 0.45);
+}
+
+.date {
+  float: right;
+  /*border: solid 1px;*/
+  width: 1.5em;
+  text-align: center;
+  position: relative;
+  right: -7px;
+  top: -7px;
+}
+.customer-color {
+  border-left-style: solid;
+  border-left-width: 5px;
+  padding-left: 2px;
+}

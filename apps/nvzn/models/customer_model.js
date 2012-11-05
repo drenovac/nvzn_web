@@ -14,9 +14,8 @@
 Nvzn.Customer = SC.Record.extend(
 /** @scope Nvzn.Customer.prototype */ {
 
-  primaryKey: 'name',
+  primaryKey: 'id',
   name: SC.Record.attr('String'),
-
 
   displayName: function() {
     return this.get('name');
@@ -36,6 +35,8 @@ Nvzn.Customer = SC.Record.extend(
 //  }.property().cacheable()
 
 //  employees: SC.Record.toMany('Nvzn.Employee', {nested: YES})
-  employees: SC.Record.toMany('Nvzn.Employee')
+  employees: SC.Record.toMany('Nvzn.Employee'),
+
+  displayColor: null
 
 }) ;
