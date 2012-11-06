@@ -23,6 +23,8 @@ Nvzn = SC.Application.create(
   canEditManager: NO,
   canApproveManager: NO,
 
+  showTimeCardColors: NO,
+
 
   // This is your application store.  You will use this store to access all
   // of your model data.  You can also set a data source on this store to

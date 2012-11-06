@@ -65,6 +65,7 @@ Nvzn.TimeCard.fieldFormatter = function(items) {
     status, approveClass = 'approve', cid,
     sent = Nvzn.local.getPath('sent');
   if (Nvzn.canEditManager) classes = "editable-cell "+classes;
+  var color = Nvzn.get('showTimeCardColors');
   items.forEach(function(item) {
     status = item.get('status');
     if (status & SC.Record.DIRTY) approveClass += ' changed';

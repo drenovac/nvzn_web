@@ -7,6 +7,7 @@ Nvzn.ROSTER_EMPLOYEE = Ki.State.design({
     Nvzn.getPath('mainPage.tabView').set('nowShowing', 'sites_by_week');
     Nvzn.getPath('mainPage.submit').set('isVisible', NO);
     Nvzn.getPath('mainPage.header').set('isVisible', YES);
+    Nvzn.set('showTimeCardColors', YES);
   },
 
   LOADING_EMPLOYEE: Ki.State.design({
