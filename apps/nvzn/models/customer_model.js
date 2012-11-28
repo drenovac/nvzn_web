@@ -31,7 +31,7 @@ Nvzn.Customer = SC.Record.extend(
   }.property().cacheable(),
 
   fullName: function() {
-    return this.get('displayName')+" "+this.get('fullAddress') + "Some really long address that will probably happen";
+    return this.get('displayName')+" "+this.get('fullAddress');
   }.property('displayName', 'fullAddress'),
 
   fullAddress: function() {
