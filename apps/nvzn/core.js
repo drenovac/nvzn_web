@@ -23,6 +23,8 @@ Nvzn = SC.Application.create(
   canEditManager: NO,
   canApproveManager: NO,
 
+  showTimeCardColors: NO,
+
 
   // This is your application store.  You will use this store to access all
   // of your model data.  You can also set a data source on this store to
@@ -48,6 +50,10 @@ Nvzn = SC.Application.create(
 
   weekEnding: function() {
      return Nvzn.weekEndingFor(this.get('selectedDate'));
+  }.property('selectedDate').cacheable(),
+
+  startOfWeek: function() {
+    return Nvzn.startOfWeekFor(this.get('selectedDate'));
   }.property('selectedDate').cacheable(),
 
   selectedWeek: function() {

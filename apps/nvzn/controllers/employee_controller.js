@@ -17,6 +17,7 @@ Nvzn.employeeController = SC.ObjectController.create(
 
 //    timeCardsBinding: '.content.timeCards',
     weekEndingBinding: 'Nvzn.weekEnding',
+    weekEnding: null,
 
     customerTimecards:function () {
       var cardsBySite = {}, sunday, customer, date, ms,
