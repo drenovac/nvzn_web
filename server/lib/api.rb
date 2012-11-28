@@ -106,7 +106,7 @@ get '/api/v1.1/site/:customer/timecards' do
     employee.surname, employee.first_name,
     employee.photo_path, employee.contact_numbers,
     employee.employee_a_street, employee.employee_a_suburb,
-    CNA.address, CNA.suburb, CNA.state, CNA.pcode
+    CNA.code, CNA.address, CNA.suburb, CNA.state, CNA.pcode
     FROM  ROSTER_TIMECARD INNER JOIN
           EMPLOYEE ON ROSTER_TIMECARD.employee = EMPLOYEE.employee INNER JOIN
           CNA ON ROSTER_TIMECARD.customer = CNA.code
@@ -125,13 +125,27 @@ SQL
       :finish => next_sunday
   }
   results = connection.execute(sql)
+  customers = {}
   employees = {}
   timecards = []
 
   results.each do |r|
     employee_id = r['employee']
     tc_id = [employee_id,r['customer'],r['roster_date'],r['start'],r['finish']].join("*")
+    c_code = r['code']
 
+    # Customers list for multiple customers
+    customers[c_code] ||= {
+      :id => c_code,
+      :address => {
+        :street => r['address'] || "",
+        :suburb => r['suburb'] || "",
+        :state  => r['state'] || "",
+        :postcode => r['pcode'] || ""
+      }
+    }
+
+    # info for single customer.
     customer['address'] ||= {
       :street => r['address'] || "",
       :suburb => r['suburb'] || "",
@@ -167,6 +181,7 @@ SQL
 
   response = {
     :customer => customer,
+    :customers => customers.map{|key| key[1] },
     :employees => employees.map {|key| key[1] },
     :timecards => timecards
   }

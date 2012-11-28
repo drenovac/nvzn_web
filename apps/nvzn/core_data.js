@@ -53,12 +53,15 @@ SC.mixin(Nvzn, {
         editScope = S.chain(),
         customer = editScope.materializeRecord(storeKey);
     Nvzn.editScope = editScope;
+    if (body.customers && body.customers.length) S.loadRecords(Nvzn.Customer, body.customers);
     if (body.employees && body.employees.length) S.loadRecords(Nvzn.Employee, body.employees);
     if (body.timecards && body.timecards.length) S.loadRecords(Nvzn.TimeCard, body.timecards);
     Nvzn.customerController.set('content', customer);
 //    console.log("Did Load site Data");
     Nvzn.cleanLocal();
-    Nvzn.statechart.sendEvent('dataDidLoad');
+    Nvzn.invokeLast(function() {
+      Nvzn.statechart.sendEvent('dataDidLoad');
+    })
   },
 
   /*

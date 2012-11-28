@@ -34,7 +34,6 @@
   background-color: #e6e6e6;
 }
 
-
 .dashboard-cell {
   display: table-cell;
   padding-left: 10px;
@@ -127,6 +126,22 @@
 .borders {
   border-top: 1px solid #888;
 /*  border-bottom: 1px solid #888; */
+}
+
+.dashboard-row.customer .dashboard-cell {
+  border:none;
+}
+
+.dashboard-row.customer span.customer>span {
+  right: -50px;
+}
+
+.dashboard-row.customer span.name {
+  position: absolute;
+  left: 80px;
+  width: 85%;
+  margin-top: 4px;
+  right: 50px;
 }
 
 .cell-dirty {

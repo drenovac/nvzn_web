@@ -61,6 +61,7 @@ Nvzn.TimeCard = SC.Record.extend(
 }) ;
 
 Nvzn.TimeCard.fieldFormatter = function(items) {
+  if (!items) return "";
   var ret = "", classes = "timecard-cell ", allClasses,
     status, approveClass = 'approve', cid,
     sent = Nvzn.local.getPath('sent');

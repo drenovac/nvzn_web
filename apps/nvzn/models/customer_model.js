@@ -15,14 +15,28 @@ Nvzn.Customer = SC.Record.extend(
 /** @scope Nvzn.Customer.prototype */ {
 
   primaryKey: 'id',
+  // Alias for id
+  customer: function() {
+    return this.get('id');
+  }.property('id').cacheable(),
+
   name: SC.Record.attr('String'),
 
   displayName: function() {
-    return this.get('name');
-  }.property('name'),
+    return this.get('id');
+  }.property('name').cacheable(),
+
+  displayClass: function() {
+    return 'customer';
+  }.property().cacheable(),
+
+  fullName: function() {
+    return this.get('displayName')+" "+this.get('fullAddress') + "Some really long address that will probably happen";
+  }.property('displayName', 'fullAddress'),
 
   fullAddress: function() {
     var address = this.get('address');
+    if (!address) return "";
     //return "1 South Street, South Kempsey 2440";
     return address.street + ", "+address.suburb+" "+address.postcode;
   }.property('address').cacheable(),
