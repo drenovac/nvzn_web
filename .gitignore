@@ -3,3 +3,8 @@ static/
 .rvmrc
 .idea
 .DS_Store
+tags
+
+*.rdb
+
+*.bak

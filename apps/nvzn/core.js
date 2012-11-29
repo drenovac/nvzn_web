@@ -14,7 +14,7 @@ Nvzn = SC.Application.create(
   /** @scope Nvzn.prototype */ {
 
   NAMESPACE: 'Nvzn',
-  VERSION: '20120917-0-gb7244ae-52',
+  VERSION: '20121130-0-ge1d29c1-65',
 
 
   /*
@@ -22,6 +22,8 @@ Nvzn = SC.Application.create(
    */
   canEditManager: NO,
   canApproveManager: NO,
+
+  showTimeCardColors: NO,
 
 
   // This is your application store.  You will use this store to access all
@@ -48,6 +50,10 @@ Nvzn = SC.Application.create(
 
   weekEnding: function() {
      return Nvzn.weekEndingFor(this.get('selectedDate'));
+  }.property('selectedDate').cacheable(),
+
+  startOfWeek: function() {
+    return Nvzn.startOfWeekFor(this.get('selectedDate'));
   }.property('selectedDate').cacheable(),
 
   selectedWeek: function() {

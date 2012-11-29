@@ -21,6 +21,18 @@ SC.mixin(Nvzn, {
     return date;
   },
 
+  startOfWeekFor: function(date) {
+    var isMonday = date.get('dayOfWeek') === 1;
+    if (!isMonday) {
+      date = date.get('lastMonday');
+    }
+    return date;
+  },
+
+  dateFromStart: function(offset) {
+    return Nvzn.get('startOfWeek').advance({day: offset}).get('day');
+  },
+
   /*
    * Site Data
    */
@@ -45,12 +57,15 @@ SC.mixin(Nvzn, {
         editScope = S.chain(),
         customer = editScope.materializeRecord(storeKey);
     Nvzn.editScope = editScope;
+    if (body.customers && body.customers.length) S.loadRecords(Nvzn.Customer, body.customers);
     if (body.employees && body.employees.length) S.loadRecords(Nvzn.Employee, body.employees);
     if (body.timecards && body.timecards.length) S.loadRecords(Nvzn.TimeCard, body.timecards);
     Nvzn.customerController.set('content', customer);
 //    console.log("Did Load site Data");
     Nvzn.cleanLocal();
-    Nvzn.statechart.sendEvent('dataDidLoad');
+    Nvzn.invokeLast(function() {
+      Nvzn.statechart.sendEvent('dataDidLoad');
+    })
   },
 
   /*
@@ -64,7 +79,9 @@ SC.mixin(Nvzn, {
   getEmployeeData: function(employee) {
 
     var week = Nvzn.weeksFromWeekEnding(),
-        url = "/api/v1.1/employee/timecards" + (week ? "?week=" + week : "");
+        url = "/api/v1.1/employee/timecards" + (week ? "?week=" + week : ""),
+        weeksToShow = Nvzn.timeCardsByWeekController.get('weeksToShow');
+    if (weeksToShow > 1) url += "&weeks="+weeksToShow;
     SC.Request.getUrl(url).notify(this, 'loadEmployeeData').json().send();
   },
 
@@ -74,6 +91,10 @@ SC.mixin(Nvzn, {
       storeKey = S.pushRetrieve(Nvzn.Employee, body.employee.id, body.employee),
       employee = S.materializeRecord(storeKey);
     if (body.timecards && body.timecards.length) S.loadRecords(Nvzn.TimeCard, body.timecards);
+    if (body.customers && body.customers.length) {
+      S.loadRecords(Nvzn.Customer, body.customers);
+      Nvzn.loginController.set('customers', body.customers.getEach('id'));
+    }
     Nvzn.employeeController.set('content', employee);
     Nvzn.statechart.sendEvent('dataDidLoad');
   },

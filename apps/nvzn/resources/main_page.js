@@ -94,7 +94,7 @@ Nvzn.mainPage = SC.Page.create({
           }),
           customerAddress: SC.View.extend(SC.ContentDisplay, {
             classNames: 'header-address'.w(),
-            layout: { top: 29, left: 700, right: 200, height:31 },
+            layout: { top: 55, left: 496, right: 200, height:31 },
             contentBinding: 'Nvzn.customerController.fullAddress',
             render:function (context) {
               context.push("<span class='label'>Site Address:</span> ");
@@ -104,14 +104,14 @@ Nvzn.mainPage = SC.Page.create({
           contactLabel:SC.View.extend({
             classNames:'label contact'.w(),
             isVisibleBinding:SC.Binding.from('Nvzn.isSite'),
-            layout:{top:70, left:10, width:110, height:18},
+            layout:{top:81, left:10, width:110, height:18},
             render:function (context, firstTime) {
               return context.text('Contact Details:');
             }
           }),
           contactView: SC.View.extend({
             classNames: 'header-contact'.w(),
-            layout: { top: 66, left: 130, right: 20, height: 24 },
+            layout: { top: 77, left: 130, right: 20, height: 24 },
             displayProperties: 'content'.w(),
             contentDisplayProperties: 'contactNumbers'.w(),
             contentBinding: 'Nvzn.selectedRecord',
@@ -333,7 +333,7 @@ Nvzn.mainPage = SC.Page.create({
             left:13,
             width:80
           },
-          isVisibleBinding:SC.Binding.from('Nvzn.isSite'),
+          //isVisibleBinding:SC.Binding.from('Nvzn.isSite'),
 
           render:function (context, firstTime) {
             return context.text('Where');
@@ -376,7 +376,7 @@ Nvzn.mainPage = SC.Page.create({
                 .begin('span')
                   .addStyle('background-color', Nvzn.colorFor(this.get('content')))
                 .end();
-                //                  context.begin('div').addClass('sidebar-jobs-item-name').text(this.getPath('content')).end();
+                //context.begin('div').addClass('sidebar-jobs-item-name').text(this.getPath('content')).end();
               }
 
             })
@@ -406,43 +406,57 @@ Nvzn.mainPage = SC.Page.create({
         key:'fullName'
       },
       {
-        title:"Mon",
+        title: function() {
+          return "Mon "+Nvzn.dateFromStart(0);
+        }.property(),
         classNames:'day mon',
         key:1,
         formatter: Nvzn.TimeCard.fieldFormatter
       },
       {
-        title:"Tue",
+        title: function () {
+          return "Tue " + Nvzn.dateFromStart(1);
+        }.property(),
         classNames:'day tue',
         key:2,
         formatter: Nvzn.TimeCard.fieldFormatter
       },
       {
-        title:"Wed",
+        title: function () {
+          return "Wed " + Nvzn.dateFromStart(2);
+        }.property(),
         classNames:'day wed',
         key:3,
         formatter: Nvzn.TimeCard.fieldFormatter
       },
       {
-        title:"Thu",
+        title: function () {
+          return "Thu " + Nvzn.dateFromStart(3);
+        }.property(),
         classNames:'day thu',
         key:4,
         formatter: Nvzn.TimeCard.fieldFormatter
       },
       {
-        title:"Fri",
+        title: function () {
+          return "Fri " + Nvzn.dateFromStart(4);
+        }.property(),
         classNames:'day fri',
         key:5,
         formatter: Nvzn.TimeCard.fieldFormatter
       },
       {
-        title:"Sat",
+        title: function () {
+          return "Sat " + Nvzn.dateFromStart(5);
+        }.property(),
         classNames:'day sat',
         key:6,
         formatter: Nvzn.TimeCard.fieldFormatter
       },
       {
-        title:"Sun",
+        title: function () {
+          return "Sun " + Nvzn.dateFromStart(6);
+        }.property(),
         classNames:'day sun',
         key:0,
         formatter: Nvzn.TimeCard.fieldFormatter
@@ -478,6 +492,11 @@ Nvzn.mainPage = SC.Page.create({
         this.set('selected', item);
       }
     }
+  }),
+
+  sites_by_week: Nvzn.WeeklyView.design({
+    contentBinding: 'Nvzn.timeCardsByWeekController.arrangedObjects',
+    weeksToShowBinding: 'Nvzn.timeCardsByWeekController.weeksToShow'
   }),
 
   all_sites: EO.TableView.design({
