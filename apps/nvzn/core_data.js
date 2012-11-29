@@ -29,6 +29,10 @@ SC.mixin(Nvzn, {
     return date;
   },
 
+  dateFromStart: function(offset) {
+    return Nvzn.get('startOfWeek').advance({day: offset}).get('day');
+  },
+
   /*
    * Site Data
    */

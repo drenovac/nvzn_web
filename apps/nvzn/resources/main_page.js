@@ -406,43 +406,57 @@ Nvzn.mainPage = SC.Page.create({
         key:'fullName'
       },
       {
-        title:"Mon",
+        title: function() {
+          return "Mon "+Nvzn.dateFromStart(0);
+        }.property(),
         classNames:'day mon',
         key:1,
         formatter: Nvzn.TimeCard.fieldFormatter
       },
       {
-        title:"Tue",
+        title: function () {
+          return "Tue " + Nvzn.dateFromStart(1);
+        }.property(),
         classNames:'day tue',
         key:2,
         formatter: Nvzn.TimeCard.fieldFormatter
       },
       {
-        title:"Wed",
+        title: function () {
+          return "Wed " + Nvzn.dateFromStart(2);
+        }.property(),
         classNames:'day wed',
         key:3,
         formatter: Nvzn.TimeCard.fieldFormatter
       },
       {
-        title:"Thu",
+        title: function () {
+          return "Thu " + Nvzn.dateFromStart(3);
+        }.property(),
         classNames:'day thu',
         key:4,
         formatter: Nvzn.TimeCard.fieldFormatter
       },
       {
-        title:"Fri",
+        title: function () {
+          return "Fri " + Nvzn.dateFromStart(4);
+        }.property(),
         classNames:'day fri',
         key:5,
         formatter: Nvzn.TimeCard.fieldFormatter
       },
       {
-        title:"Sat",
+        title: function () {
+          return "Sat " + Nvzn.dateFromStart(5);
+        }.property(),
         classNames:'day sat',
         key:6,
         formatter: Nvzn.TimeCard.fieldFormatter
       },
       {
-        title:"Sun",
+        title: function () {
+          return "Sun " + Nvzn.dateFromStart(6);
+        }.property(),
         classNames:'day sun',
         key:0,
         formatter: Nvzn.TimeCard.fieldFormatter
