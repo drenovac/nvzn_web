@@ -46,7 +46,7 @@ Nvzn.mainPage = SC.Page.create({
           classNames:'page-header'.w(),
           layout:{height:100},
           childViews: ('nameLabel nameView dateLabel dateView contactLabel ' +
-            'customerAddress ' +
+//            'customerAddress ' +
             'contactView titleView greetingLabel logoutButton').w(),
 
           titleView: SC.LabelView.extend({
@@ -72,7 +72,7 @@ Nvzn.mainPage = SC.Page.create({
             }
           }),
           dateLabel:SC.View.extend({
-            classNames:'label date'.w(),
+            classNames:'label weekending'.w(),
             layout:{
               top:35, left:394, width:90, height:18},
             render:function (context, firstTime) {
@@ -407,7 +407,7 @@ Nvzn.mainPage = SC.Page.create({
       },
       {
         title: function() {
-          return "Mon "+Nvzn.dateFromStart(0);
+          return Nvzn.dateFromStart(0);
         }.property(),
         classNames:'day mon',
         key:1,
@@ -415,7 +415,7 @@ Nvzn.mainPage = SC.Page.create({
       },
       {
         title: function () {
-          return "Tue " + Nvzn.dateFromStart(1);
+          return Nvzn.dateFromStart(1);
         }.property(),
         classNames:'day tue',
         key:2,
@@ -423,7 +423,7 @@ Nvzn.mainPage = SC.Page.create({
       },
       {
         title: function () {
-          return "Wed " + Nvzn.dateFromStart(2);
+          return Nvzn.dateFromStart(2);
         }.property(),
         classNames:'day wed',
         key:3,
@@ -431,7 +431,7 @@ Nvzn.mainPage = SC.Page.create({
       },
       {
         title: function () {
-          return "Thu " + Nvzn.dateFromStart(3);
+          return Nvzn.dateFromStart(3);
         }.property(),
         classNames:'day thu',
         key:4,
@@ -439,7 +439,7 @@ Nvzn.mainPage = SC.Page.create({
       },
       {
         title: function () {
-          return "Fri " + Nvzn.dateFromStart(4);
+          return Nvzn.dateFromStart(4);
         }.property(),
         classNames:'day fri',
         key:5,
@@ -447,7 +447,7 @@ Nvzn.mainPage = SC.Page.create({
       },
       {
         title: function () {
-          return "Sat " + Nvzn.dateFromStart(5);
+          return Nvzn.dateFromStart(5);
         }.property(),
         classNames:'day sat',
         key:6,
@@ -455,7 +455,7 @@ Nvzn.mainPage = SC.Page.create({
       },
       {
         title: function () {
-          return "Sun " + Nvzn.dateFromStart(6);
+          return Nvzn.dateFromStart(6);
         }.property(),
         classNames:'day sun',
         key:0,
