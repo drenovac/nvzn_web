@@ -10,7 +10,8 @@ require 'digest/sha2'
 
 set :sessions, true
 
-COUCH = 'http://rectertupochastroyeysery:OKeJh8V1Rj8ABqXCvElfUCMj@geoffreyd.cloudant.com/nvzn'
+#COUCH = 'http://rectertupochastroyeysery:OKeJh8V1Rj8ABqXCvElfUCMj@geoffreyd.cloudant.com/nvzn'
+COUCH = 'http://rectertupochastroyeysery:OKeJh8V1Rj8ABqXCvElfUCMj@10.1.1.50:5984/nvzn'
 
 config = {
     :url => "jdbc:sqlserver://10.1.1.50;databaseName=NVZN11",
