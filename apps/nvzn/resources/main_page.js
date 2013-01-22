@@ -309,13 +309,9 @@ Nvzn.mainPage = SC.Page.create({
           },
           //            monthStartOn:SC.DateTime.create({day:7}),
           //            weekdayStrings:["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          selectedDateFollowsVisibleMonth: YES,
           weekStartMonday:YES,
-          selectedDateBinding:'Nvzn.selectedDate',
-          selectToday:function () {
-            console.log("select today");
-            this.set('selectedDate', SC.DateTime.create());
-            this.resetToSelectedDate();
-          }
+          selectedDateBinding:'Nvzn.selectedDate'
         })
       }),
 
