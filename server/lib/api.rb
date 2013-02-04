@@ -109,11 +109,11 @@ get '/api/v1.1/site/:customer/timecards' do
     EMPLOYEES.photo_path, EMPLOYEES.contact_numbers,
     EMPLOYEES.employee_a_street, EMPLOYEES.employee_a_suburb,
     CNA.code, CNA.given_names, CNA.address, CNA.suburb, CNA.state, CNA.pcode,
-    RTC.hour_type, ROSTER_TYPE.description
+    RTC.hour_type, ROSTER_TYPES.description
     FROM  RTC
     LEFT JOIN EMPLOYEES ON RTC.employee = EMPLOYEES.employee
     LEFT JOIN CNA ON RTC.customer = CNA.code
-    LEFT JOIN ROSTER_TYPE ON RTC.hour_type = ROSTER_TYPE.code
+    LEFT JOIN ROSTER_TYPES ON RTC.hour_type = ROSTER_TYPES.code
 
     WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_sunday}'
     AND  customer IN (#{customer_id})
