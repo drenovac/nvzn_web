@@ -64,8 +64,8 @@
 
 .dashboard-cell.day {
   text-align: center;
-  width: 40px;
-  min-width: 40px;
+  width: 76px;
+  min-width: 76px;
 }
 
 .dashboard-cell.tick-all {
@@ -109,13 +109,13 @@
 }
 
 .dashboard-header.name {
-  width: 140px;
+  width: 19%;
   min-width: 140px;
 }
 
-.dashboard-header.days {
-  width: 40px;
-  min-width: 40px;
+.dashboard-header.day {
+  width: 11%;
+  min-width: 76px;
 }
 
 .dashboard-header.tick-all {

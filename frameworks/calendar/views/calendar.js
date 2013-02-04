@@ -11,6 +11,7 @@ SCUI.CalendarView = SC.View.extend({
   
   monthStartOn: SC.DateTime.create({day: 1}),
   selectedDate: null,
+  selectedDateFollowsVisibleMonth: NO,
 
   weekStartMonday: NO,
 
@@ -19,6 +20,11 @@ SCUI.CalendarView = SC.View.extend({
   resetToSelectedDate: function(){
     var selectedDate = this.get('selectedDate');
     if (selectedDate) this.set('monthStartOn', selectedDate.adjust({ day: 1 }));
+  },
+
+  selectToday: function () {
+    this.set('selectedDate', SC.DateTime.create());
+    this.resetToSelectedDate();
   },
   
   mouseDown: function(evt) {
@@ -40,9 +46,16 @@ SCUI.CalendarView = SC.View.extend({
     
     if (evt.target.className === 'button previous active') {
       this.set('monthStartOn', monthStartOn.advance({month: -1}));
+      if(this.selectedDateFollowsVisibleMonth) {
+        var starts = this.get('monthStartOn');
+        this.set('selectedDate', starts.copy().adjust({ day: starts.get('daysInMonth') }));
+      }
       this.$('.button.previous').removeClass('active');
     } else if (evt.target.className === 'button next active') {
       this.set('monthStartOn', monthStartOn.advance({month: 1}));
+      if(this.selectedDateFollowsVisibleMonth) {
+        this.set('selectedDate', this.get('monthStartOn').copy());
+      }
       this.$('.button.next').removeClass('active');
       
     }

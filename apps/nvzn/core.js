@@ -14,7 +14,7 @@ Nvzn = SC.Application.create(
   /** @scope Nvzn.prototype */ {
 
   NAMESPACE: 'Nvzn',
-  VERSION: '20121130-0-ge1d29c1-65',
+  VERSION: '20130204-0-g19bfd33-74',
 
 
   /*
@@ -38,8 +38,8 @@ Nvzn = SC.Application.create(
 
   selectedRecord: null,
 
-//  selectedDate: SC.DateTime.create(),
-  selectedDate:SC.DateTime.create({ year:2010, month:10, day:31 }),
+  selectedDate: SC.DateTime.create(),
+//  selectedDate:SC.DateTime.create({ year:2010, month:10, day:31 }),
 
   selectedWeekDidChange: function() {
     if (Nvzn.didChangeFor('core', 'selectedWeek')) {

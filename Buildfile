@@ -10,7 +10,7 @@ config :nvzn,
     :load_fixtures => true
 
 
-#server = "localhost:9292"
-server = "www.roster-me.com.au:9292"
+server = "localhost:9292"
+#server = "www.roster-me.com.au:9292"
 
 proxy '/api', :to => server

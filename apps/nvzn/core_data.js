@@ -30,7 +30,10 @@ SC.mixin(Nvzn, {
   },
 
   dateFromStart: function(offset) {
-    return Nvzn.get('startOfWeek').advance({day: offset}).get('day');
+    var date = Nvzn.get('startOfWeek').advance({day: offset});
+    var fmt = "%a %D %b";
+//    if (offset === 0 || date.get('day') == 1) fmt += " %b";
+    return date.toFormattedString(fmt);
   },
 
   /*
