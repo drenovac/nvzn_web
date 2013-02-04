@@ -14,7 +14,8 @@ set :sessions, true
 COUCH = 'http://rectertupochastroyeysery:OKeJh8V1Rj8ABqXCvElfUCMj@10.1.1.50:5984/nvzn'
 
 config = {
-    :url => "jdbc:sqlserver://10.1.1.50;databaseName=NVZN11",
+    #:url => "jdbc:sqlserver://10.1.1.50;databaseName=NVZN11",
+    :url => "jdbc:sqlserver://10.1.1.50;databaseName=edmen",
     :adapter => "jdbc",
     :username => "sa",
     :password => "s1nemojP0werforce",
@@ -101,23 +102,25 @@ get '/api/v1.1/site/:customer/timecards' do
   # next_friday = '2010-10-03'
 
   sql =<<SQL
-    SELECT ROSTER_TIMECARD.roster_date, ROSTER_TIMECARD.customer, ROSTER_TIMECARD.employee,
-    convert(varchar, ROSTER_TIMECARD.ftime, 108) as finish, convert(varchar, ROSTER_TIMECARD.stime, 108) as start,
-    ROSTER_TIMECARD.ftime, ROSTER_TIMECARD.stime,
-    employee.surname, employee.first_name,
-    employee.photo_path, employee.contact_numbers,
-    employee.employee_a_street, employee.employee_a_suburb,
-    CNA.code, CNA.address, CNA.suburb, CNA.state, CNA.pcode
-    FROM  ROSTER_TIMECARD INNER JOIN
-          EMPLOYEE ON ROSTER_TIMECARD.employee = EMPLOYEE.employee INNER JOIN
-          CNA ON ROSTER_TIMECARD.customer = CNA.code
+    SELECT RTC.roster_date, RTC.customer, RTC.employee,
+    convert(varchar, RTC.ftime, 108) as finish, convert(varchar, RTC.stime, 108) as start,
+    RTC.ftime, RTC.stime,
+    EMPLOYEES.surname, EMPLOYEES.first_name,
+    EMPLOYEES.photo_path, EMPLOYEES.contact_numbers,
+    EMPLOYEES.employee_a_street, EMPLOYEES.employee_a_suburb,
+    CNA.code, CNA.given_names, CNA.address, CNA.suburb, CNA.state, CNA.pcode,
+    RTC.hour_type, ROSTER_TYPE.description
+    FROM  RTC
+    LEFT JOIN EMPLOYEES ON RTC.employee = EMPLOYEES.employee
+    LEFT JOIN CNA ON RTC.customer = CNA.code
+    LEFT JOIN ROSTER_TYPE ON RTC.hour_type = ROSTER_TYPE.code
 
     WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_sunday}'
     AND  customer IN (#{customer_id})
     ORDER BY customer,  employee, roster_date, stime, ftime
 SQL
 
-  #puts sql
+  puts sql
 
   customer = {
       :id => customer_id,
@@ -148,6 +151,7 @@ SQL
 
     # info for single customer.
     customer['address'] ||= {
+      :name => r['given_names'] || "",
       :street => r['address'] || "",
       :suburb => r['suburb'] || "",
       :state  => r['state'] || "",
@@ -172,7 +176,9 @@ SQL
       :customer => r['customer'],
       :date => r['roster_date'],
       :start => r['start'],
-      :finish => r['finish']
+      :finish => r['finish'],
+      :type => r['hour_type'],
+      :desc => r['description']
     }
   end
 
@@ -217,16 +223,16 @@ get '/api/v1.1/employee/timecards' do
   # next_friday = '2010-10-03'
 
   sql =<<SQL
-    SELECT ROSTER_TIMECARD.roster_date, ROSTER_TIMECARD.customer, ROSTER_TIMECARD.employee,
-    convert(varchar, ROSTER_TIMECARD.ftime, 108) as finish, convert(varchar, ROSTER_TIMECARD.stime, 108) as start,
-    ROSTER_TIMECARD.ftime, ROSTER_TIMECARD.stime, employee.surname, employee.first_name,
+    SELECT RTC.roster_date, RTC.customer, RTC.employee,
+    convert(varchar, RTC.ftime, 108) as finish, convert(varchar, RTC.stime, 108) as start,
+    RTC.ftime, RTC.stime, EMPLOYEES.surname, EMPLOYEES.first_name,
     CNA.code, CNA.address, CNA.suburb, CNA.state, CNA.pcode
-    FROM  ROSTER_TIMECARD INNER JOIN
-          EMPLOYEE ON ROSTER_TIMECARD.employee = EMPLOYEE.employee INNER JOIN
-          CNA ON ROSTER_TIMECARD.customer = CNA.code
+    FROM  RTC INNER JOIN
+          EMPLOYEES ON RTC.employee = EMPLOYEES.employee INNER JOIN
+          CNA ON RTC.customer = CNA.code
 
     WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_sunday}'
-    AND  EMPLOYEE.EMPLOYEE = '#{employee}'
+    AND  EMPLOYEES.EMPLOYEE = '#{employee}'
     ORDER BY employee, customer, roster_date, stime, ftime
 SQL
 
