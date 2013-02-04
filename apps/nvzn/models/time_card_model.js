@@ -22,6 +22,7 @@ Nvzn.TimeCard = SC.Record.extend(
   finish: SC.Record.attr('String'),
   customer: SC.Record.attr('String'),
   employee: SC.Record.toOne('Nvzn.Employee'),
+  desc: SC.Record.attr('String'),
 
   timeDisplay: function() {
     var start = this.timeFromString('start'),
@@ -87,7 +88,7 @@ Nvzn.TimeCard.fieldFormatter = function(items) {
 
     ret += "<span id='tc-f-"+item.get('storeKey')+"' class='"+allClasses+"'>"
       +item.timeFromString('finish')
-      +"</span><br>"
+      +item.get('desc')+"</span><br>"
     ;
     if (color) ret += "</span>";
   });
