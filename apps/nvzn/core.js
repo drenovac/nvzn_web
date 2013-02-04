@@ -38,8 +38,8 @@ Nvzn = SC.Application.create(
 
   selectedRecord: null,
 
-//  selectedDate: SC.DateTime.create(),
-  selectedDate:SC.DateTime.create({ year:2010, month:10, day:31 }),
+  selectedDate: SC.DateTime.create(),
+//  selectedDate:SC.DateTime.create({ year:2010, month:10, day:31 }),
 
   selectedWeekDidChange: function() {
     if (Nvzn.didChangeFor('core', 'selectedWeek')) {
