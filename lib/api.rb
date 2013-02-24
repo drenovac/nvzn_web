@@ -23,11 +23,10 @@ config = {
 }
 
 #config = {
-#  :url => "jdbc:sqlserver://203.44.138.69;databaseName=NVZN11",
-#  :adapter => "jdbc",
+#  :url => "jdbc:jtds:sqlserver://10.1.1.50/edmen",
+#  :adapter => "jdbcmssql",
 #  :username => "sa",
-#  :password => "edmen",
-#  :driver => 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
+#  :password => "s1nemojP0werforce"
 #}
 
 use Rack::Deflater
@@ -131,7 +130,7 @@ get '/api/v1.1/site/:customer/timecards' do
     AND  customer IN (#{customer_id})
     ORDER BY customer,  employee, roster_date, stime, ftime
 SQL
-  puts sql
+  #puts sql
 
   results = connection.execute(sql)
   results.each do |r|
@@ -202,7 +201,7 @@ SQL
     AND  customer IN (#{customer_id})
     ORDER BY customer,  employee, roster_date, stime, ftime
 SQL
-  puts sql
+  #puts sql
 
   results = connection.execute(sql)
   results.each do |r|
@@ -297,16 +296,22 @@ get '/api/v1.1/employee/timecards' do
   sql =<<SQL
     SELECT RTC.roster_date, RTC.customer, RTC.employee,
     convert(varchar, RTC.ftime, 108) as finish, convert(varchar, RTC.stime, 108) as start,
-    RTC.ftime, RTC.stime, EMPLOYEES.surname, EMPLOYEES.first_name,
-    CNA.code, CNA.address, CNA.suburb, CNA.state, CNA.pcode
-    FROM  RTC INNER JOIN
-          EMPLOYEES ON RTC.employee = EMPLOYEES.employee INNER JOIN
-          CNA ON RTC.customer = CNA.code
+    RTC.ftime, RTC.stime,
+    EMPLOYEES.surname, EMPLOYEES.first_name,
+    EMPLOYEES.photo_path, EMPLOYEES.contact_numbers,
+    EMPLOYEES.employee_a_street, EMPLOYEES.employee_a_suburb,
+    CNA.code, CNA.given_names, CNA.address, CNA.suburb, CNA.state, CNA.pcode,
+    RTC.hour_type, ROSTER_TYPES.description
+    FROM  RTC
+    LEFT JOIN EMPLOYEES ON RTC.employee = EMPLOYEES.employee
+    LEFT JOIN CNA ON RTC.customer = CNA.code
+    LEFT JOIN ROSTER_TYPES ON RTC.hour_type = ROSTER_TYPES.code
 
     WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_sunday}'
     AND  EMPLOYEES.EMPLOYEE = '#{employee}'
     ORDER BY employee, customer, roster_date, stime, ftime
 SQL
+  puts sql
 
   emp = nil
   results = connection.execute(sql)
@@ -320,7 +325,11 @@ SQL
 
     emp ||= {
       :first_name => r['first_name'],
+      :customer => r['customer'],
       :last_name => r['surname'],
+      :photo_path => r['photo_path'],
+      :contact_numbers => r['contact_numbers'].to_s.split('<vm/>'),
+      :address => [r['employee_a_street'], r['employee_a_suburb']].compact.reject(&:blank?).join(", "),
       :id => employee_id,
       :timeCards => []
     }
@@ -342,11 +351,13 @@ SQL
       :customer => r['customer'],
       :date => r['roster_date'],
       :start => r['start'],
-      :finish => r['finish']
+      :finish => r['finish'],
+      :type => r['hour_type'],
+      :desc => r['description']
     }
   end
 
-  emp ||= {:id => employee, timeCards => []}
+  emp ||= {:id => employee, timecards => []}
   
   response = {
     :employee => emp,
