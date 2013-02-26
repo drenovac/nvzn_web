@@ -26,6 +26,10 @@ Nvzn.timeCardsByWeekController = SC.ArrayController.create(
     weeksToShow: 4,
     startOfWeekBinding: 'Nvzn.startOfWeek',
 
+    startOfWeekDidChange: function() {
+      console.log('Start Of Week Did Change');
+    },
+
     timeCardsDidChange: function() {
       console.log('TimeCards or startOfWeek did change');
 
@@ -33,7 +37,8 @@ Nvzn.timeCardsByWeekController = SC.ArrayController.create(
         weeksToShow = this.get('weeksToShow'),
         startOfWeek = this.get('startOfWeek'),
         daysToShow = 7 * weeksToShow, i, days = [];
-      if (!timecards) return;
+      if (!timecards) {console.log("No TimeCards"); return;}
+      console.log("TimeCards:", timecards.get('length'));
 
       // Build Object for Each Day
       for(i = 0; i < daysToShow; i++) {
@@ -46,7 +51,6 @@ Nvzn.timeCardsByWeekController = SC.ArrayController.create(
         });
       }
 
-      console.log("TimeCards:");
 //      timecards.forEach(function(timecard) {
 //        console.log(timecard.get('attributes'));
 //      });

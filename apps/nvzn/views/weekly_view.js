@@ -1,9 +1,9 @@
-Nvzn.WeeklyView = SC.View.extend({
+Nvzn.WeeklyView = SC.View.extend(SC.ContentDisplay, {
   classNames: ["weekly-view"],
 
   weeksToShow: 2,
 
-  displayProperties: ['content', '[]', 'weeksToShow'],
+  displayProperties: ['weeksToShow'],
 
   render: function(ctx, firstTime) {
     var content = this.get('content') || [],
@@ -11,8 +11,16 @@ Nvzn.WeeklyView = SC.View.extend({
       date;
 
     ctx.push(
-      "<table style='width:100%'>",
-        "<tr><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>"
+      "<table>",
+        "<thead><tr>",
+          "<th class='dashboard-header day'>Mon</th>",
+          "<th class='dashboard-header day'>Tue</th>",
+          "<th class='dashboard-header day'>Wed</th>",
+          "<th class='dashboard-header day'>Thu</th>",
+          "<th class='dashboard-header day'>Fri</th>",
+          "<th class='dashboard-header day'>Sat</th>",
+          "<th class='dashboard-header day'>Sun</th>",
+        "</tr></thead>"
     );
 
     content.forEach(function(i, idx) {
@@ -27,6 +35,7 @@ Nvzn.WeeklyView = SC.View.extend({
 
       ctx.push("</td>");
     });
+    if (content.get('length') == 0) ctx.push("<br style='clear:both'>");
 
     ctx.push(
         "</tr>",

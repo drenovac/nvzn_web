@@ -27,6 +27,7 @@ Nvzn.ROSTER_EMPLOYEE = Ki.State.design({
       this.gotoState('SHOWING_EMPLOYEE');
       this.invokeLater(function(){
         Nvzn.employeeController.propertyDidChange('customerTimecards');
+        Nvzn.timeCardsByWeekController.timeCardsDidChange();
         Nvzn.mainPage.sites_by_week.displayDidChange();
       });
     }

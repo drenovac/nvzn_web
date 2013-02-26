@@ -37,11 +37,16 @@ Nvzn.Customer = SC.Record.extend(
   fullAddress: function() {
     var address = this.get('address');
     if (!address) address = {};
-    if (SC.empty(address.name))   address.name   = "The Building"
-    if (SC.empty(address.street)) address.street = "1 Some Place";
-    if (SC.empty(address.suburb)) address.suburb = "That Town";
+//    if (SC.empty(address.street)) {
+//      if (SC.empty(address.name))   address.name   = "The Building."
+//      address.street = "1 Some Place";
+//    }
+//    if (SC.empty(address.suburb)) address.suburb = "That Town";
     //return "1 South Street, South Kempsey 2440";
-    return address.name + " "+address.street + ", "+address.suburb+" "+address.postcode;
+    return (address.name || "") + " "+
+      (address.street || "")+ ", "+
+      (address.suburb || "")+" "+
+      (address.postcode || "");
   }.property('address').cacheable(),
 
 //  employees: function() {

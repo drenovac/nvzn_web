@@ -4,6 +4,8 @@
 // ==========================================================================
 /*globals Nvzn */
 
+//Nvzn.ICON_SO = sc_static("image/icons/SO.png");
+
 /** @class
 
   (Document your Model here)
@@ -22,6 +24,7 @@ Nvzn.TimeCard = SC.Record.extend(
   finish: SC.Record.attr('String'),
   customer: SC.Record.attr('String'),
   employee: SC.Record.toOne('Nvzn.Employee'),
+  type: SC.Record.attr('String'),
   desc: SC.Record.attr('String'),
 
   timeDisplay: function() {
@@ -64,7 +67,7 @@ Nvzn.TimeCard = SC.Record.extend(
 Nvzn.TimeCard.fieldFormatter = function(items) {
   if (!items) return "";
   var ret = "", classes = "timecard-cell ", allClasses,
-    status, approveClass = 'approve', cid,
+    status, approveClass = 'approve', cid, icon,
     sent = Nvzn.local.getPath('sent');
   if (Nvzn.canEditManager) classes = "editable-cell "+classes;
   var color = Nvzn.get('showTimeCardColors');
@@ -83,13 +86,22 @@ Nvzn.TimeCard.fieldFormatter = function(items) {
 //    console.log("Rendering cell", item.get('storeKey'), item.statusString());
     allClasses = classes + (items.get('status') & SC.Record.DIRTY ? "cell-dirty" : "");
     ret += "<span id='tc-s-"+item.get('storeKey')+"' class='"+allClasses+"'>"
-      +item.timeFromString('start')
-      +"</span>&nbsp;-&nbsp;";
+      +item.timeFromString('start') + " - </span>";
+
+//    icon = Nvzn.icon_for(item.get('type'));
+//    if(icon !== SC.BLANK_IMAGE_URL) {
+//      ret+="<img class='tc_icon' src='"+ Nvzn.icon_for(item.get('type'))+"' title='"+item.get('desc')+"' >";
+//    } else {
+//      ret +="&nbsp;-&nbsp;";
+//    }
 
     ret += "<span id='tc-f-"+item.get('storeKey')+"' class='"+allClasses+"'>"
       +item.timeFromString('finish')
-      +item.get('desc')+"</span><br>"
+      +"</span><br>"
     ;
+    if (item.get('type') !== "N") {
+      ret += "<span class='tc_desc'>"+ item.get('desc') +"</span></br>";
+    }
     if (color) ret += "</span>";
   });
   return ret;

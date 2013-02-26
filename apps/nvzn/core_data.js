@@ -82,7 +82,7 @@ SC.mixin(Nvzn, {
   getEmployeeData: function(employee) {
 
     var week = Nvzn.weeksFromWeekEnding(),
-        url = "/api/v1.1/employee/timecards" + (week ? "?week=" + week : ""),
+        url = "/api/v1.1/employee/timecards?week=" + week,
         weeksToShow = Nvzn.timeCardsByWeekController.get('weeksToShow');
     if (weeksToShow > 1) url += "&weeks="+weeksToShow;
     SC.Request.getUrl(url).notify(this, 'loadEmployeeData').json().send();

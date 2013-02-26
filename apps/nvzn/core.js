@@ -14,7 +14,7 @@ Nvzn = SC.Application.create(
   /** @scope Nvzn.prototype */ {
 
   NAMESPACE: 'Nvzn',
-  VERSION: '201302041715-1-gbbcc303-80',
+  VERSION: '201302041715-4-g859a52c-83',
 
 
   /*
@@ -38,7 +38,7 @@ Nvzn = SC.Application.create(
 
   selectedRecord: null,
 
-  selectedDate: SC.DateTime.create(),
+  selectedDate: SC.DateTime.create({hour: 0, minute: 0, second: 0}),
 //  selectedDate:SC.DateTime.create({ year:2010, month:10, day:31 }),
 
   selectedWeekDidChange: function() {
@@ -107,6 +107,12 @@ Nvzn = SC.Application.create(
     }
 
     return color;
+  },
+
+  icon_for: function(code) {
+    var icon = Nvzn['ICON_'+code];
+    if (!icon) icon = SC.BLANK_IMAGE_URL
+    return icon;
   }
 
 }) ;

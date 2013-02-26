@@ -13,21 +13,29 @@ set :sessions, true
 #COUCH = 'http://rectertupochastroyeysery:OKeJh8V1Rj8ABqXCvElfUCMj@geoffreyd.cloudant.com/nvzn'
 COUCH = 'http://rectertupochastroyeysery:OKeJh8V1Rj8ABqXCvElfUCMj@10.1.1.50:5984/nvzn'
 
+#config = {
+#    #:url => "jdbc:sqlserver://10.1.1.50;databaseName=NVZN11",
+#    :url => "jdbc:sqlserver://10.1.1.50;databaseName=edmen",
+#    :adapter => "jdbc",
+#    :username => "sa",
+#    :password => "s1nemojP0werforce",
+#    :driver => 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
+#}
+
 config = {
-    #:url => "jdbc:sqlserver://10.1.1.50;databaseName=NVZN11",
-    :url => "jdbc:sqlserver://10.1.1.50;databaseName=edmen",
-    :adapter => "jdbc",
-    :username => "sa",
-    :password => "s1nemojP0werforce",
-    :driver => 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
+  #:url => "jdbc:sqlserver://10.1.1.50;databaseName=NVZN11",
+  :url => "jdbc:sqlserver://203.47.127.239;databaseName=edmen",
+  :adapter => "jdbc",
+  :username => "sa",
+  :password => "3dm3n",
+  :driver => 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
 }
 
 #config = {
-#  :url => "jdbc:sqlserver://203.44.138.69;databaseName=NVZN11",
-#  :adapter => "jdbc",
+#  :url => "jdbc:jtds:sqlserver://10.1.1.50/edmen",
+#  :adapter => "jdbcmssql",
 #  :username => "sa",
-#  :password => "edmen",
-#  :driver => 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
+#  :password => "s1nemojP0werforce"
 #}
 
 use Rack::Deflater
@@ -101,6 +109,18 @@ get '/api/v1.1/site/:customer/timecards' do
   # this_monday = '2010-09-27'
   # next_friday = '2010-10-03'
 
+  customer = {
+    :id => customer_id,
+    :employees => {},
+    :start => this_monday,
+    :finish => next_sunday
+  }
+  #results = connection.execute(sql)
+  customers = {}
+  employees = {}
+  timecards = []
+
+  # GET Standard Timecards
   sql =<<SQL
     SELECT RTC.roster_date, RTC.customer, RTC.employee,
     convert(varchar, RTC.ftime, 108) as finish, convert(varchar, RTC.stime, 108) as start,
@@ -108,7 +128,7 @@ get '/api/v1.1/site/:customer/timecards' do
     EMPLOYEES.surname, EMPLOYEES.first_name,
     EMPLOYEES.photo_path, EMPLOYEES.contact_numbers,
     EMPLOYEES.employee_a_street, EMPLOYEES.employee_a_suburb,
-    CNA.code, CNA.given_names, CNA.address, CNA.suburb, CNA.state, CNA.pcode,
+    CNA.code, CNA.given_name, CNA.address, CNA.suburb, CNA.state, CNA.pcode,
     RTC.hour_type, ROSTER_TYPES.description
     FROM  RTC
     LEFT JOIN EMPLOYEES ON RTC.employee = EMPLOYEES.employee
@@ -119,20 +139,9 @@ get '/api/v1.1/site/:customer/timecards' do
     AND  customer IN (#{customer_id})
     ORDER BY customer,  employee, roster_date, stime, ftime
 SQL
+  #puts sql
 
-  puts sql
-
-  customer = {
-      :id => customer_id,
-      :employees => {},
-      :start => this_monday,
-      :finish => next_sunday
-  }
   results = connection.execute(sql)
-  customers = {}
-  employees = {}
-  timecards = []
-
   results.each do |r|
     employee_id = r['employee']
     tc_id = [employee_id,r['customer'],r['roster_date'],r['start'],r['finish']].join("*")
@@ -142,7 +151,7 @@ SQL
     customers[c_code] ||= {
       :id => c_code,
       :address => {
-        :street => r['address'] || "",
+        :street => (r['address'] || "").split("@VM@").join(" "),
         :suburb => r['suburb'] || "",
         :state  => r['state'] || "",
         :postcode => r['pcode'] || ""
@@ -151,8 +160,8 @@ SQL
 
     # info for single customer.
     customer['address'] ||= {
-      :name => r['given_names'] || "",
-      :street => r['address'] || "",
+      :name => r['given_name'] || "",
+      :street => (r['address'] || "").split("@VM@").join(" "),
       :suburb => r['suburb'] || "",
       :state  => r['state'] || "",
       :postcode => r['pcode'] || ""
@@ -178,6 +187,77 @@ SQL
       :start => r['start'],
       :finish => r['finish'],
       :type => r['hour_type'],
+      :desc => r['description']
+    }
+  end
+
+  # GET AdHoc Timecards
+  sql =<<SQL
+    SELECT ARTC.roster_date, ARTC.customer, ARTC.employee,
+    convert(varchar, ARTC.ftime, 108) as finish, convert(varchar, ARTC.stime, 108) as start,
+    ARTC.ftime, ARTC.stime,
+    EMPLOYEES.surname, EMPLOYEES.first_name,
+    EMPLOYEES.photo_path, EMPLOYEES.contact_numbers,
+    EMPLOYEES.employee_a_street, EMPLOYEES.employee_a_suburb,
+    CNA.code, CNA.given_name, CNA.address, CNA.suburb, CNA.state, CNA.pcode,
+    ARTC.shift_type, ROSTER_TYPES.description
+    FROM  ARTC
+    LEFT JOIN EMPLOYEES ON ARTC.employee = EMPLOYEES.employee
+    LEFT JOIN CNA ON ARTC.customer = CNA.code
+    LEFT JOIN ROSTER_TYPES ON ARTC.shift_type = ROSTER_TYPES.code
+
+    WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_sunday}'
+    AND  customer IN (#{customer_id})
+    ORDER BY customer,  employee, roster_date, stime, ftime
+SQL
+  #puts sql
+
+  results = connection.execute(sql)
+  results.each do |r|
+    employee_id = 'ADHOC'
+    tc_id = [employee_id, r['customer'], r['roster_date'], r['start'], r['finish']].join("*")
+    c_code = r['code']
+
+    # Customers list for multiple customers
+    customers[c_code] ||= {
+      :id => c_code,
+      :address => {
+        :street => (r['address'] || "").split("@VM@").join(" "),
+        :suburb => r['suburb'] || "",
+        :state => r['state'] || "",
+        :postcode => r['pcode'] || ""
+      }
+    }
+
+    # info for single customer.
+    customer['address'] ||= {
+      :name => r['given_name'] || "",
+      :street => (r['address'] || "").split("@VM@").join(" "),
+      :suburb => r['suburb'] || "",
+      :state => r['state'] || "",
+      :postcode => r['pcode'] || ""
+    }
+
+    employees[employee_id] ||= {
+      :first_name => "ADHOC",
+      :customer => "",
+      :last_name => "",
+      :photo_path => "",
+      :contact_numbers => "",
+      :address => "",
+      :id => "ADHOC",
+      :timeCards => []
+    }
+
+    employees[employee_id][:timeCards] << tc_id
+    timecards << {
+      :id => tc_id,
+      :employee => employee_id,
+      :customer => r['customer'],
+      :date => r['roster_date'],
+      :start => r['start'],
+      :finish => r['finish'],
+      :type => r['shift_type'],
       :desc => r['description']
     }
   end
@@ -215,7 +295,7 @@ get '/api/v1.1/employee/timecards' do
   end
   this_monday = date.monday.to_formatted_s("%Y-%m-%d")
   if params[:weeks]
-    next_sunday = (date+params[:weeks].to_i.weeks).sunday.to_formatted_s("%Y-%m-%d")
+    next_sunday = (date.monday+params[:weeks].to_i.weeks).to_formatted_s("%Y-%m-%d")
   else
     next_sunday = date.sunday.to_formatted_s("%Y-%m-%d")
   end
@@ -225,16 +305,22 @@ get '/api/v1.1/employee/timecards' do
   sql =<<SQL
     SELECT RTC.roster_date, RTC.customer, RTC.employee,
     convert(varchar, RTC.ftime, 108) as finish, convert(varchar, RTC.stime, 108) as start,
-    RTC.ftime, RTC.stime, EMPLOYEES.surname, EMPLOYEES.first_name,
-    CNA.code, CNA.address, CNA.suburb, CNA.state, CNA.pcode
-    FROM  RTC INNER JOIN
-          EMPLOYEES ON RTC.employee = EMPLOYEES.employee INNER JOIN
-          CNA ON RTC.customer = CNA.code
+    RTC.ftime, RTC.stime,
+    EMPLOYEES.surname, EMPLOYEES.first_name,
+    EMPLOYEES.photo_path, EMPLOYEES.contact_numbers,
+    EMPLOYEES.employee_a_street, EMPLOYEES.employee_a_suburb,
+    CNA.code, CNA.given_name, CNA.address, CNA.suburb, CNA.state, CNA.pcode,
+    RTC.hour_type, ROSTER_TYPES.description
+    FROM  RTC
+    LEFT JOIN EMPLOYEES ON RTC.employee = EMPLOYEES.employee
+    LEFT JOIN CNA ON RTC.customer = CNA.code
+    LEFT JOIN ROSTER_TYPES ON RTC.hour_type = ROSTER_TYPES.code
 
     WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_sunday}'
     AND  EMPLOYEES.EMPLOYEE = '#{employee}'
     ORDER BY employee, customer, roster_date, stime, ftime
 SQL
+  puts sql
 
   emp = nil
   results = connection.execute(sql)
@@ -248,7 +334,11 @@ SQL
 
     emp ||= {
       :first_name => r['first_name'],
+      :customer => r['customer'],
       :last_name => r['surname'],
+      :photo_path => r['photo_path'],
+      :contact_numbers => r['contact_numbers'].to_s.split('@vm@'),
+      :address => [r['employee_a_street'], r['employee_a_suburb']].compact.reject(&:blank?).join(", "),
       :id => employee_id,
       :timeCards => []
     }
@@ -256,7 +346,7 @@ SQL
     customers[r['code']] ||= {
       :id => r['code'],
       :address => {
-        :street => r['address'] || "",
+        :street => (r['address'] || "").split("@VM@").join(" "),
         :suburb => r['suburb'] || "",
         :state  => r['state'] || "",
         :postcode => r['pcode'] || ""
@@ -270,11 +360,13 @@ SQL
       :customer => r['customer'],
       :date => r['roster_date'],
       :start => r['start'],
-      :finish => r['finish']
+      :finish => r['finish'],
+      :type => r['hour_type'],
+      :desc => r['description']
     }
   end
 
-  emp ||= {:id => employee, timeCards => []}
+  emp ||= {:id => employee, timecards => []}
   
   response = {
     :employee => emp,

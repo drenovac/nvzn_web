@@ -46,7 +46,7 @@ Nvzn.mainPage = SC.Page.create({
           classNames:'page-header'.w(),
           layout:{height:100},
           childViews: ('nameLabel nameView dateLabel dateView contactLabel ' +
-//            'customerAddress ' +
+            'customerAddress ' +
             'contactView titleView greetingLabel logoutButton').w(),
 
           titleView: SC.LabelView.extend({
@@ -94,7 +94,8 @@ Nvzn.mainPage = SC.Page.create({
           }),
           customerAddress: SC.View.extend(SC.ContentDisplay, {
             classNames: 'header-address'.w(),
-            layout: { top: 55, left: 496, right: 200, height:31 },
+            isVisibleBinding: 'Nvzn.isEmployee',
+            layout: { top: 55, left: 0.11, right: 200, height:31 },
             contentBinding: 'Nvzn.customerController.fullAddress',
             render:function (context) {
               context.push("<span class='label'>Site Address:</span> ");
@@ -489,6 +490,8 @@ Nvzn.mainPage = SC.Page.create({
       }
     }
   }),
+
+  approve_tc: SC.outlet('all_employees'),
 
   sites_by_week: Nvzn.WeeklyView.design({
     contentBinding: 'Nvzn.timeCardsByWeekController.arrangedObjects',
