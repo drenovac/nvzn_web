@@ -13,13 +13,22 @@ set :sessions, true
 #COUCH = 'http://rectertupochastroyeysery:OKeJh8V1Rj8ABqXCvElfUCMj@geoffreyd.cloudant.com/nvzn'
 COUCH = 'http://rectertupochastroyeysery:OKeJh8V1Rj8ABqXCvElfUCMj@10.1.1.50:5984/nvzn'
 
+#config = {
+#    #:url => "jdbc:sqlserver://10.1.1.50;databaseName=NVZN11",
+#    :url => "jdbc:sqlserver://10.1.1.50;databaseName=edmen",
+#    :adapter => "jdbc",
+#    :username => "sa",
+#    :password => "s1nemojP0werforce",
+#    :driver => 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
+#}
+
 config = {
-    #:url => "jdbc:sqlserver://10.1.1.50;databaseName=NVZN11",
-    :url => "jdbc:sqlserver://10.1.1.50;databaseName=edmen",
-    :adapter => "jdbc",
-    :username => "sa",
-    :password => "s1nemojP0werforce",
-    :driver => 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
+  #:url => "jdbc:sqlserver://10.1.1.50;databaseName=NVZN11",
+  :url => "jdbc:sqlserver://203.47.127.239;databaseName=edmen",
+  :adapter => "jdbc",
+  :username => "sa",
+  :password => "3dm3n",
+  :driver => 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
 }
 
 #config = {
@@ -119,7 +128,7 @@ get '/api/v1.1/site/:customer/timecards' do
     EMPLOYEES.surname, EMPLOYEES.first_name,
     EMPLOYEES.photo_path, EMPLOYEES.contact_numbers,
     EMPLOYEES.employee_a_street, EMPLOYEES.employee_a_suburb,
-    CNA.code, CNA.given_names, CNA.address, CNA.suburb, CNA.state, CNA.pcode,
+    CNA.code, CNA.given_name, CNA.address, CNA.suburb, CNA.state, CNA.pcode,
     RTC.hour_type, ROSTER_TYPES.description
     FROM  RTC
     LEFT JOIN EMPLOYEES ON RTC.employee = EMPLOYEES.employee
@@ -142,7 +151,7 @@ SQL
     customers[c_code] ||= {
       :id => c_code,
       :address => {
-        :street => r['address'] || "",
+        :street => (r['address'] || "").split("@VM@").join(" "),
         :suburb => r['suburb'] || "",
         :state  => r['state'] || "",
         :postcode => r['pcode'] || ""
@@ -151,8 +160,8 @@ SQL
 
     # info for single customer.
     customer['address'] ||= {
-      :name => r['given_names'] || "",
-      :street => r['address'] || "",
+      :name => r['given_name'] || "",
+      :street => (r['address'] || "").split("@VM@").join(" "),
       :suburb => r['suburb'] || "",
       :state  => r['state'] || "",
       :postcode => r['pcode'] || ""
@@ -190,7 +199,7 @@ SQL
     EMPLOYEES.surname, EMPLOYEES.first_name,
     EMPLOYEES.photo_path, EMPLOYEES.contact_numbers,
     EMPLOYEES.employee_a_street, EMPLOYEES.employee_a_suburb,
-    CNA.code, CNA.given_names, CNA.address, CNA.suburb, CNA.state, CNA.pcode,
+    CNA.code, CNA.given_name, CNA.address, CNA.suburb, CNA.state, CNA.pcode,
     ARTC.shift_type, ROSTER_TYPES.description
     FROM  ARTC
     LEFT JOIN EMPLOYEES ON ARTC.employee = EMPLOYEES.employee
@@ -213,7 +222,7 @@ SQL
     customers[c_code] ||= {
       :id => c_code,
       :address => {
-        :street => r['address'] || "",
+        :street => (r['address'] || "").split("@VM@").join(" "),
         :suburb => r['suburb'] || "",
         :state => r['state'] || "",
         :postcode => r['pcode'] || ""
@@ -222,8 +231,8 @@ SQL
 
     # info for single customer.
     customer['address'] ||= {
-      :name => r['given_names'] || "",
-      :street => r['address'] || "",
+      :name => r['given_name'] || "",
+      :street => (r['address'] || "").split("@VM@").join(" "),
       :suburb => r['suburb'] || "",
       :state => r['state'] || "",
       :postcode => r['pcode'] || ""
@@ -300,7 +309,7 @@ get '/api/v1.1/employee/timecards' do
     EMPLOYEES.surname, EMPLOYEES.first_name,
     EMPLOYEES.photo_path, EMPLOYEES.contact_numbers,
     EMPLOYEES.employee_a_street, EMPLOYEES.employee_a_suburb,
-    CNA.code, CNA.given_names, CNA.address, CNA.suburb, CNA.state, CNA.pcode,
+    CNA.code, CNA.given_name, CNA.address, CNA.suburb, CNA.state, CNA.pcode,
     RTC.hour_type, ROSTER_TYPES.description
     FROM  RTC
     LEFT JOIN EMPLOYEES ON RTC.employee = EMPLOYEES.employee
@@ -328,7 +337,7 @@ SQL
       :customer => r['customer'],
       :last_name => r['surname'],
       :photo_path => r['photo_path'],
-      :contact_numbers => r['contact_numbers'].to_s.split('<vm/>'),
+      :contact_numbers => r['contact_numbers'].to_s.split('@vm@'),
       :address => [r['employee_a_street'], r['employee_a_suburb']].compact.reject(&:blank?).join(", "),
       :id => employee_id,
       :timeCards => []
@@ -337,7 +346,7 @@ SQL
     customers[r['code']] ||= {
       :id => r['code'],
       :address => {
-        :street => r['address'] || "",
+        :street => (r['address'] || "").split("@VM@").join(" "),
         :suburb => r['suburb'] || "",
         :state  => r['state'] || "",
         :postcode => r['pcode'] || ""
