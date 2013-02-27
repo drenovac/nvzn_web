@@ -201,7 +201,7 @@
 .date {
   float: right;
   /*border: solid 1px;*/
-  width: 1.5em;
+  min-width: 1.5em;
   text-align: center;
   position: absolute;
   right: 2px;
