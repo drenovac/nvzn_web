@@ -186,16 +186,16 @@
 .weekly-view table {
   border: none;
   width: 100%;
-  height: 100%;
+  /*height: 100%;*/
 }
 .weekly-view table td, .weekly-view table th {
   position: relative;
   border: solid 1px rgba(134, 134, 134, 0.45);
-  /*min-height: 1.5em;*/
 }
 
 .weekly-view table td {
-  height: 25%;
+  /*height: 25%;*/
+  height: 2em;
   vertical-align: top;
   text-align: center;
 }
