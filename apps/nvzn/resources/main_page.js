@@ -384,8 +384,6 @@ Nvzn.mainPage = SC.Page.create({
                     .attr('title', addr)
                     .text(addr)
                   .end();
-                } else {
-                  debugger;
                 }
                 context.begin('span')
                   .addStyle('background-color', Nvzn.colorFor(this.get('content')))
