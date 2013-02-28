@@ -19,6 +19,10 @@ Nvzn.customersController = SC.ArrayController.create(
 
   selectionDidChange: function() {
     Nvzn.statechart.sendEvent('customerSelectionChanged');
-  }.observes('selection')
+  }.observes('selection'),
+
+  byID: function(id) {
+    return Nvzn.store.find(Nvzn.Customer, id);
+  }
 
 }) ;

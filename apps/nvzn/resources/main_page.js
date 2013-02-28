@@ -355,22 +355,39 @@ Nvzn.mainPage = SC.Page.create({
             top:20, bottom:13, right:13
           },
           contentView:SC.ListView.extend({
-            rowHeight:31,
+            rowHeight: function() {
+              return this.get('isEmployee') ? 45 : 31;
+            }.property('isEmployee'),
             contentBinding:'Nvzn.customersController.arrangedObjects',
+            controllerBinding: 'Nvzn.customersController',
+            isEmployeeBinding: SC.Binding.oneWay('Nvzn.isEmployee'),
             selectionBinding:'Nvzn.customersController.selection',
             exampleView:SC.ListItemView.extend({
               displayProperties:'isSelected'.w(),
               classNames:'sidebar-jobs-list-item',
+//              isEmployeeBinding: SC.Binding.oneWay('.owner.isEmployee'),
 
               render:function (context) {
+                var id = this.getPath('content');
                 if (this.get('isSelected')) {
                   context.addClass('sel');
                 }
+                var cust = this.getPath('owner.controller').byID(id);
+                var addr = cust.get('fullAddress');
 
                 context.begin('div').addClass('sidebar-jobs-item-number')
-                  .text(this.getPath('content'))
-                .end()
-                .begin('span')
+                  .attr('title', addr)
+                  .text(id)
+                .end();
+                if (this.getPath('owner.isEmployee')) { // Show the address
+                  context.begin('div').addClass('sidebar-jobs-item-name')
+                    .attr('title', addr)
+                    .text(addr)
+                  .end();
+                } else {
+                  debugger;
+                }
+                context.begin('span')
                   .addStyle('background-color', Nvzn.colorFor(this.get('content')))
                 .end();
                 //context.begin('div').addClass('sidebar-jobs-item-name').text(this.getPath('content')).end();

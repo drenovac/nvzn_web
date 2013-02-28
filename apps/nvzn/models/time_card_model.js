@@ -81,7 +81,7 @@ Nvzn.TimeCard.fieldFormatter = function(items) {
     }
     if (color) {
       cid = item.getPath('customer');
-      ret += "<span class='customer-color' title='"+cid+"' style='border-left-color:"+Nvzn.colorFor(cid)+";'>";
+      ret += "<span class='customer-color' title='"+cid+"' style='background-color:"+Nvzn.colorFor(cid)+";'>";
     }
 //    console.log("Rendering cell", item.get('storeKey'), item.statusString());
     allClasses = classes + (items.get('status') & SC.Record.DIRTY ? "cell-dirty" : "");

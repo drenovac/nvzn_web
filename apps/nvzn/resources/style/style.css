@@ -49,7 +49,8 @@
 
 .sidebar-jobs-item-name, .header-name {
   position: absolute;
-  left: 75px;
+  left: 15px;
+  top: 19px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
