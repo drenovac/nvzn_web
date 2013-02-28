@@ -25,7 +25,10 @@ Nvzn.WeeklyView = SC.View.extend(SC.ContentDisplay, {
     );
 
     content.forEach(function(i, idx) {
-      if (idx % 7 === 0) ctx.push("</tr><tr>");
+      if (idx % 7 === 0) {
+        ctx.push("</tr><tr>");
+        currentMonth = -1; // reset to get month on each monday
+      }
       date = i.date;
       var dateStr = date.get('day');
       if (date.get('month') !== currentMonth) {
