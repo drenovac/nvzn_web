@@ -39,6 +39,10 @@ Nvzn.SHOW_LOGIN = Ki.State.design({
       controller.set('errorMessage', "Incorrect Login or Password");
       return;
     }
+    if (req.status === 500) {
+      controller.set('errorMessage', "The server was not able to log you in");
+      return;
+    }
     
     if (body.user) {
       this.statechart.sendEvent('loggedIn', body.user);
