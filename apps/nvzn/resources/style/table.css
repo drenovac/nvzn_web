@@ -48,13 +48,15 @@
   min-width: 5px;
   padding:0;
   position: relative;
+  overflow:hidden;
 }
-.dashboard-cell.customer>span {
+.dashboard-cell.customer>.color {
   position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
+  top:0;
+  left:0;
+  padding:20px;
+  bottom: -100%;
+  z-index:20;
 }
 
 .dashboard-cell.name {
@@ -140,9 +142,9 @@
   border:none;
 }
 
-.dashboard-row.customer span.customer>span {
-  right: -50px;
-}
+/*.dashboard-row.customer span.customer>.color {*/
+  /*right: -50px;*/
+/*}*/
 
 .dashboard-row.customer span.name {
   position: absolute;
