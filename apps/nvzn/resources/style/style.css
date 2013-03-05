@@ -74,7 +74,7 @@
 }
 
 .header-address {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 300;
 }
 
@@ -317,3 +317,4 @@
 .loading-spinner {
   background-image: static_url('spinner-black');
 }
+

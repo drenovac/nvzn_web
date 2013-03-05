@@ -14,7 +14,7 @@ Nvzn.APP = Ki.State.design({
       ]);
     } else {
       Nvzn.getPath('mainPage.tabView').set('items', [
-        {title: 'Coming Weeks', value:'sites_by_week'}
+        {title: 'Roster', value:'sites_by_week'}
 //        {title: 'This Week', value:'all_sites'},
 //        {title: 'OSH Report', value:'ohs_report'}
       ]);

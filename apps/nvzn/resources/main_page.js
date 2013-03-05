@@ -95,7 +95,7 @@ Nvzn.mainPage = SC.Page.create({
           customerAddress: SC.View.extend(SC.ContentDisplay, {
             classNames: 'header-address'.w(),
             isVisibleBinding: 'Nvzn.isEmployee',
-            layout: { top: 55, left: 0.11, right: 200, height:31 },
+            layout: { top: 60, left: 0.11, right: 200, height:31 },
             contentBinding: 'Nvzn.customerController.fullAddress',
             render:function (context) {
               context.push("<span class='label'>Site Address:</span> ");
@@ -209,6 +209,7 @@ Nvzn.mainPage = SC.Page.create({
         }),
 
         footerView:SC.View.extend({
+          classNames: ["page-footer"],
           childViews:'submitButton'.w(),
 
           layout:{
@@ -373,7 +374,7 @@ Nvzn.mainPage = SC.Page.create({
                   context.addClass('sel');
                 }
                 var cust = this.getPath('owner.controller').byID(id);
-                var addr = cust.get('fullAddress');
+                var addr = cust ? cust.get('fullAddress') : "";
 
                 context.begin('div').addClass('sidebar-jobs-item-number')
                   .attr('title', addr)
@@ -409,7 +410,7 @@ Nvzn.mainPage = SC.Page.create({
         key: 'customer',
         formatter: function(value) {
           var color = Nvzn.colorFor(value);
-          return "<span style='background-color:%@'></span>".fmt(color);
+          return "<div class='sc-view color' style='background-color:%@'>&nbsp;</div>".fmt(color);
         }
       },
       {
