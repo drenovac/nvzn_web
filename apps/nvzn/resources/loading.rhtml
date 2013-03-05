@@ -4,6 +4,59 @@
    # caching and startup very fast, so your users will often only see this 
    # content for a brief moment on their first app load, if at all.
 %>
-<p class="loading">Loading...<p>
+<p class="loading">Please Wait, Loading...<p>
 
+<% end %>
+
+
+<% content_for :page_styles do %>
+  <style media="print">
+    .sidebar, .page-header, .page-footer, .sc-segmented-view {
+      display: none;
+    }
+
+    .weekly-view table {
+      border: none;
+      width: 100%;
+      border-spacing: 0;
+    }
+
+    .weekly-view table td, .weekly-view table th {
+      position: relative;
+      border: solid 1px rgba(134, 134, 134, 0.45);
+      width: 13%;
+    }
+
+    .weekly-view table td {
+      height: 2em;
+      vertical-align: top;
+      text-align: center;
+      padding-top: 20px;
+    }
+
+    .date {
+      padding-left: 4px;
+      text-align: center;
+      background-color: rgb(255, 255, 255);
+      position: absolute;
+      right: 2px;
+      top: 2px;
+    }
+
+    .customer-color {
+      /*border-left-style: solid;*/
+      /*border-width: 1px;*/
+      /*border-left-width: 5px;*/
+      /*padding: 0 2px;*/
+      margin: 2px 0;
+      display: inline-block;
+      width: 92%;
+    }
+
+    .timecard-cell {
+      line-height: 20px;
+      white-space: nowrap;
+    }
+
+  </style>
 <% end %>
