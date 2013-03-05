@@ -37,8 +37,22 @@ config = {
 #  :username => "sa",
 #  :password => "s1nemojP0werforce"
 #}
+module Rack
+  class ChromeFrame
+    def initialize(app)
+      @app = app
+    end
+
+    def call(env)
+      status, headers, response = @app.call(env)
+      headers["X-UA-Compatible"] ||= "chrome=1"
+      [status, headers, response]
+    end
+  end
+end
 
 use Rack::Deflater
+use Rack::ChromeFrame
 
 get '/api/v1.1/login' do
   halt 401, {'status' => "not authorised"}.to_json if !session || session[:username].blank?
@@ -78,6 +92,7 @@ post '/api/v1.1/login' do
 end
 
 get '/api/v1.1/logout' do
+  session[:username] = nil # IE doesn't work without this.
   session.clear
   body ({ :status => "ok" }).to_json
 end
