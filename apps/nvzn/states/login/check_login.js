@@ -1,5 +1,16 @@
 Nvzn.CHECK_LOGIN = Ki.State.design({
   enterState: function() {
+
+    if($.browser.msie && $.browser.version < 9) {
+      var pane = Nvzn.getPath('loginPage.chromeFramePane');
+      pane.append();
+      CFInstall.check({
+        mode: "overlay", // the default
+        node: "prompt"
+      });
+      return;
+    }
+
     SC.Request.getUrl('/api/v1.1/login').json().notify(this, 'checkedLogin').send();
 
   },

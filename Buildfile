@@ -7,7 +7,8 @@
 config :nvzn,
     :required => [:sproutcore, :"more_cowbell", :ki, :tableview, :calendar, :'sproutcore/forms'],
     :theme => 'sproutcore/ace',
-    :load_fixtures => true
+    :load_fixtures => true,
+    :chrome_frame => true
 
 
 server = "localhost:9292"

@@ -1,3 +1,8 @@
+.chromeFrameOverlayCloseBar {
+  display: none; /* don't let the user bypass the prompt */
+}
+
+
 .sc-main {
   background: #C0C0C0;
 }

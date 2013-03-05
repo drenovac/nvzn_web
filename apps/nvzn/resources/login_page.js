@@ -7,6 +7,24 @@
 // This page describes a part of the interface for your application.
 Nvzn.loginPage = SC.Page.design({
 
+  chromeFramePane: SC.Pane.design({
+    layout: { top: 0, bottom:0, right:0, left: 0 },
+    childViews: 'header prompt'.w(),
+
+    header: SC.LabelView.design({
+      layout: {top:20, width:800, centerX:0, height: 50},
+      value: "<h2>Envizion was made for use with a modern browser.</h2>"
+        + "<p>Please upgrade to the newest Internet Explorer, or install Chrome Frame. Chrome Frame does not need Admin rights.</p>",
+      textAlign: SC.ALIGN_MIDDLE,
+      escapeHTML: NO
+    }),
+
+    prompt: SC.View.design({
+      layerId: 'prompt',
+      layout: {top: 50, left: 0, right: 0, bottom:0}
+    })
+  }),
+
   loginPane: SC.Pane.design({
     layout: { centerX: 0, centerY: 0, width: 450, height: 270 },
     childViews: 'logo prompt errorMessage loginLabel loginInput passLabel passInput submitButton'.w(),
