@@ -67,17 +67,18 @@ Nvzn.TimeCard = SC.Record.extend(
 Nvzn.TimeCard.fieldFormatter = function(items) {
   if (!items) return "";
   var ret = "", classes = "timecard-cell ", allClasses,
-    status, approveClass = 'approve', cid, icon,
+    status, approveClass = 'approve', cid, approveClasses,
     sent = Nvzn.local.getPath('sent');
   if (Nvzn.canEditManager) classes = "editable-cell "+classes;
   var color = Nvzn.get('showTimeCardColors');
   items.forEach(function(item) {
     status = item.get('status');
-    if (status & SC.Record.DIRTY) approveClass += ' changed';
-    if (sent && sent[item.get('id')]) approveClass += " submitted";
-    if (item.get('approved')) approveClass += ' approved';
+    approveClasses = approveClass;
+    if (status & SC.Record.DIRTY) approveClasses += ' changed';
+    if (sent && sent[item.get('id')]) approveClasses += " submitted";
+    if (item.get('approved')) approveClasses += ' approved';
     if (Nvzn.canApproveManager) {
-      ret += "<span class='"+approveClass+"' storeKey='"+item.get('storeKey')+"'> </span>";
+      ret += "<span class='"+ approveClasses+"' storeKey='"+item.get('storeKey')+"'> </span>";
     }
     if (color) {
       cid = item.getPath('customer');
@@ -86,7 +87,7 @@ Nvzn.TimeCard.fieldFormatter = function(items) {
 //    console.log("Rendering cell", item.get('storeKey'), item.statusString());
     allClasses = classes + (items.get('status') & SC.Record.DIRTY ? "cell-dirty" : "");
     ret += "<span id='tc-s-"+item.get('storeKey')+"' class='"+allClasses+"'>"
-      +item.timeFromString('start') + " - </span>";
+      +item.timeFromString('start') + "</span> - "; // ensure `-` is outside span for editing.
 
 //    icon = Nvzn.icon_for(item.get('type'));
 //    if(icon !== SC.BLANK_IMAGE_URL) {

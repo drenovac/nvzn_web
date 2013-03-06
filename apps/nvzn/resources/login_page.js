@@ -26,8 +26,10 @@ Nvzn.loginPage = SC.Page.design({
   }),
 
   loginPane: SC.Pane.design({
-    layout: { centerX: 0, centerY: 0, width: 450, height: 270 },
-    childViews: 'logo prompt errorMessage loginLabel loginInput passLabel passInput submitButton'.w(),
+    layout: { centerX: 0, centerY: 0, width: 450, height: 310 },
+    childViews: ('logo prompt errorMessage ' +
+      'loginLabel loginInput passLabel passInput submitButton ' +
+      'demoLabel approveCheck editCheck').w(),
     classNames: "login",
 
     defaultResponder: 'Nvzn.statechart',
@@ -49,14 +51,14 @@ Nvzn.loginPage = SC.Page.design({
     }),
 
     errorMessage: SC.LabelView.design({
-      layout: { top: 95, left: 10, height: 20, width: 300 },
+      layout: { top: 189, left: 10, height: 20, width: 300 },
       classNames: ['error-message'],
       textAlign: SC.ALIGN_RIGHT,
       valueBinding: 'Nvzn.loginController.errorMessage'
     }),
 
     loginLabel: SC.LabelView.design({
-      layout: { top: 110, left: 40, width: 95 },
+      layout: { top: 120, left: 40, width: 95, height:20 },
       escapeHTML: NO,
       textAlign: SC.ALIGN_RIGHT,
       value: '<h1>Login</h1>',
@@ -64,14 +66,14 @@ Nvzn.loginPage = SC.Page.design({
     }),
 
     loginInput: SC.TextFieldView.design({
-      layout: { left: 150, top: 110, width: 200, height: 30 },
+      layout: { left: 150, top: 116, width: 200, height: 25 },
       applyImmediately: YES,
       hint: 'site or employee',
       valueBinding: 'Nvzn.loginController.loginInput'
     }),
 
     passLabel: SC.LabelView.design({
-      layout: { left: 40, top: 150, width: 95 },
+      layout: { left: 40, top: 160, width: 95, height: 20  },
       escapeHTML: NO,
       textAlign: SC.ALIGN_RIGHT,
       value: '<h1>Password</h1>',
@@ -79,7 +81,7 @@ Nvzn.loginPage = SC.Page.design({
     }),
 
     passInput: SC.TextFieldView.design({
-      layout: { left: 150, top: 150, width: 200, height: 30 },
+      layout: { left: 150, top: 156, width: 200, height: 25 },
       applyImmediately: YES,
       valueBinding: 'Nvzn.loginController.passInput',
       isPassword: YES,
@@ -103,6 +105,30 @@ Nvzn.loginPage = SC.Page.design({
     cancelButton: SC.ButtonView.design({
       layout: {left: 90, top: 220, width: 100, height: 24},
       title: 'Cancel'
+    }),
+
+    demoLabel: SC.LabelView.design({
+      layout: { top: 250, left: 40, width: 400, height: 20 },
+      isVisibleBinding: SC.Binding.oneWay('Nvzn.isDemo'),
+      escapeHTML: NO,
+      textAlign: SC.ALIGN_LEFT,
+      value: 'In Demo Mode you can enable the following options.',
+      classNames: 'black'
+    }),
+
+    approveCheck: SC.CheckboxView.design({
+      layout: { top: 270, left: 40, width: 300, height: 20 },
+      isVisibleBinding: SC.Binding.oneWay('Nvzn.isDemo'),
+      title: "Manager Login: Approve Time Cards",
+      valueBinding: 'Nvzn.canApproveManager'
+    }),
+
+    editCheck: SC.CheckboxView.design({
+      layout: { top: 290, left: 40, width: 300, height: 20 },
+      isVisibleBinding: SC.Binding.oneWay('Nvzn.isDemo'),
+      isEnabledBinding: SC.Binding.oneWay('Nvzn.canApproveManager'),
+      title: "Manager Login: Edit Time Cards",
+      valueBinding: 'Nvzn.canEditManager'
     })
   })
 });

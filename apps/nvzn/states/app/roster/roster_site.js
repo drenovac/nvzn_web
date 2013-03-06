@@ -5,12 +5,12 @@ Nvzn.ROSTER_SITE = Ki.State.design({
     Nvzn.set('mode', 'site');
     Nvzn.getPath('mainPage.tabView').set('nowShowing', 'all_employees');
     var submit = Nvzn.getPath('mainPage.submit');
-    if (Nvzn.canApproveManager) {
-      submit.set('title', 'Submit Approvals');
-      submit.set('isVisible', YES);
-    } else {
-      submit.set('isVisible', NO);
-    }
+//    if (Nvzn.canApproveManager) {
+//      submit.set('title', 'Submit Approvals');
+//      submit.set('isVisible', YES);
+//    } else {
+//      submit.set('isVisible', NO);
+//    }
     Nvzn.getPath('mainPage.header').set('isVisible', YES);
   },
 

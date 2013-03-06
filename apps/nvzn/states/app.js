@@ -9,8 +9,8 @@ Nvzn.APP = Ki.State.design({
     // Set Tabs
     if (Nvzn.loginController.get('role') == 'site') {
       Nvzn.getPath('mainPage.tabView').set('items', [
-        {title:'View Rosters', value:'all_employees'},
-        {title:'Approve Rosters', value: 'approve_tc'}
+        {title:'View Rosters', value:'all_employees'}
+//        {title:'Approve Rosters', value: 'approve_tc'}
       ]);
     } else {
       Nvzn.getPath('mainPage.tabView').set('items', [
@@ -25,14 +25,14 @@ Nvzn.APP = Ki.State.design({
   tabDidChange:function () {
     switch (Nvzn.mainPage.getPath('tabView.nowShowing')) {
       case 'all_employees':
-        Nvzn.set('canEditManager', NO);
-        Nvzn.set('canApproveManager', NO);
+//        Nvzn.set('canEditManager', NO);
+//        Nvzn.set('canApproveManager', NO);
         this.gotoState('APP.ROSTER');
         break;
 
       case 'approve_tc':
-        Nvzn.set('canEditManager', YES);
-        Nvzn.set('canApproveManager', YES);
+//        Nvzn.set('canEditManager', YES);
+//        Nvzn.set('canApproveManager', YES);
         this.gotoState('APP.ROSTER');
         break;
 

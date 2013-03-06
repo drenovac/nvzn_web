@@ -20,8 +20,14 @@ Nvzn = SC.Application.create(
   /*
    * Permissions
    */
+  isDemo: YES,
   canEditManager: NO,
   canApproveManager: NO,
+
+  canApproveManagerDidChange: function() {
+    if (!this.get('canApproveManager'))
+      this.set('canEditManager', NO);
+  }.observes('canApproveManager'),
 
   showTimeCardColors: NO,
 

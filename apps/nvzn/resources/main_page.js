@@ -238,6 +238,7 @@ Nvzn.mainPage = SC.Page.create({
               height:24,
               width:120
             },
+            isVisibleBinding: SC.Binding.oneWay('Nvzn.canApproveManager'),
             target:Nvzn.statechart,
             action:'submit',
             title:'Submit Approvals'
