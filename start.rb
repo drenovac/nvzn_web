@@ -1,0 +1,3 @@
+require 'rack'
+
+Rack::Server.start()
