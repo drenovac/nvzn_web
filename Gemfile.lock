@@ -16,8 +16,8 @@ GEM
     bouncy-castle-java (1.5.0147)
     builder (2.1.2)
     i18n (0.6.0)
-    jruby-openssl (0.8.4)
-      bouncy-castle-java (>= 1.5.0147)
+    jruby-openssl (0.7.7)
+      bouncy-castle-java (>= 1.5.0146.1)
     json (1.6.1)
     json (1.6.1-java)
     mime-types (1.18)
@@ -39,7 +39,7 @@ DEPENDENCIES
   activerecord-jdbc-adapter (= 1.1.1)
   activesupport (= 3.0.5)
   arel (= 2.0.9)
-  jruby-openssl
+  jruby-openssl (~> 0.7.5)
   json
   rest-client
   sinatra

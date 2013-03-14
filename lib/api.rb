@@ -1,4 +1,4 @@
-require 'rubygems'
+# require 'rubygems'
 require 'active_record'
 require 'activerecord-jdbc-adapter'
 require './lib/sqljdbc4.jar'
