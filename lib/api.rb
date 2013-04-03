@@ -11,7 +11,7 @@ require 'digest/sha2'
 set :sessions, true
 
 #COUCH = 'http://rectertupochastroyeysery:OKeJh8V1Rj8ABqXCvElfUCMj@geoffreyd.cloudant.com/nvzn'
-COUCH = 'http://rectertupochastroyeysery:OKeJh8V1Rj8ABqXCvElfUCMj@10.1.1.50:5984/nvzn'
+COUCH = 'http://rectertupochastroyeysery:OKeJh8V1Rj8ABqXCvElfUCMj@10.1.1.50:5984/edmen'
 
 #config = {
 #    #:url => "jdbc:sqlserver://10.1.1.50;databaseName=NVZN11",
@@ -152,7 +152,7 @@ get '/api/v1.1/site/:customer/timecards' do
 
     WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_sunday}'
     AND  customer IN (#{customer_id})
-    ORDER BY customer,  employee, roster_date, stime, ftime
+    ORDER BY customer,  employee, surname, roster_date, stime, ftime
 SQL
   #puts sql
 
@@ -223,7 +223,7 @@ SQL
 
     WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_sunday}'
     AND  customer IN (#{customer_id})
-    ORDER BY customer,  employee, roster_date, stime, ftime
+    ORDER BY customer,  employee, surname, roster_date, stime, ftime
 SQL
   #puts sql
 
@@ -255,8 +255,8 @@ SQL
 
     employees[employee_id] ||= {
       :first_name => "ADHOC",
-      :customer => "",
-      :last_name => "",
+      :customer => r['customer'],
+      :last_name => "*",
       :photo_path => "",
       :contact_numbers => "",
       :address => "",
@@ -278,13 +278,17 @@ SQL
   end
 
   customer['address'] ||= {}
-  customer[:employees] = employees.map {|key| key[1][:id] }
+  customer[:employees] = employees.values.sort { |a, b|
+    #return -1 if a[:id] == "ADHOC"
+    #return 1 if b[:id] == "ADHOC"
+    (a[:customer] == b[:customer]) ? a[:last_name] <=> b[:last_name] : a[:customer] <=> b[:customer]
+  }.map {|o| o[:id] }
   #employees.collect
 
   response = {
     :customer => customer,
-    :customers => customers.map{|key| key[1] },
-    :employees => employees.map {|key| key[1] },
+    :customers => customers.values,
+    :employees => employees.values,
     :timecards => timecards
   }
 
@@ -333,7 +337,7 @@ get '/api/v1.1/employee/timecards' do
 
     WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_sunday}'
     AND  EMPLOYEES.EMPLOYEE = '#{employee}'
-    ORDER BY employee, customer, roster_date, stime, ftime
+    ORDER BY employee, customer, surname, roster_date, stime, ftime
 SQL
   puts sql
 
