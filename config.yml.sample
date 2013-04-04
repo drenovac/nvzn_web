@@ -1,0 +1,8 @@
+couch: 'http://username:password@server:port/database'
+db:
+  url: 'jdbc:sqlserver://server;databaseName=database'
+  adapter: 'jdbc'
+  username: 'username'
+  password: 'password'
+  driver: 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
+

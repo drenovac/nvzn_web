@@ -7,36 +7,16 @@ require 'sinatra'
 require 'rest_client'
 require 'json'
 require 'digest/sha2'
+require 'yaml'
 
 set :sessions, true
 
-#COUCH = 'http://rectertupochastroyeysery:OKeJh8V1Rj8ABqXCvElfUCMj@geoffreyd.cloudant.com/nvzn'
-COUCH = 'http://rectertupochastroyeysery:OKeJh8V1Rj8ABqXCvElfUCMj@10.1.1.50:5984/edmen'
+settings = YAML.load_file('config.yml')
 
-#config = {
-#    #:url => "jdbc:sqlserver://10.1.1.50;databaseName=NVZN11",
-#    :url => "jdbc:sqlserver://10.1.1.50;databaseName=edmen",
-#    :adapter => "jdbc",
-#    :username => "sa",
-#    :password => "s1nemojP0werforce",
-#    :driver => 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
-#}
+COUCH = settings['couch']
 
-config = {
-  #:url => "jdbc:sqlserver://10.1.1.50;databaseName=NVZN11",
-  :url => "jdbc:sqlserver://203.47.127.239;databaseName=edmen",
-  :adapter => "jdbc",
-  :username => "sa",
-  :password => "3dm3n",
-  :driver => 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
-}
+config = settings['db']
 
-#config = {
-#  :url => "jdbc:jtds:sqlserver://10.1.1.50/edmen",
-#  :adapter => "jdbcmssql",
-#  :username => "sa",
-#  :password => "s1nemojP0werforce"
-#}
 module Rack
   class ChromeFrame
     def initialize(app)
