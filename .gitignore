@@ -4,7 +4,7 @@ static/
 .idea
 .DS_Store
 tags
-
+server/bundle
 *.rdb
 
 *.bak
