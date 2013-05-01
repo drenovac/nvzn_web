@@ -1,4 +1,4 @@
-require 'rubygems'
+# require 'rubygems'
 require 'active_record'
 require 'activerecord-jdbc-adapter'
 require './lib/sqljdbc4.jar'
@@ -7,36 +7,16 @@ require 'sinatra'
 require 'rest_client'
 require 'json'
 require 'digest/sha2'
+require 'yaml'
 
 set :sessions, true
 
-#COUCH = 'http://rectertupochastroyeysery:OKeJh8V1Rj8ABqXCvElfUCMj@geoffreyd.cloudant.com/nvzn'
-COUCH = 'http://rectertupochastroyeysery:OKeJh8V1Rj8ABqXCvElfUCMj@10.1.1.50:5984/nvzn'
+settings = YAML.load_file('config.yml')
 
-#config = {
-#    #:url => "jdbc:sqlserver://10.1.1.50;databaseName=NVZN11",
-#    :url => "jdbc:sqlserver://10.1.1.50;databaseName=edmen",
-#    :adapter => "jdbc",
-#    :username => "sa",
-#    :password => "s1nemojP0werforce",
-#    :driver => 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
-#}
+COUCH = settings['couch']
 
-config = {
-  #:url => "jdbc:sqlserver://10.1.1.50;databaseName=NVZN11",
-  :url => "jdbc:sqlserver://203.47.127.239;databaseName=edmen",
-  :adapter => "jdbc",
-  :username => "sa",
-  :password => "3dm3n",
-  :driver => 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
-}
+config = settings['db']
 
-#config = {
-#  :url => "jdbc:jtds:sqlserver://10.1.1.50/edmen",
-#  :adapter => "jdbcmssql",
-#  :username => "sa",
-#  :password => "s1nemojP0werforce"
-#}
 module Rack
   class ChromeFrame
     def initialize(app)
@@ -92,6 +72,7 @@ post '/api/v1.1/login' do
 end
 
 get '/api/v1.1/logout' do
+  session[:username] = nil # IE doesn't work without this.
   session.clear
   body ({ :status => "ok" }).to_json
 end
@@ -151,7 +132,7 @@ get '/api/v1.1/site/:customer/timecards' do
 
     WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_sunday}'
     AND  customer IN (#{customer_id})
-    ORDER BY customer,  employee, roster_date, stime, ftime
+    ORDER BY customer,  employee, surname, roster_date, stime, ftime
 SQL
   #puts sql
 
@@ -222,28 +203,29 @@ SQL
 
     WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_sunday}'
     AND  customer IN (#{customer_id})
-    ORDER BY customer,  employee, roster_date, stime, ftime
+    ORDER BY customer,  employee, surname, roster_date, stime, ftime
 SQL
   #puts sql
 
+  adhoc_emoloyee = nil
   results = connection.execute(sql)
   results.each do |r|
     employee_id = 'ADHOC'
     tc_id = [employee_id, r['customer'], r['roster_date'], r['start'], r['finish']].join("*")
     c_code = r['code']
 
-    # Customers list for multiple customers
+    # Customers list for multiple customers. Added if there are only adhoc shifts
     customers[c_code] ||= {
       :id => c_code,
       :address => {
-        :street => (r['address'] || "").split("@VM@").join(" "),
-        :suburb => r['suburb'] || "",
-        :state => r['state'] || "",
-        :postcode => r['pcode'] || ""
+        :street => (r['address'] || '').split("@VM@").join(' '),
+        :suburb => r['suburb'] || '',
+        :state => r['state'] || '',
+        :postcode => r['pcode'] || ''
       }
     }
 
-    # info for single customer.
+    # info for single customer that only has adhoc shifts.
     customer['address'] ||= {
       :name => r['given_name'] || "",
       :street => (r['address'] || "").split("@VM@").join(" "),
@@ -252,18 +234,18 @@ SQL
       :postcode => r['pcode'] || ""
     }
 
-    employees[employee_id] ||= {
+    adhoc_emoloyee ||= {
       :first_name => "ADHOC",
-      :customer => "",
+      :customer => r['customer'],
       :last_name => "",
       :photo_path => "",
       :contact_numbers => "",
       :address => "",
-      :id => "ADHOC",
+      :id => employee_id,
       :timeCards => []
     }
 
-    employees[employee_id][:timeCards] << tc_id
+    adhoc_emoloyee[:timeCards] << tc_id
     timecards << {
       :id => tc_id,
       :employee => employee_id,
@@ -277,13 +259,24 @@ SQL
   end
 
   customer['address'] ||= {}
-  customer[:employees] = employees.map {|key| key[1][:id] }
-  #employees.collect
+  customer[:employees] = employees.values.sort { |a, b|
+    if a[:customer] == b[:customer]
+      a[:last_name] <=> b[:last_name]
+    else
+      a[:customer] <=> b[:customer]
+    end
+  }.map {|o| o[:id] }
+
+  if adhoc_emoloyee
+    customer[:employees] << 'ADHOC'
+    employees['ADHOC'] = adhoc_emoloyee
+  end
+  #TODO: .push(*canceled)
 
   response = {
     :customer => customer,
-    :customers => customers.map{|key| key[1] },
-    :employees => employees.map {|key| key[1] },
+    :customers => customers.values,
+    :employees => employees.values,
     :timecards => timecards
   }
 
@@ -332,7 +325,7 @@ get '/api/v1.1/employee/timecards' do
 
     WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_sunday}'
     AND  EMPLOYEES.EMPLOYEE = '#{employee}'
-    ORDER BY employee, customer, roster_date, stime, ftime
+    ORDER BY employee, customer, surname, roster_date, stime, ftime
 SQL
   puts sql
 

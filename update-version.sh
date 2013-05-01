@@ -10,7 +10,7 @@ appname='nvzn'
 sed -e "s/VERSION: '[0-9a-zA-Z\.-]*'/VERSION: '`echo "$projectversion-$revisioncount"`'/" -i .bak apps/$appname/core.js
 
 sproutcore build nvzn -r --languages='en'
-version = `sproutcore build-number nvzn`
+version=`sproutcore build-number nvzn`
 
 # Copy the server code
 cp -Rf server/ ../nvzn_build
@@ -34,3 +34,6 @@ cd $wd
 
 # Set the right version number.
 sproutcore build-number nvzn > ../nvzn_build/VERSION
+
+echo "New version is "
+cat ../nvzn_build/VERSION
