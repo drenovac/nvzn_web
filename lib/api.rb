@@ -207,24 +207,25 @@ SQL
 SQL
   #puts sql
 
+  adhoc_emoloyee = nil
   results = connection.execute(sql)
   results.each do |r|
     employee_id = 'ADHOC'
     tc_id = [employee_id, r['customer'], r['roster_date'], r['start'], r['finish']].join("*")
     c_code = r['code']
 
-    # Customers list for multiple customers
+    # Customers list for multiple customers. Added if there are only adhoc shifts
     customers[c_code] ||= {
       :id => c_code,
       :address => {
-        :street => (r['address'] || "").split("@VM@").join(" "),
-        :suburb => r['suburb'] || "",
-        :state => r['state'] || "",
-        :postcode => r['pcode'] || ""
+        :street => (r['address'] || '').split("@VM@").join(' '),
+        :suburb => r['suburb'] || '',
+        :state => r['state'] || '',
+        :postcode => r['pcode'] || ''
       }
     }
 
-    # info for single customer.
+    # info for single customer that only has adhoc shifts.
     customer['address'] ||= {
       :name => r['given_name'] || "",
       :street => (r['address'] || "").split("@VM@").join(" "),
@@ -233,18 +234,18 @@ SQL
       :postcode => r['pcode'] || ""
     }
 
-    employees[employee_id] ||= {
+    adhoc_emoloyee ||= {
       :first_name => "ADHOC",
       :customer => r['customer'],
-      :last_name => "*",
+      :last_name => "",
       :photo_path => "",
       :contact_numbers => "",
       :address => "",
-      :id => "ADHOC",
+      :id => employee_id,
       :timeCards => []
     }
 
-    employees[employee_id][:timeCards] << tc_id
+    adhoc_emoloyee[:timeCards] << tc_id
     timecards << {
       :id => tc_id,
       :employee => employee_id,
@@ -259,11 +260,18 @@ SQL
 
   customer['address'] ||= {}
   customer[:employees] = employees.values.sort { |a, b|
-    #return -1 if a[:id] == "ADHOC"
-    #return 1 if b[:id] == "ADHOC"
-    (a[:customer] == b[:customer]) ? a[:last_name] <=> b[:last_name] : a[:customer] <=> b[:customer]
+    if a[:customer] == b[:customer]
+      a[:last_name] <=> b[:last_name]
+    else
+      a[:customer] <=> b[:customer]
+    end
   }.map {|o| o[:id] }
-  #employees.collect
+
+  if adhoc_emoloyee
+    customer[:employees] << 'ADHOC'
+    employees['ADHOC'] = adhoc_emoloyee
+  end
+  #TODO: .push(*canceled)
 
   response = {
     :customer => customer,
