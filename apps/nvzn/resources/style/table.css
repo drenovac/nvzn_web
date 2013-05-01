@@ -34,6 +34,10 @@
   background-color: #e6e6e6;
 }
 
+.dashboard-row .row-adhoc, .dashboard-row .row-cancelled {
+  font-weight: bold;
+}
+
 .dashboard-cell {
   display: table-cell;
   padding-left: 10px;

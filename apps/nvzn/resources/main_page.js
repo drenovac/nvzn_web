@@ -417,7 +417,14 @@ Nvzn.mainPage = SC.Page.create({
       {
         title:"Employee",
         classNames:'name',
-        key:'fullName'
+        key:'displayName',
+        formatter: function(value) {
+          if (value.indexOf('ADHOC') >= 0) {
+            return "<span class='row-adhoc'>Shifts to be filled</span>";
+          } else if (value.indexOf('CANCELLED') >=0 ) {
+            return "<span class='row-cancelled'>Cancelled Shifts</span>";
+          } else return value;
+        }
       },
       {
         title: function() {
@@ -491,6 +498,15 @@ Nvzn.mainPage = SC.Page.create({
         start = matches[1] === 's',
         storeKey = parseInt(matches[2], 10);
       Nvzn.statechart.sendEvent('valueChanged', storeKey, [start, value]);
+    },
+
+    didUpdateLayer: function() {
+      sc_super();
+//      debugger;
+      this.$(".row-adhoc").parents('.dashboard-row').css({'background-color': 'lightblue'})
+        .children('.dashboard-cell:not(.customer)').css("border-top", "solid 1px grey");
+      this.$(".row-cancelled").parents('.dashboard-row').css({'background-color': 'mistyrose'})
+        .children('.dashboard-cell').css("border-top", "solid 1px grey");
     },
 
     click: function(evt) {

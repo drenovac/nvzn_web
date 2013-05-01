@@ -17,9 +17,12 @@ Nvzn.employeesController = SC.ArrayController.create(
 
   allowsEmptySelection: NO,
 
+  orderBy: ['customer', 'lastName'],
+
   arrangedObjects: function() {
     var customerId = null, customer,
       employees = this.get('content'),
+//      employees = this._scac_observableContent(),
       site, storeKey,
       S = Nvzn.store, C = Nvzn.Customer,
       ret = [];
@@ -36,6 +39,11 @@ Nvzn.employeesController = SC.ArrayController.create(
       }
       ret.push(employee);
     });
+
+//    ret.sort(function() {
+//
+//    })
+
     return ret;
   }.property('content').cacheable()
 

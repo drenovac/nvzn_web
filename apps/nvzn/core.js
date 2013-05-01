@@ -14,7 +14,7 @@ Nvzn = SC.Application.create(
   /** @scope Nvzn.prototype */ {
 
   NAMESPACE: 'Nvzn',
-  VERSION: '201302041715-4-g859a52c-83',
+  VERSION: '201302041715-18-g1ee8b1c-97',
 
 
   /*

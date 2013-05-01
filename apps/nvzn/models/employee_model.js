@@ -30,8 +30,8 @@ Nvzn.Employee = SC.Record.extend(
   }.property('firstName', 'lastName').cacheable(),
 
   displayName: function() {
-    return this.get('fullName');
-  }.property('fullName'),
+    return "%@, %@".fmt(this.get('lastName'), this.get('firstName')).titleize();
+  }.property('firstName', 'lastName'),
 
   timeCardsByDate: function(sunday) {
 //    if (this._timeCardsBuDate) return this._timeCardsByDate;

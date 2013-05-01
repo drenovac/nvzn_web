@@ -5,9 +5,12 @@ Nvzn.LOGIN = Ki.State.design({
     var controller = Nvzn.loginController,
         userKey = Nvzn.store.loadRecord(Nvzn.User, data);
     controller.set('content', Nvzn.store.materializeRecord(userKey));
-    Nvzn.local.set('userDomain', controller.get('db_id'));
+    if (controller.get('db_id')) Nvzn.local.set('userDomain', controller.get('db_id'));
     var sent = Nvzn.local.get('sent');
     if (!sent) Nvzn.local.set('sent', {});
+//    if (Nvzn.local.get('canApproveManager') !== undefined) {
+//
+//    }
     this.gotoState('APP');
   },
 

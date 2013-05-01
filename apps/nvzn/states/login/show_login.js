@@ -33,7 +33,9 @@ Nvzn.SHOW_LOGIN = Ki.State.design({
 
   didLogin: function(req) {
     var controller = Nvzn.loginController,
-        body = req.get('body');
+        body;
+    controller.set('errorMessage', "Logging in!");
+    body = req.get('body');
 
     if (req.status === 401) {
       controller.set('errorMessage', "Incorrect Login or Password");
