@@ -210,9 +210,9 @@ SQL
   adhoc_emoloyee = nil
   results = connection.execute(sql)
   results.each do |r|
-    employee_id = 'ADHOC'
-    tc_id = [employee_id, r['customer'], r['roster_date'], r['start'], r['finish']].join("*")
     c_code = r['code']
+    employee_id = 'ADHOC'+c_code
+    tc_id = ['ADHOC', r['customer'], r['roster_date'], r['start'], r['finish']].join("*")
 
     # Customers list for multiple customers. Added if there are only adhoc shifts
     customers[c_code] ||= {
@@ -234,10 +234,10 @@ SQL
       :postcode => r['pcode'] || ""
     }
 
-    adhoc_emoloyee ||= {
+    employees[employee_id] ||= {
       :first_name => "ADHOC",
       :customer => r['customer'],
-      :last_name => "",
+      :last_name => "~",
       :photo_path => "",
       :contact_numbers => "",
       :address => "",
@@ -245,7 +245,7 @@ SQL
       :timeCards => []
     }
 
-    adhoc_emoloyee[:timeCards] << tc_id
+    employees[employee_id][:timeCards] << tc_id
     timecards << {
       :id => tc_id,
       :employee => employee_id,
@@ -254,6 +254,71 @@ SQL
       :start => r['start'],
       :finish => r['finish'],
       :type => r['shift_type'],
+      :desc => r['description']
+    }
+  end
+
+  # GET Cancelled Timecards
+  sql =<<SQL
+    SELECT CRTC.roster_date, CRTC.customer, CRTC.employee, canx_rtc_id,
+    CNA.code, CNA.given_name, CNA.address, CNA.suburb, CNA.state, CNA.pcode,
+    CRTC.reason as description
+    FROM  CRTC
+    LEFT JOIN CNA ON CRTC.customer = CNA.code
+
+    WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_sunday}'
+    AND  customer IN (#{customer_id})
+    ORDER BY customer,  employee, roster_date, canx_rtc_id
+SQL
+  #puts sql
+
+  results = connection.execute(sql)
+  #results = []
+  results.each do |r|
+    c_code = r['customer']
+    employee_id = 'CANCELLED'+c_code
+    tc_id = ['CANCELLED', r['canx_rtc_id']].join('*')
+
+    # Customers list for multiple customers. Added if there are only adhoc shifts
+    customers[c_code] ||= {
+      :id => c_code,
+      :address => {
+        :street => (r['address'] || '').split('@VM@').join(' '),
+        :suburb => r['suburb'] || '',
+        :state => r['state'] || '',
+        :postcode => r['pcode'] || ''
+      }
+    }
+
+    # info for single customer that only has cancelled shifts.
+    customer['address'] ||= {
+      :name => r['given_name'] || '',
+      :street => (r['address'] || '').split('@VM@').join(' '),
+      :suburb => r['suburb'] || '',
+      :state => r['state'] || '',
+      :postcode => r['pcode'] || ''
+    }
+
+    employees[employee_id] ||= {
+      :first_name => 'CANCELLED',
+      :customer => r['customer'],
+      :last_name => '~',
+      :photo_path => '',
+      :contact_numbers => '',
+      :address => '',
+      :id => employee_id,
+      :timeCards => []
+    }
+
+    employees[employee_id][:timeCards] << tc_id
+    timecards << {
+      :id => tc_id,
+      :employee => employee_id,
+      :customer => r['customer'],
+      :date => r['roster_date'],
+      :start => '00:00',
+      :finish => '00:00',
+      :type => 'Cancelled',
       :desc => r['description']
     }
   end
@@ -267,10 +332,10 @@ SQL
     end
   }.map {|o| o[:id] }
 
-  if adhoc_emoloyee
-    customer[:employees] << 'ADHOC'
-    employees['ADHOC'] = adhoc_emoloyee
-  end
+  #if adhoc_emoloyee
+  #  customer[:employees] << 'ADHOC'
+  #  employees['ADHOC'] = adhoc_emoloyee
+  #end
   #TODO: .push(*canceled)
 
   response = {
