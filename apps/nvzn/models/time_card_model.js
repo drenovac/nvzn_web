@@ -100,7 +100,7 @@ Nvzn.TimeCard.fieldFormatter = function(items) {
       +item.timeFromString('finish')
       +"</span><br>"
     ;
-    if (item.get('type') !== "N") {
+    if (item.get('type') !== "N" && item.get('desc') !== null) {
       ret += "<span class='tc_desc'>"+ item.get('desc') +"</span></br>";
     }
     if (color) ret += "</span>";

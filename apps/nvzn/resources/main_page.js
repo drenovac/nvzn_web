@@ -32,7 +32,7 @@ Nvzn.mainPage = SC.Page.create({
           context.begin('div').addClass('bottom').end();
           context.begin('div').addClass('bottom-right').end();
         }
-        }),
+      }),
 
       mainView:SC.View.extend({
         classNames:'main'.w(),
@@ -419,7 +419,9 @@ Nvzn.mainPage = SC.Page.create({
         classNames:'name',
         key:'displayName',
         formatter: function(value) {
-          if (value.indexOf('ADHOC') >= 0) {
+          if (value.indexOf('ADHOCNOFILL') >= 0) {
+            return "<span class='row-adhoc'>Shifts Not filled</span>";
+          } else if (value.indexOf('ADHOC') >= 0) {
             return "<span class='row-adhoc'>Shifts to be filled</span>";
           } else if (value.indexOf('CANCELLED') >=0 ) {
             return "<span class='row-cancelled'>Cancelled Shifts</span>";
