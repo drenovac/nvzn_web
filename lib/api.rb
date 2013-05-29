@@ -211,7 +211,9 @@ SQL
   results = connection.execute(sql)
   results.each do |r|
     c_code = r['code']
+    no_fill = r['description'] == 'No Fill'
     employee_id = 'ADHOC'+c_code
+    employee_id += 'NoFill' if no_fill
     tc_id = ['ADHOC', r['customer'], r['roster_date'], r['start'], r['finish']].join("*")
 
     # Customers list for multiple customers. Added if there are only adhoc shifts
@@ -235,7 +237,7 @@ SQL
     }
 
     employees[employee_id] ||= {
-      :first_name => "ADHOC",
+      :first_name => no_fill ? 'ADHOCNOFILL' : 'ADHOC',
       :customer => r['customer'],
       :last_name => "~",
       :photo_path => "",
