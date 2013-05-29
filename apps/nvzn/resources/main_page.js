@@ -585,7 +585,59 @@ Nvzn.mainPage = SC.Page.create({
       if (!employeeId) return;
 
     }
-  })
+  }),
 
+  payslips: EO.TableView.design({
+    columns: [
+      {
+        title: "Pay Day",
+        key: "date",
+        formatter: function(value) {
+          return value.toFormattedString("%D-%b-%Y");
+        }
+      },
+      {
+        title: "Paid To",
+        key: "paid_to",
+        formatter: function (value) {
+          return value.toFormattedString("%D-%b-%Y");
+        }
+      },
+      {
+        title: 'Hours',
+        key: 'hours'
+      },
+      {
+        title: "Taxable",
+        key: 'taxable'
+      },
+      {
+        title: "Non-Tax",
+        key: 'non_tax'
+      },
+      {
+        title: "Gross",
+        key: "gross"
+      },
+      {
+        title: "Tax",
+        key: 'tax'
+      },
+      {
+        title: "Net",
+        key: 'net'
+      },
+      {
+        title: "PaySlip",
+        key: 'url',
+        formatter: function (value) {
+          return "<a href='%@'>Download</a>".fmt(value);
+        }
+      }
+    ].map(function (hash) {
+       return EO.TableColumn.create(hash);
+    }),
+    contentBinding: 'Nvzn.employeeController.payslips'
+  })
 
 });// end mainPage

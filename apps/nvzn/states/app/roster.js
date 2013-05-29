@@ -6,7 +6,7 @@ Nvzn.ROSTER = Ki.State.design({
     var controller = Nvzn.loginController,
         role = controller.get('role');
 
-    SC.routes.set('location', "mainPage/mainPane");
+//    SC.routes.set('location', "mainPage/mainPane");
 
     window.setTimeout(function() {
       Nvzn.mainPage.mainPane.get('calendar').resetToSelectedDate()

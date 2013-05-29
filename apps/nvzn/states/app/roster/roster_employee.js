@@ -9,6 +9,9 @@ Nvzn.ROSTER_EMPLOYEE = Ki.State.design({
     Nvzn.getPath('mainPage.header').set('isVisible', YES);
     Nvzn.set('showTimeCardColors', YES);
   },
+  exitState: function() {
+    Nvzn.set('mode', 'none');
+  },
 
   LOADING_EMPLOYEE: Ki.State.design({
     enterState: function() {

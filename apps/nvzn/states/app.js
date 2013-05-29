@@ -3,7 +3,7 @@ Nvzn.APP = Ki.State.design({
   initialSubstate: 'ROSTER',
 
   enterState: function() {
-    SC.routes.set('location', "mainPage/mainPane");
+//    SC.routes.set('location', "mainPage/mainPane");
     Nvzn.getPath('mainPage.mainPane').append() ;
 
     // Set Tabs
@@ -14,8 +14,8 @@ Nvzn.APP = Ki.State.design({
       ]);
     } else {
       Nvzn.getPath('mainPage.tabView').set('items', [
-        {title: 'Roster', value:'sites_by_week'}
-//        {title: 'This Week', value:'all_sites'},
+        {title: 'Roster', value:'sites_by_week'},
+        {title: 'Payslip', value:'payslips'}
 //        {title: 'OSH Report', value:'ohs_report'}
       ]);
     }
@@ -23,7 +23,8 @@ Nvzn.APP = Ki.State.design({
   },
 
   tabDidChange:function () {
-    switch (Nvzn.mainPage.getPath('tabView.nowShowing')) {
+    var nowShowing = Nvzn.mainPage.getPath('tabView.nowShowing');
+    switch (nowShowing) {
       case 'all_employees':
 //        Nvzn.set('canEditManager', NO);
 //        Nvzn.set('canApproveManager', NO);
@@ -39,15 +40,23 @@ Nvzn.APP = Ki.State.design({
       case 'all_sites':
         this.gotoState('APP.ROSTER');
         break;
+      case 'sites_by_week':
+        this.gotoState('APP.ROSTER');
+        break;
 
       case 'ohs_report':
         this.gotoState('OHS_REPORT');
         break;
 
+      case 'payslips':
+        this.gotoState('PAYSLIPS');
+        break;
+
 //      case 'subcontractors':
 //        this.gotoState('APPLICATION.SUBCONTRACTORS');
 //        break;
-
+      default:
+        console.log("Tab Changed with no action:", nowShowing );
     }
     return YES;
   },
@@ -62,5 +71,6 @@ Nvzn.APP = Ki.State.design({
   },
 
   ROSTER: Ki.State.plugin('Nvzn.ROSTER'),
+  PAYSLIPS: Ki.State.plugin('Nvzn.PAYSLIPS'),
   OHS_REPORT: Ki.State.plugin('Nvzn.OHS_REPORT')
 });

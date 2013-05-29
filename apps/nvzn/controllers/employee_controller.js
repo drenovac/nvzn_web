@@ -54,6 +54,35 @@ Nvzn.employeeController = SC.ObjectController.create(
       return sites.map(function(site){
         return SC.Object.create(cardsBySite[site]);
       });
-    }.property('timeCards', 'weekEnding').cacheable()
+    }.property('timeCards', 'weekEnding').cacheable(),
+
+    payslips: function() {
+      return [
+        {
+          date: SC.DateTime.create(),
+          paid_to: SC.DateTime.create().adjust({days: 5}),
+          hours: 38,
+          taxable: 608,
+          non_tax: 0,
+          gross: 0,
+          tax: -57,
+          net: 557,
+          url: '/payslips/key1/slip.pdf'
+        },
+        {
+          date: SC.DateTime.create().adjust({days: 7}),
+          paid_to: SC.DateTime.create().adjust({days: 12}),
+          hours: 38,
+          taxable: 608,
+          non_tax: 0,
+          gross: 0,
+          tax: -57,
+          net: 557,
+          url: '/payslips/key2/slip.pdf'
+        }
+      ].map(function(hash) {
+          return SC.Object.create(hash);
+        })
+    }.property().cacheable()
 
 }) ;

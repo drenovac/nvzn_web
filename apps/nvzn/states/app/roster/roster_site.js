@@ -13,6 +13,9 @@ Nvzn.ROSTER_SITE = Ki.State.design({
 //    }
     Nvzn.getPath('mainPage.header').set('isVisible', YES);
   },
+  exitState: function() {
+    Nvzn.set('mode', 'none');
+  },
 
   START_SITE: Ki.State.design({
     customerSelectionChanged: function() {
