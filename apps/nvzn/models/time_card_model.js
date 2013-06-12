@@ -35,8 +35,7 @@ Nvzn.TimeCard = SC.Record.extend(
 
   dateObject: function() {
     return SC.DateTime.parse(
-      this.get('date')+" "+this.get('start'),
-      "%Y-%m-%d %H:%M:%S"
+      this.get('date')+" "+this.get('start'), "%Y-%m-%d %H:%M:%S"
     );
   }.property('date').cacheable(),
 
@@ -68,7 +67,7 @@ Nvzn.TimeCard.fieldFormatter = function(items) {
   if (!items) return "";
   var ret = "", classes = "timecard-cell ", allClasses,
     status, approveClass = 'approve', cid, approveClasses,
-    sent = Nvzn.local.getPath('sent');
+    sent = Nvzn.local.getPath('sent'), desc;
   if (Nvzn.canEditManager) classes = "editable-cell "+classes;
   var color = Nvzn.get('showTimeCardColors');
   items.forEach(function(item) {
@@ -100,8 +99,9 @@ Nvzn.TimeCard.fieldFormatter = function(items) {
       +item.timeFromString('finish')
       +"</span><br>"
     ;
-    if (item.get('type') !== "N" && item.get('desc') !== null) {
-      ret += "<span class='tc_desc'>"+ item.get('desc') +"</span></br>";
+    desc = item.get('desc');
+    if (item.get('type') !== "N" && desc !== null) {
+      ret += "<span class='tc_desc' title='%@'>%@</span></br>".fmt(desc, desc);
     }
     if (color) ret += "</span>";
   });
