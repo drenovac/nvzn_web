@@ -239,7 +239,7 @@ SQL
     employees[employee_id] ||= {
       :first_name => no_fill ? 'ADHOCNOFILL' : 'ADHOC',
       :customer => r['customer'],
-      :last_name => "~",
+      :last_name => "~"+(no_fill ? "z" : "a"),
       :photo_path => "",
       :contact_numbers => "",
       :address => "",
@@ -304,7 +304,7 @@ SQL
     employees[employee_id] ||= {
       :first_name => 'CANCELLED',
       :customer => r['customer'],
-      :last_name => '~',
+      :last_name => '~h',
       :photo_path => '',
       :contact_numbers => '',
       :address => '',
@@ -318,8 +318,8 @@ SQL
       :employee => employee_id,
       :customer => r['customer'],
       :date => r['roster_date'],
-      :start => '00:00',
-      :finish => '00:00',
+      :start => '00:00:00',
+      :finish => '00:00:00',
       :type => 'Cancelled',
       :desc => r['description']
     }

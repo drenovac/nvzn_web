@@ -1,4 +1,4 @@
-require '../server/bundle/bundler/setup'
+require './bundle/bundler/setup'
 require 'rack'
 
 Rack::Server.start()
