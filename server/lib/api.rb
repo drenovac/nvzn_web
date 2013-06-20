@@ -263,6 +263,8 @@ SQL
   # GET Cancelled Timecards
   sql =<<SQL
     SELECT CRTC.roster_date, CRTC.customer, CRTC.employee, canx_rtc_id,
+    convert(varchar, CRTC.ftime, 108) as finish, convert(varchar, CRTC.stime, 108) as start,
+    CRTC.ftime, CRTC.stime,
     CNA.code, CNA.given_name, CNA.address, CNA.suburb, CNA.state, CNA.pcode,
     CRTC.reason as description
     FROM  CRTC
@@ -318,8 +320,8 @@ SQL
       :employee => employee_id,
       :customer => r['customer'],
       :date => r['roster_date'],
-      :start => '00:00:00',
-      :finish => '00:00:00',
+      :start => r['start'],
+      :finish => r['finish'],
       :type => 'Cancelled',
       :desc => r['description']
     }
