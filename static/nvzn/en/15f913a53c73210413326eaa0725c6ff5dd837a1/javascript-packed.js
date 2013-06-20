@@ -99651,7 +99651,7 @@ Nvzn = SC.Application.create(
   /** @scope Nvzn.prototype */ {
 
   NAMESPACE: 'Nvzn',
-  VERSION: '201302041715-25-g66bbb16-104',
+  VERSION: '201302041715-27-ge597ead-106',
 
 
   /*
@@ -100857,7 +100857,7 @@ Nvzn.Employee = SC.Record.extend(
 // ==========================================================================
 /*globals Nvzn */
 
-//Nvzn.ICON_SO = '/static/nvzn/en/1fc00545fc8c1bb8e03f6f9fe1da3f7ada63c61c/source/resources/image/icons/SO.png';
+//Nvzn.ICON_SO = '/static/nvzn/en/15f913a53c73210413326eaa0725c6ff5dd837a1/source/resources/image/icons/SO.png';
 
 /** @class
 
@@ -102145,7 +102145,7 @@ Nvzn.loginPage = SC.Page.design({
 
     logo: SC.ImageView.design({
       layout: { width: 181, right: 100, top: 0, height: 61 },
-      value: '/static/nvzn/en/1fc00545fc8c1bb8e03f6f9fe1da3f7ada63c61c/source/resources/image/envizion-logo.png'
+      value: '/static/nvzn/en/15f913a53c73210413326eaa0725c6ff5dd837a1/source/resources/image/envizion-logo.png'
     }),
 
     prompt: SC.LabelView.design({
@@ -103029,7 +103029,7 @@ Nvzn.rosterPage = SC.Page.create({
 
       loading: SC.ImageView.design({
         layout: {top: 10, right: 15, width: 16, height: 16},
-        value: '/static/nvzn/en/1fc00545fc8c1bb8e03f6f9fe1da3f7ada63c61c/source/resources/image/loading-spinner.gif',
+        value: '/static/nvzn/en/15f913a53c73210413326eaa0725c6ff5dd837a1/source/resources/image/loading-spinner.gif',
         isVisibleBinding: 'Nvzn.rosterController.loading'
       }),
 
@@ -103037,7 +103037,7 @@ Nvzn.rosterPage = SC.Page.create({
         layout: {left: 5, top: 45, width: 75 },
         title: "Prev",
         isEnabledBinding: SC.Binding.not('Nvzn.rosterController.loading'),
-        icon: '/static/nvzn/en/1fc00545fc8c1bb8e03f6f9fe1da3f7ada63c61c/source/resources/image/up.png',
+        icon: '/static/nvzn/en/15f913a53c73210413326eaa0725c6ff5dd837a1/source/resources/image/up.png',
         action: 'prev_week'
       }),
 
@@ -103045,7 +103045,7 @@ Nvzn.rosterPage = SC.Page.create({
         layout: {right: 5, top: 45, width: 75 },
         title: "Next",
         isEnabledBinding: SC.Binding.not('Nvzn.rosterController.loading'),
-        icon: '/static/nvzn/en/1fc00545fc8c1bb8e03f6f9fe1da3f7ada63c61c/source/resources/image/down.png',
+        icon: '/static/nvzn/en/15f913a53c73210413326eaa0725c6ff5dd837a1/source/resources/image/down.png',
         action: 'next_week'
       }),
 
