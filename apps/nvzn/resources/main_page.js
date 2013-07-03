@@ -411,7 +411,7 @@ Nvzn.mainPage = SC.Page.create({
         key: 'customer',
         formatter: function(value) {
           var color = Nvzn.colorFor(value);
-          return "<div class='sc-view color' style='background-color:%@'>&nbsp;</div>".fmt(color);
+          return "<div class='sc-view color' data-color='%@'>&nbsp;</div>".fmt(color);
         }
       },
       {
@@ -509,6 +509,12 @@ Nvzn.mainPage = SC.Page.create({
         .children('.dashboard-cell:not(.customer)').css("border-top", "solid 1px grey");
       this.$(".row-cancelled").parents('.dashboard-row').css({'background-color': 'mistyrose'})
         .children('.dashboard-cell').css("border-top", "solid 1px grey");
+
+      this.$("div.color").each(function() {
+        var el = $(this), parent = el.parent(), color = el.data('color');
+        if (parent.hasClass('customer')) parent.siblings('.name').css('border-left-color', color);
+        parent.css('background-color', color);
+      });
     },
 
     click: function(evt) {

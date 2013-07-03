@@ -151,11 +151,7 @@
 /*}*/
 
 .dashboard-row.customer span.name {
-  position: absolute;
-  left: 80px;
-  width: 85%;
-  margin-top: 4px;
-  right: 50px;
+  border-left: 2em solid white;
 }
 
 .cell-dirty {
