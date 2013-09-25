@@ -223,6 +223,12 @@
   margin: 2px 0;
   display: inline-block;
   width: 92%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.customer-color .site-name {
+  white-space: nowrap;
 }
 
 .timecard-cell {

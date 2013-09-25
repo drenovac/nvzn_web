@@ -23,6 +23,7 @@ Nvzn = SC.Application.create(
   isDemo: YES,
   canEditManager: NO,
   canApproveManager: NO,
+  showInlineSite: true,
 
   canApproveManagerDidChange: function() {
     if (!this.get('canApproveManager'))

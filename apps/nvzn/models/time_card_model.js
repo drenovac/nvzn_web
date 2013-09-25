@@ -79,8 +79,8 @@ Nvzn.TimeCard.fieldFormatter = function(items) {
     if (Nvzn.canApproveManager) {
       ret += "<span class='"+ approveClasses+"' storeKey='"+item.get('storeKey')+"'> </span>";
     }
+    cid = item.getPath('customer');
     if (color) {
-      cid = item.getPath('customer');
       ret += "<span class='customer-color' title='"+cid+"' style='background-color:"+Nvzn.colorFor(cid)+";'>";
     }
 //    console.log("Rendering cell", item.get('storeKey'), item.statusString());
@@ -99,6 +99,9 @@ Nvzn.TimeCard.fieldFormatter = function(items) {
       +item.timeFromString('finish')
       +"</span><br>"
     ;
+    if (Nvzn.showInlineSite) {
+      ret += "<span class='site-name'>"+cid+"</span><br>"
+    }
     desc = item.get('desc');
     if (item.get('type') !== "N" && desc !== null) {
       ret += "<span class='tc_desc' title='%@'>%@</span></br>".fmt(desc, desc);

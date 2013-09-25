@@ -26,10 +26,10 @@ Nvzn.loginPage = SC.Page.design({
   }),
 
   loginPane: SC.Pane.design({
-    layout: { centerX: 0, centerY: 0, width: 450, height: 310 },
+    layout: { centerX: 0, centerY: 0, width: 450, height: 330 },
     childViews: ('logo prompt errorMessage ' +
       'loginLabel loginInput passLabel passInput submitButton ' +
-      'demoLabel approveCheck editCheck').w(),
+      'demoLabel approveCheck editCheck employeeSiteCheck').w(),
     classNames: "login",
 
     defaultResponder: 'Nvzn.statechart',
@@ -129,6 +129,13 @@ Nvzn.loginPage = SC.Page.design({
       isEnabledBinding: SC.Binding.oneWay('Nvzn.canApproveManager'),
       title: "Manager Login: Edit Time Cards",
       valueBinding: 'Nvzn.canEditManager'
+    }),
+
+    employeeSiteCheck: SC.CheckboxView.design({
+      layout: { top: 310, left: 40, width: 300, height: 20 },
+      isVisibleBinding: SC.Binding.oneWay('Nvzn.isDemo'),
+      title: "Employee Login: Show Site Info inline",
+      valueBinding: 'Nvzn.showInlineSite'
     })
   })
 });
