@@ -270,7 +270,7 @@ Nvzn.mainPage = SC.Page.create({
 
       calendarView:SC.View.extend({
         layout:{
-          top:70,
+          top:85,
           height: 240
         },
 
@@ -320,7 +320,7 @@ Nvzn.mainPage = SC.Page.create({
 
       jobsView:SC.View.extend({
         layout:{
-          top:300
+          top:320
         },
 
         childViews:'headerView listView'.w(),

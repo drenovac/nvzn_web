@@ -27,7 +27,7 @@ Nvzn.loginPage = SC.Page.design({
 
   loginPane: SC.Pane.design({
     layout: { centerX: 0, centerY: 0, width: 450, height: 330 },
-    childViews: ('logo prompt errorMessage ' +
+    childViews: ('logo errorMessage ' +
       'loginLabel loginInput passLabel passInput submitButton ' +
       'demoLabel approveCheck editCheck employeeSiteCheck').w(),
     classNames: "login",
@@ -39,8 +39,8 @@ Nvzn.loginPage = SC.Page.design({
     },
 
     logo: SC.ImageView.design({
-      layout: { width: 181, right: 100, top: 0, height: 61 },
-      value: sc_static('image/envizion-logo.png')
+      layout: { width: 200, right: 100, top: 0, height: 70 },
+      value: sc_static('image/edmen-logo-small.png')
     }),
 
     prompt: SC.LabelView.design({
@@ -68,7 +68,7 @@ Nvzn.loginPage = SC.Page.design({
     loginInput: SC.TextFieldView.design({
       layout: { left: 150, top: 116, width: 200, height: 25 },
       applyImmediately: YES,
-      hint: 'site or employee',
+      hint: 'jsmith',
       valueBinding: 'Nvzn.loginController.loginInput'
     }),
 
