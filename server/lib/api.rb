@@ -99,6 +99,7 @@ get '/api/v1.1/site/:customer/timecards' do
     "'#{c}'"
   end.join(",")
   # customer = session[:id]
+  company = session[:company]
   if !params[:week] || params[:week] == 0
     date = Date.today
   else
@@ -122,21 +123,23 @@ get '/api/v1.1/site/:customer/timecards' do
 
   # GET Standard Timecards
   sql =<<SQL
-    SELECT RTC.roster_date, RTC.customer, RTC.employee,
-    convert(varchar, RTC.ftime, 108) as finish, convert(varchar, RTC.stime, 108) as start,
-    RTC.ftime, RTC.stime,
-    EMPLOYEES.surname, EMPLOYEES.first_name,
-    EMPLOYEES.photo_path, EMPLOYEES.contact_numbers,
-    EMPLOYEES.employee_a_street, EMPLOYEES.employee_a_suburb,
-    CNA.code, CNA.given_name, CNA.address, CNA.suburb, CNA.state, CNA.pcode,
-    RTC.hour_type, ROSTER_TYPES.description
-    FROM  RTC
-    LEFT JOIN EMPLOYEES ON RTC.employee = EMPLOYEES.employee
-    LEFT JOIN CNA ON RTC.customer = CNA.code
-    LEFT JOIN ROSTER_TYPES ON RTC.hour_type = ROSTER_TYPES.code
+    SELECT rtc.roster_date, rtc.customer, rtc.employee,
+    convert(varchar, rtc.ftime, 108) as finish, convert(varchar, rtc.stime, 108) as start,
+    rtc.ftime, rtc.stime,
+    employees.surname, employees.first_name,
+    employees.photo_path, employees.contact_numbers,
+    employees.employee_a_street, employees.employee_a_suburb,
+    cna.code, cna.given_name, cna.address, cna.suburb, cna.state, cna.pcode,
+    rtc.hour_type, roster_types.description
+    FROM  rtc
+    LEFT JOIN employees ON rtc.employee = employees.employee
+    LEFT JOIN cna ON rtc.customer = cna.code
+    LEFT JOIN roster_types ON rtc.hour_type = roster_types.code
 
-    WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_sunday}'
+    WHERE roster_date BETWEEN '#{this_monday}' AND '#{next_sunday}'
     AND  customer IN (#{customer_id})
+    AND employees.company = '#{company}'
+    AND rtc.company = '#{company}'
     ORDER BY customer,  employee, surname, roster_date, stime, ftime
 SQL
   #puts sql
@@ -193,21 +196,23 @@ SQL
 
   # GET AdHoc Timecards
   sql =<<SQL
-    SELECT ARTC.roster_date, ARTC.customer, ARTC.employee,
-    convert(varchar, ARTC.ftime, 108) as finish, convert(varchar, ARTC.stime, 108) as start,
-    ARTC.ftime, ARTC.stime,
-    EMPLOYEES.surname, EMPLOYEES.first_name,
-    EMPLOYEES.photo_path, EMPLOYEES.contact_numbers,
-    EMPLOYEES.employee_a_street, EMPLOYEES.employee_a_suburb,
-    CNA.code, CNA.given_name, CNA.address, CNA.suburb, CNA.state, CNA.pcode,
-    ARTC.shift_type, ROSTER_TYPES.description
-    FROM  ARTC
-    LEFT JOIN EMPLOYEES ON ARTC.employee = EMPLOYEES.employee
-    LEFT JOIN CNA ON ARTC.customer = CNA.code
-    LEFT JOIN ROSTER_TYPES ON ARTC.shift_type = ROSTER_TYPES.code
+    SELECT artc.roster_date, artc.customer, artc.employee,
+    convert(varchar, artc.ftime, 108) as finish, convert(varchar, artc.stime, 108) as start,
+    artc.ftime, artc.stime,
+    employees.surname, employees.first_name,
+    employees.photo_path, employees.contact_numbers,
+    employees.employee_a_street, employees.employee_a_suburb,
+    cna.code, cna.given_name, cna.address, cna.suburb, cna.state, cna.pcode,
+    artc.shift_type, roster_types.description
+    FROM  artc
+    LEFT JOIN employees ON artc.employee = employees.employee
+    LEFT JOIN cna ON artc.customer = cna.code
+    LEFT JOIN roster_types ON artc.shift_type = roster_types.code
 
-    WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_sunday}'
+    WHERE roster_date BETWEEN '#{this_monday}' AND '#{next_sunday}'
     AND  customer IN (#{customer_id})
+    AND employees.company = '#{company}'
+    AND artc.company = '#{company}'
     ORDER BY customer,  employee, surname, roster_date, stime, ftime
 SQL
   #puts sql
@@ -267,16 +272,17 @@ SQL
 
   # GET Cancelled Timecards
   sql =<<SQL
-    SELECT CRTC.roster_date, CRTC.customer, CRTC.employee, canx_rtc_id,
-    convert(varchar, CRTC.ftime, 108) as finish, convert(varchar, CRTC.stime, 108) as start,
-    CRTC.ftime, CRTC.stime,
-    CNA.code, CNA.given_name, CNA.address, CNA.suburb, CNA.state, CNA.pcode,
-    CRTC.reason as description
-    FROM  CRTC
-    LEFT JOIN CNA ON CRTC.customer = CNA.code
+    SELECT crtc.roster_date, crtc.customer, crtc.employee, canx_rtc_id,
+    convert(varchar, crtc.ftime, 108) as finish, convert(varchar, crtc.stime, 108) as start,
+    crtc.ftime, crtc.stime,
+    cna.code, cna.given_name, cna.address, cna.suburb, cna.state, cna.pcode,
+    crtc.reason as description
+    FROM  crtc
+    LEFT JOIN cna ON crtc.customer = cna.code
 
-    WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_sunday}'
+    WHERE roster_date BETWEEN '#{this_monday}' AND '#{next_sunday}'
     AND  customer IN (#{customer_id})
+    AND crtc.company = '#{company}'
     ORDER BY customer,  employee, roster_date, canx_rtc_id
 SQL
   #puts sql
@@ -385,21 +391,22 @@ get '/api/v1.1/employee/timecards' do
   # next_friday = '2010-10-03'
 
   sql =<<SQL
-    SELECT RTC.roster_date, RTC.customer, RTC.employee,
-    convert(varchar, RTC.ftime, 108) as finish, convert(varchar, RTC.stime, 108) as start,
-    RTC.ftime, RTC.stime,
-    EMPLOYEES.surname, EMPLOYEES.first_name,
-    EMPLOYEES.photo_path, EMPLOYEES.contact_numbers,
-    EMPLOYEES.employee_a_street, EMPLOYEES.employee_a_suburb,
-    CNA.code, CNA.given_name, CNA.address, CNA.suburb, CNA.state, CNA.pcode,
-    RTC.hour_type, ROSTER_TYPES.description
-    FROM  RTC
-    LEFT JOIN EMPLOYEES ON RTC.employee = EMPLOYEES.employee
-    LEFT JOIN CNA ON RTC.customer = CNA.code
-    LEFT JOIN ROSTER_TYPES ON RTC.hour_type = ROSTER_TYPES.code
+    SELECT rtc.roster_date, rtc.customer, rtc.employee,
+    convert(varchar, rtc.ftime, 108) as finish, convert(varchar, rtc.stime, 108) as start,
+    rtc.ftime, rtc.stime,
+    employees.surname, employees.first_name,
+    employees.photo_path, employees.contact_numbers,
+    employees.employee_a_street, employees.employee_a_suburb,
+    cna.code, cna.given_name, cna.address, cna.suburb, cna.state, cna.pcode,
+    rtc.hour_type, roster_types.description
+    FROM  rtc
+    LEFT JOIN employees ON rtc.employee = employees.employee
+    LEFT JOIN cna ON rtc.customer = cna.code
+    LEFT JOIN roster_types ON rtc.hour_type = roster_types.code
 
-    WHERE ROSTER_DATE BETWEEN '#{this_monday}' AND '#{next_sunday}'
-    AND  EMPLOYEES.EMPLOYEE = '#{employee}'
+    WHERE roster_date BETWEEN '#{this_monday}' AND '#{next_sunday}'
+    AND  employees.employee = '#{employee}'
+    AND  rtc.company = '#{company}'
     ORDER BY employee, customer, surname, roster_date, stime, ftime
 SQL
   puts sql
@@ -469,7 +476,7 @@ post '/api/v1.1/timecards' do
   rows = []
 
   sql =<<SQL
-    INSERT INTO APPROVED_TIMESHEETS (rtc_id, user_id, stime, ftime) VALUES
+    INSERT INTO approved_timesheets (rtc_id, user_id, stime, ftime) VALUES
 SQL
 
   changeset['TimeCard']['attributes'].each do |id, tc|
@@ -478,7 +485,7 @@ SQL
   sql << rows.join(", ")
 
   json_sql =<<SQL
-    INSERT INTO APPROVED_TIMESHEETS (misc_1) VALUES
+    INSERT INTO approved_timesheets (misc_1) VALUES
     ('#{json}')
 SQL
 
