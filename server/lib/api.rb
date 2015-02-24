@@ -42,7 +42,7 @@ get '/api/v1.1/login' do
   begin
     data = '{"status":"ok", "user":'+RestClient.get(url)+"}"
   rescue => e
-    e.response
+    '{"error": "'+e.inspect+'"}'
   end
   
 end
@@ -61,13 +61,18 @@ post '/api/v1.1/login' do
     
     halt 401, { :status => 'unauthorised', :data => data }.to_json unless data["reason"].blank?
     halt 401, { :status => 'unauthorised', :password => password, :data => data, :post => post }.to_json if data["password"] != password
+    halt 500, { 
+      :status => 'User is incomplete',
+      :details => 'The Field `company` is missing'
+    }.to_json if data['company'].blank?
     
     session[:username] = username
     session[:id] = data["db_id"]
+    session[:company] = data['company']
     body ({ :status => "ok", :user => data }).to_json
     
   rescue => e
-    e.response
+    e.inspect
   end
 end
 
@@ -364,6 +369,7 @@ get '/api/v1.1/employee/timecards' do
 
   #customer = params[:customer]
   employee = session[:id]
+  company  = session[:company]
   if !params[:week] || params[:week] == 0
     date = Date.today
   else
